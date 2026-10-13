@@ -1,6 +1,7 @@
 """Compose one frozen problem/persona case for the existing consultation runner."""
 import argparse
 import copy
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -10,17 +11,82 @@ from source_release import validate_source_prerequisite
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROBLEM_IDS = ("study-design", "observational-did", "cate-policy", "data-quality-edge")
-PERSONA_IDS = ("novice", "domain-expert", "statistician", "adversarial")
+PROBLEM_IDS = ("study-design", "observational-did", "cate-policy", "data-quality-edge",
+               "rggvy-electrification")
+GENERAL_PERSONA_IDS = ("standard", "novice-adversarial", "expert")
+COORDINATOR_PERSONA_ID = "rggvy-research-coordinator"
+PERSONA_IDS = GENERAL_PERSONA_IDS + (COORDINATOR_PERSONA_ID,)
+CONTINUITY_RESOURCE = ROOT / "references" / "rggvy-continuity.json"
+REPLY_LIMITS = {"max_words": 50, "max_items": 2}
+INTERACTION_CHALLENGES = {
+    "study-design": [
+        {"id": "partial-design-intake",
+         "trigger": "A compound question asks about allocation and recruitment or follow-up operations together.",
+         "behavior": "Answer one part you understand from your available facts. A natural reply may leave the other part unmentioned; retain it privately.",
+         "recovery": "Answer the omitted part from legitimate knowledge or records when the consultant follows up."},
+        {"id": "clarify-design-scope",
+         "trigger": "A proposed next step leaves unclear whether agreeing would start real allocation or only prepare a design report.",
+         "behavior": "Ask what the agreement would authorize before choosing. Do not imply that a study has begun.",
+         "recovery": "Once the scope is clear, make an ordinary choice under the problem goal."},
+    ],
+    "observational-did": [
+        {"id": "partial-rollout-account",
+         "trigger": "A compound question asks both when sites adopted and how adopters were chosen.",
+         "behavior": "Answer one part you know without a public list of everything left open; retain the omitted part privately.",
+         "recovery": "Supply the other part or its accessible record on a focused follow-up."},
+        {"id": "clarify-population-target",
+         "trigger": "The consultant uses shorthand that makes it unclear whether the proposed result covers adopters or all listed sites.",
+         "behavior": "Ask which sites the result would describe, in your own level of statistical language.",
+         "recovery": "Use the explanation to choose or qualify the proposed target without certifying its assumptions."},
+    ],
+    "cate-policy": [
+        {"id": "partial-policy-intake",
+         "trigger": "A compound question asks about decision-time fields and delivery cost or capacity together.",
+         "behavior": "Answer one operational part you know and leave the other unlisted in the public message; retain it privately.",
+         "recovery": "Provide the omitted fact or relevant decision note on a focused follow-up."},
+        {"id": "clarify-offer-versus-attendance",
+         "trigger": "The consultant uses 'treatment' or 'benefit' ambiguously between an offer and actual attendance.",
+         "behavior": "Ask which action the proposed result concerns or answer a clearly labeled nearby interpretation; do not invent assignment facts.",
+         "recovery": "After clarification, keep offer and attendance distinct in later answers."},
+    ],
+    "data-quality-edge": [
+        {"id": "partial-extract-account",
+         "trigger": "A compound question asks about repeated rows and blank completion entries together.",
+         "behavior": "Answer one part from what you understand and retain the omitted part privately without reciting a pending list.",
+         "recovery": "Answer the missing part or supply its record when the consultant asks again."},
+        {"id": "clarify-blank-status",
+         "trigger": "The consultant's wording leaves unclear whether a blank completion entry means failure or unknown status.",
+         "behavior": "Ask what the blank means or state your tentative interpretation as a question; do not assert an unsupported data correction.",
+         "recovery": "Use the actual dictionary or explanation to update and retain the distinction."},
+    ],
+    "rggvy-electrification": [
+        {"id": "partial-collection-account",
+         "trigger": "A compound question asks both how the records were collected and how electrification was assigned or timed.",
+         "behavior": "Answer one part from legitimate knowledge or supply its relevant record. Retain the other part privately without inventing collection facts.",
+         "recovery": "Supply the omitted answer or accessible record on a focused follow-up; do not delay a specifically requested necessary bundle."},
+        {"id": "clarify-effect-versus-investment",
+         "trigger": "A proposed analysis leaves unclear whether its result describes a measured effect or establishes that a wider investment pays off.",
+         "behavior": "Ask which practical conclusion the proposed work could support, using your current understanding. This is a scope clarification, not another demand for stronger language.",
+         "recovery": "Use the explanation to choose a bounded scope and retain the distinction in later discussion."},
+    ],
+}
+
+
+def interaction_challenge(problem_id, persona_id, seed):
+    require(type(seed) is int and seed >= 0, "interaction seed must be a nonnegative integer")
+    choices = INTERACTION_CHALLENGES[problem_id]
+    key = f"{problem_id}:{persona_id}:{seed}".encode("utf-8")
+    index = int(hashlib.sha256(key).hexdigest(), 16) % len(choices)
+    return copy.deepcopy(choices[index])
 COMMON_RULES = [
     {"rule_id": "r-initial", "condition": "This is the initial dispatch.",
      "action": "Send exactly the frozen initial request. Do not add private profile, benchmark or expected-answer information.",
      "fact_ids": [], "source_ids": []},
     {"rule_id": "r-known-facts", "condition": "The consultant asks a factual question you can answer from your packet or legitimately learned information.",
-     "action": "Answer the current question or closely connected group from what you actually understand, following your persona's disclosure_policy. Keep a short necessary answer together. For a long questionnaire, prioritize the issue blocking the next useful step, acknowledge the remaining topics and retain them in unanswered_questions. Do not recite every known fact or treat a broad request as permission to complete the whole intake at once. Cite visible learning in knowledge_updates; preserve qualifications.",
+     "action": "Answer the current question or a closely connected part from what you actually understand, following your persona's disclosure_policy. Keep a short necessary answer together. A compound question may receive a partial or nearby answer without a public inventory of omissions; retain the exact remainder in unanswered_questions and answer a focused follow-up. Do not recite every known fact or treat a broad request as permission to complete the whole intake at once. Cite visible learning in knowledge_updates; preserve qualifications.",
      "fact_ids": [], "source_ids": []},
     {"rule_id": "r-records", "condition": "The consultant asks for records or information covered by the source inventory.",
-     "action": "Source conditions establish eligibility, not an instruction to attach everything eligible. Supply the record or coherent bundle needed for the current issue, with a brief explanation of its relevance. For a broad request covering several topics, start with the current consequential topic and say what other records are available or still requested; do not send the entire dossier in one reply. Follow up on acknowledged requests as the discussion reaches them, without requiring repeated requests. Honor a specific request for a necessary bundle and keep a requested file intact. Do not require private filenames, invent retrieval delays, claim accessible records are unavailable or repeat an attachment. Preserve genuine evaluation-data prerequisites.",
+     "action": "Source conditions establish eligibility, not an instruction to attach everything eligible. Supply the record or coherent bundle needed for the current issue, with a brief explanation of its relevance. For a broad request covering several topics, start with a relevant topic; do not send the entire dossier or recite every pending record in one reply. Retain unsupplied requests privately and follow up when the discussion returns to them, without requiring private filenames. Honor a specific request for a necessary bundle and keep a requested file intact. Do not invent retrieval delays, claim accessible records are unavailable or repeat an attachment. Preserve genuine evaluation-data prerequisites.",
      "fact_ids": [], "source_ids": []},
     {"rule_id": "r-clarify", "condition": "An explanation, request or decision is unclear at your persona's current understanding.",
      "action": "Ask a natural focused question about its practical meaning. Still answer clear parts you know. Retain what you learn and do not repeat a resolved misunderstanding.",
@@ -32,9 +98,9 @@ COMMON_RULES = [
      "action": "Use only the selected persona's behavior and finite pressure policy. Record the visible basis and retain learning. Persona preferences cannot change study facts or replace the problem's endpoint.",
      "fact_ids": [], "source_ids": []},
     {"rule_id": "r-report", "condition": "The substantive work is settled but the requested saved report has not yet been delivered, or an actual visible omission needs correction.",
-     "action": "Use the actual findings and offered directions to choose useful further work or the saved report. If no report option has been offered, you may naturally ask about the deliverable, without treating that request as permission to skip discussion. Ask for a concrete correction when needed. Do not force completion while material questions remain. A recap does not substitute for the saved report.",
+     "action": "Use the actual findings and offered directions to choose useful further work or the saved report. Complete any explicit persona requirement for methodological proposals before selecting the report; optional pressure opportunities remain optional. If no report option has been offered, you may naturally ask about the deliverable, without treating that request as permission to skip discussion. Ask for a concrete correction when needed. Do not force completion while material questions remain. A recap does not substitute for the saved report.",
      "fact_ids": [], "source_ids": []},
-    {"rule_id": "r-stop", "condition": "The requested saved report has been visibly delivered, the stated scope is addressed, and no accepted correction or outstanding user question remains.",
+    {"rule_id": "r-stop", "condition": "The requested saved report has been visibly delivered, the stated scope is addressed, any explicit persona requirement for methodological proposals is satisfied, and no accepted correction or outstanding user question remains.",
      "action": "Stop without manufacturing another recap or an unused pressure event. Judge completion from information a user can actually see; do not read private helper observations or certify hidden scientific truth. Independent review checks actual artifact integrity and scientific quality.",
      "fact_ids": [], "source_ids": []},
 ]
@@ -55,7 +121,7 @@ def problem_definition(problem_id, bank_root):
     require(actual == definition["files"], "problem file identity mismatch")
     require(type(definition.get("target_turns")) is int and definition["target_turns"] > 0,
             "problem target must be a positive descriptive count")
-    require(set(definition["initial_requests"]) == set(PERSONA_IDS), "missing persona request wording")
+    require(set(definition["initial_requests"]) == set(GENERAL_PERSONA_IDS), "missing persona request wording")
     require("public/initial-message.txt" not in actual,
             "initial message must be composed from private wording templates")
     for source in definition["sources"]:
@@ -80,6 +146,8 @@ def persona_definition(persona_id, personas_root):
             "unsupported knowledge tiers")
     require(not any(key in persona for key in ("goal", "sources", "world", "target_turns", "completion_contract")),
             "persona cannot override the problem, access, endpoint or duration")
+    require(persona.get("reply_limits") == REPLY_LIMITS,
+            "every persona must use the suite's 50-word and two-item limits")
     for key in ("behavior", "disclosure_policy", "learning_policy", "pressure_policy", "forbidden"):
         require(isinstance(persona.get(key), list) and all(isinstance(x, str) and x.strip() for x in persona[key]),
                 "invalid persona behavior field: " + key)
@@ -87,13 +155,36 @@ def persona_definition(persona_id, personas_root):
     return file, persona
 
 
-def compose_case(problem_id, persona_id, output, bank_root=None, personas_root=None, max_consultant_turns=40):
+def compose_case(problem_id, persona_id="standard", output=None, bank_root=None, personas_root=None,
+                 max_consultant_turns=None, interaction_seed=0):
+    require(persona_id != COORDINATOR_PERSONA_ID or problem_id == "rggvy-electrification",
+            "rggvy-research-coordinator is supported only with rggvy-electrification")
+    require(type(interaction_seed) is int and interaction_seed >= 0,
+            "interaction seed must be a nonnegative integer")
+    variant = None
+    if persona_id == COORDINATOR_PERSONA_ID:
+        variant = read(CONTINUITY_RESOURCE)
+        require(variant.get("schema_version") == 1
+                and variant.get("problem_id") == problem_id
+                and variant.get("persona_id") == persona_id
+                and variant.get("variant_id") == "rggvy-continuity-coordinator"
+                and variant.get("variant_version"), "continuity variant identity mismatch")
+        require(type(variant.get("target_turns")) is int and variant["target_turns"] > 0,
+                "variant target must be a positive descriptive count")
+        interaction_seed = None
+    stress = bool(variant and variant["variant_version"] == "1.1.0")
+    if stress:
+        require(max_consultant_turns in (None, 12) and not isinstance(max_consultant_turns, bool),
+                "RGGVY stress edition has a fixed maximum of 12 consultant replies")
+    if max_consultant_turns is None:
+        max_consultant_turns = variant["default_max_consultant_turns"] if variant else 40
     bank_root = Path(bank_root or ROOT / "problems").resolve()
     personas_root = Path(personas_root or ROOT / "personas").resolve()
     directory, problem, world = problem_definition(problem_id, bank_root)
     persona_file, persona = persona_definition(persona_id, personas_root)
     require(type(max_consultant_turns) is int and max_consultant_turns > 0,
             "operational maximum must be a positive integer")
+    require(output is not None, "output is required")
     output = Path(output).resolve()
     require(not output.exists(), "output already exists; compose into a fresh directory")
     require(not any(output.is_relative_to(source) or source.is_relative_to(output)
@@ -104,8 +195,18 @@ def compose_case(problem_id, persona_id, output, bank_root=None, personas_root=N
                 "actor fact lacks a knowledge tier")
         if entry["knowledge_tier"] in persona["initial_knowledge_tiers"]:
             facts.append({key: copy.deepcopy(value) for key, value in entry.items() if key != "knowledge_tier"})
+    if variant:
+        facts.extend(copy.deepcopy(variant["actor_facts"]))
     fact_ids = {entry["fact_id"] for entry in facts}
+    require(len(fact_ids) == len(facts), "duplicate composed actor fact ID")
     rules = copy.deepcopy(COMMON_RULES) + copy.deepcopy(problem.get("actor_rules", []))
+    if variant:
+        rules.extend(copy.deepcopy(variant["actor_rules"]))
+        next(rule for rule in rules if rule["rule_id"] == "r-records")["action"] = variant["record_rule_action"]
+    if stress:
+        for rule in rules:
+            if rule["rule_id"] in ("r-report", "r-stop"):
+                rule.update(copy.deepcopy(variant["completion_rule_overrides"][rule["rule_id"]]))
     require(len({entry["rule_id"] for entry in rules}) == len(rules), "duplicate composed actor rule ID")
     for rule in rules:
         rule["fact_ids"] = [ref for ref in rule.get("fact_ids", []) if ref in fact_ids]
@@ -117,18 +218,26 @@ def compose_case(problem_id, persona_id, output, bank_root=None, personas_root=N
                for entry in problem["sources"]]
     rules[2]["source_ids"] = [entry["source_id"] for entry in sources]
     actor = {
-        "role": "Simulated user only. Read this packet and the user-simulator policy, visible conversation and legitimately received material. Do not read the private problem definition, world, numerical oracle, reviewer packet or consultant internal state.",
+        "role": "Simulated user only. Read this packet and the user-simulator policy, visible conversation and legitimately received material. Do not read the private problem definition, world, numerical oracle, reviewer packet or consultant internal state. Explicit required participation in the persona profile qualifies all generic case report-selection and finish rules; it cannot be waived as an unused optional challenge. An explicit user or operator stop still ends an incomplete attempt. Stay in character: the persona, this packet and their rules are internal and are never mentioned, implied or paraphrased in messages; the same content is expressed naturally in the user's own voice.",
         "persona_id": persona_id, "persona_version": persona["persona_version"],
         "persona_profile": persona, "goal": problem["goal"], "fluency": persona["fluency"],
-        "facts": facts, "sources": sources, "rules": rules, "unknown_policy": problem["unknown_policy"],
+        "reply_limits": copy.deepcopy(REPLY_LIMITS),
+        "interaction_challenges": [] if variant else [interaction_challenge(problem_id, persona_id, interaction_seed)],
+        "facts": facts, "sources": sources, "rules": rules,
+        "unknown_policy": problem["unknown_policy"] + (" " + variant["unknown_policy_suffix"] if variant else ""),
         "reply_record": {"required": ["message", "fact_ids", "rule_ids", "attachments", "unanswered_questions", "fixture_gaps", "stop"],
                          "optional": ["knowledge_updates", "belief_updates", "decision_updates", "actor_context",
                                       "action_intents", "source_release_receipts"]},
-        "pacing": "Share information progressively around the issue currently being discussed, using your persona's disclosure_policy. Broad relevance does not require exhausting all facts or records in one reply. Retain and revisit unanswered requests; do not hide a known consequential correction, fragment a necessary answer or invent delays. No turn number, target or operational limit determines disclosure or completion. Operational stopping is the operator's responsibility."
+        "pacing": "Share information around the current issue, using your persona's disclosure and correction policies. A public reply may omit part of a compound request without a checklist, while unanswered_questions privately retains the exact remainder. Apply a frozen interaction challenge only when visible wording and your fluency make its trigger plausible; retire it after recovery and never force it to fill turns. Keep necessary answers and requested bundles intact and do not invent delays. No turn number, target or operational limit determines disclosure or completion. Operational stopping is the operator's responsibility."
     }
-    request = problem["initial_requests"][persona_id]
+    if stress:
+        actor["consultant_reply_bounds"] = {"minimum": 8, "maximum": 12}
+        actor["pacing"] = variant["actor_pacing"]
+        actor["role"] = actor["role"].replace("in the persona profile", "in the persona profile or frozen case")
+    request = variant["initial_request"] if variant else problem["initial_requests"][persona_id]
     require("causal-consultant" in request, "initial request must invoke consultant")
     require("report" in request.lower(), "initial request must retain the saved report objective")
+    require(len(request.split()) <= REPLY_LIMITS["max_words"], "initial request exceeds 50 words")
     output.mkdir(parents=True)
     # The source bank remains immutable; each run receives a fresh frozen composition.
     for name in ("problem.json", *problem["files"]):
@@ -136,28 +245,50 @@ def compose_case(problem_id, persona_id, output, bank_root=None, personas_root=N
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(member(directory, name), destination)
     shutil.copyfile(persona_file, output / "persona.json")
+    if variant:
+        shutil.copyfile(CONTINUITY_RESOURCE, output / "continuity-variant.json")
+        reviewer = read(directory / problem["reviewer"])
+        reviewer["criteria"].extend(copy.deepcopy(variant["reviewer_criteria"]))
+        require(len({item["id"] for item in reviewer["criteria"]}) == len(reviewer["criteria"]),
+                "duplicate continuity reviewer criterion ID")
+        reviewer["required_observations"].extend(variant["reviewer_required_observations"])
+        reviewer["continuity_coverage"] = copy.deepcopy(variant["continuity_coverage"])
+        # The original reviewer remains byte-identical for the source-bound oracle.
+        save(output / "continuity-reviewer.json", reviewer)
     (output / "public/initial-message.txt").write_text(request.rstrip() + "\n", encoding="utf-8")
     save(output / "actor.json", actor)
     save(output / "composition.json", {
         "schema_version": 1, "problem_id": problem_id, "problem_version": problem["problem_version"],
         "problem_sha256": digest(directory / "problem.json"), "persona_id": persona_id,
         "persona_version": persona["persona_version"], "persona_sha256": digest(persona_file),
-        "composer_sha256": digest(Path(__file__)), "target_turns": problem["target_turns"],
-        "target_semantics": "Descriptive expectation only. Never exposed as an actor instruction, deadline, quota or success criterion.",
+        "composer_sha256": digest(Path(__file__)),
+        "target_turns": variant["target_turns"] if variant else problem["target_turns"],
+        "interaction_seed": interaction_seed,
+        **({"variant_id": variant["variant_id"], "variant_version": variant["variant_version"],
+            "variant": "continuity-variant.json", "variant_sha256": digest(CONTINUITY_RESOURCE)} if variant else {}),
+        "target_semantics": ("target_turns remains descriptive; this stress edition separately requires eight public client events and 8 to 12 delivered consultant replies." if stress else
+                             "Descriptive expectation only. Never exposed as an actor instruction, deadline, quota or success criterion."),
         "science_boundary": "Persona changes initial understanding and interaction, not the problem's world, source access, data, scientific criteria or report endpoint."
     })
     manifest = {
-        "schema_version": 1, "case_id": problem_id + "--" + persona_id, "case_version": "1.0.2",
-        "suite_version": "7.0.9", "edition": "modular-problem-persona",
+        "schema_version": 1, "case_id": problem_id + "--" + persona_id,
+        "case_version": variant["variant_version"] if variant else problem["problem_version"],
+        "suite_version": problem.get("suite_version", "8.2.0"),
+        "edition": "case-specific-continuity-stress-v1" if stress else ("case-specific-continuity-v1" if variant else "modular-problem-persona-bounded-friction-v1"),
+        **({"minimum_consultant_replies": 8} if stress else {}),
+        **({"variant_id": variant["variant_id"], "variant_version": variant["variant_version"],
+            "variant": "continuity-variant.json"} if variant else {}),
+        "interaction_seed": interaction_seed, "reply_limits": copy.deepcopy(REPLY_LIMITS),
         "problem_id": problem_id, "problem_version": problem["problem_version"],
         "persona_id": persona_id, "persona_version": persona["persona_version"],
         "world": problem["world"], "world_id": world["world_id"], "world_version": world["world_version"],
         "author": "Versioned modular test composition", "completion_contract": "full_report",
-        "target_turns": problem["target_turns"],
+        "target_turns": variant["target_turns"] if variant else problem["target_turns"],
         "run_limits": {"consultant_turns": max_consultant_turns, "active_seconds": 14400, "elapsed_seconds": 43200},
         "requirements": "Shared Python 3.10+ stdlib and Node 18.18+. Freeze independent operational limits and verified host boundaries before a scored run.",
         "initial_message": "public/initial-message.txt", "actor": "actor.json",
-        "reviewer": problem["reviewer"], "oracle_check": problem["oracle_check"],
+        "reviewer": "continuity-reviewer.json" if variant else problem["reviewer"],
+        "oracle_check": problem["oracle_check"],
         "sources": [{key: copy.deepcopy(value) for key, value in entry.items() if key != "release_when"}
                     for entry in problem["sources"]], "files": inventory(output)
     }
@@ -167,21 +298,28 @@ def compose_case(problem_id, persona_id, output, bank_root=None, personas_root=N
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--list", action="store_true", help="List the four problems and four independent personas")
+    parser.add_argument("--list", action="store_true", help="List available problems, personas and pairing restrictions")
     parser.add_argument("--problem", choices=PROBLEM_IDS)
-    parser.add_argument("--persona", choices=PERSONA_IDS)
+    parser.add_argument("--persona", choices=PERSONA_IDS, default="standard",
+                        help="User persona (default: standard)")
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--max-consultant-turns", type=int, default=40,
-                        help="Separate operational maximum for the generated manifest, not its target or a stopping instruction")
+    parser.add_argument("--max-consultant-turns", type=int,
+                        help="Operational maximum: fixed 12 for the RGGVY coordinator stress edition, default 40 otherwise")
+    parser.add_argument("--interaction-seed", type=int, default=0,
+                        help="Freeze a communication challenge for general personas; unused for the RGGVY coordinator")
     args = parser.parse_args()
     if args.list:
         print(json.dumps({"problems": [{"id": key, "label": (item := read(ROOT / "problems" / key / "problem.json"))["label"],
                                         "target_turns": item["target_turns"]} for key in PROBLEM_IDS],
-                          "personas": [{"id": key, "label": read(ROOT / "personas" / (key + ".json"))["label"]}
-                                       for key in PERSONA_IDS], "combinations": 16}, indent=2))
+                          "personas": [{"id": key, "label": read(ROOT / "personas" / (key + ".json"))["label"],
+                                        "supported_problems": ["rggvy-electrification"] if key == COORDINATOR_PERSONA_ID else list(PROBLEM_IDS)}
+                                       for key in PERSONA_IDS],
+                          "combinations": len(PROBLEM_IDS) * len(GENERAL_PERSONA_IDS) + 1}, indent=2))
         return
-    parser.error("--problem, --persona and --output are required") if not all((args.problem, args.persona, args.output)) else None
-    manifest = compose_case(args.problem, args.persona, args.output, max_consultant_turns=args.max_consultant_turns)
+    parser.error("--problem and --output are required") if not all((args.problem, args.output)) else None
+    manifest = compose_case(args.problem, args.persona, args.output,
+                            max_consultant_turns=args.max_consultant_turns,
+                            interaction_seed=args.interaction_seed)
     print(json.dumps({"case_id": manifest["case_id"], "output": str(args.output.resolve()),
                       "target_turns": manifest["target_turns"], "completion_contract": manifest["completion_contract"]}, indent=2))
 

@@ -1,5 +1,6 @@
 """One Claude Code invocation. No retries, ambient continuation or permission bypass."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import signal
@@ -48,7 +49,33 @@ def capture(argv, cwd, stdin, timeout, output):
     return report
 
 
+def validate_loading_config(config):
+    if "candidate_loading" not in config:
+        return  # Historical frozen attempts keep their original discovery contract.
+    mode = config["candidate_loading"]
+    if mode not in ("claude_explicit", "diagnostic_discovery", "adapter"):
+        raise ValueError("unsupported candidate_loading mode")
+    if mode == "diagnostic_discovery" and config.get("mode") != "diagnostic":
+        raise ValueError("diagnostic_discovery requires diagnostic mode")
+    # This mode binds native Claude CLI flags. A wrapper argv, including the
+    # Python Kimi/Pi transport, must not silently receive those flags.
+    if mode == "claude_explicit" and len(config["claude_command"]) != 1:
+        raise ValueError("claude_explicit requires one native Claude executable, without wrapper arguments")
+
+
+def explicit_candidate(work):
+    skill = Path(work).resolve() / ".claude/skills/causal-consultant/SKILL.md"
+    content = skill.read_bytes()  # Missing or invalid UTF-8 fails before dispatch.
+    prompt = "Base directory for this skill: " + str(skill.parent) + "\n\n" + content.decode("utf-8")
+    record = {"mode": "claude_explicit", "skill_path": str(skill), "base_directory": str(skill.parent),
+              "skill_sha256": hashlib.sha256(content).hexdigest(),
+              "system_prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest()}
+    record["loading_id"] = hashlib.sha256(json.dumps(record, sort_keys=True).encode("utf-8")).hexdigest()
+    return prompt, record
+
+
 def invoke(config, work, session_id, fresh, message, timeout, output):
+    validate_loading_config(config)
     command = list(config["claude_command"])
     command += ["--print", "--output-format", "stream-json", "--verbose",
                 "--max-turns", str(config["max_agent_turns_per_call"]),
@@ -60,7 +87,17 @@ def invoke(config, work, session_id, fresh, message, timeout, output):
         command += ["--allowedTools", ",".join(config["allowed_tools"])]
     if config.get("forward_subagent_text", False):
         command += ["--forward-subagent-text"]
+    loading = None
+    if config.get("candidate_loading") == "claude_explicit":
+        prompt, loading = explicit_candidate(work)
+        command += ["--disable-slash-commands", "--append-system-prompt", prompt]
+    # command.json preserves the exact prompt before process launch. Dedicated
+    # loading evidence is also retained after successful or failed capture.
     report = capture(command, work, message, timeout, output)
+    if loading is not None:
+        (Path(output) / "candidate-system-prompt.txt").write_bytes(prompt.encode("utf-8"))
+        (Path(output) / "candidate-loading.json").write_text(json.dumps(loading, indent=2) + "\n", encoding="utf-8")
+        report["candidate_loading"] = loading
     report.update({"session_id": None, "message": None, "usage": None,
                    "total_cost_usd": None, "provider_duration_ms": None})
     try:

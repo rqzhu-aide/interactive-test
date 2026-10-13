@@ -66,6 +66,31 @@ def nonempty(value):
     return isinstance(value, str) and bool(value.strip())
 
 
+def artifact_identified(artifact, quote, files):
+    """True if the public quote identifies the saved artifact.
+
+    Primary check: the work-relative inventory key appears verbatim in the
+    quote (the strict anchor). Fallback (path-normalizing): consultants
+    naturally speak project-relative paths (``runs/x/outputs/y.md`` under the
+    project folder); such a mention counts when it uniquely resolves to this
+    artifact among the turn's saved-file inventory, so it cannot silently
+    denote a different saved file.
+    """
+    hay = unquote(quote).replace("\\", "/")
+    if re.search(r"(?<![\w.-])" + re.escape(artifact) + r"(?![\w/-]|\.[\w.-])", hay):
+        return True
+    for token in set(re.findall(r"[A-Za-z0-9_.][A-Za-z0-9_./-]{4,}", hay)):
+        token = token.strip("./")
+        if not token:
+            continue
+        if token != artifact and not artifact.endswith("/" + token):
+            continue
+        rivals = [key for key in files if key == token or key.endswith("/" + token)]
+        if rivals == [artifact]:
+            return True
+    return False
+
+
 def validate_release_receipts(attempt, state, sources, attachments, receipts=None):
     """Validate all requested gated sources before any attachment is staged.
 
@@ -130,8 +155,7 @@ all four components. No held-out file identity is required before its release.
             snapshot_ref = event_ref + "/work-snapshot/" + artifact if isinstance(artifact, str) else ""
             saved = member(attempt, snapshot_ref)
             current = member(state["work"], artifact)
-            require(re.search(r"(?<![\w.-])" + re.escape(artifact) + r"(?![\w/-]|\.[\w.-])",
-                              unquote(quote).replace("\\", "/")) is not None,
+            require(artifact_identified(artifact, quote, files),
                     "saved artifact must be identified in the public commitment quote")
             require(isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{64}", sha) is not None,
                     "invalid saved artifact hash")

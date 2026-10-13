@@ -2,7 +2,7 @@
   "assumption_boundary": "Generating assumptions hold in the private synthetic model but are not empirical certifications available to the consultant. Causal and extrapolation claims must remain conditional on their support in the supplied record.",
   "generation": {
     "generator": "scripts/generate_problem_bank.py",
-    "generator_sha256": "79db1abef53959d6c4a250e6abd8e79ea93a3708d17d9c049dd0a15ffce649c4",
+    "generator_sha256": "a24e15dbc3e8b59cb802e1dd6ef5a742171a61905f7893b1375c9d2843780d26",
     "numeric_note": "CSV values are frozen to six decimal places where indicated. Seed alone does not replace preserved bytes.",
     "seed": 26091002,
     "specification": {
@@ -25,9 +25,9 @@
   "privacy": "World and oracle are reviewer-only. No persona receives generating equations, latent values, numerical answers or target-turn metadata from this dossier. Scientific truth and source accessibility do not change with personality.",
   "reference_outputs": {
     "checker_file": "check_oracle.py",
-    "checker_sha256": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
+    "checker_sha256": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
     "oracle_file": "oracle.json",
-    "oracle_sha256": "ffa08f3711df7c23790a5e4c629d4f6ae792307976e4a551322fd4a0da12acae"
+    "oracle_sha256": "aedaffb1fd84a9fad0edeb6efd9745905ac8363abd39308bc5ab4044e003bb87"
   },
   "scientific_truth": {
     "adopters_low_high": [

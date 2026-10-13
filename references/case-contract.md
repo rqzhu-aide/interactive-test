@@ -1,6 +1,6 @@
 # Frozen Case Contract
 
-For fixture authors and run operators. The four problem/persona compositions
+For fixture authors and run operators. The five-problem catalog's compositions
 use this contract and the shared validator described in [runner.md](runner.md).
 
 Source-specific `release_prerequisite` metadata is frozen in the problem, case
@@ -42,6 +42,14 @@ was assembled but cannot establish exchangeability just by agreeing to it.
 Separate an inaccurate user belief from the underlying truth and freeze the
 event by which the user can learn a correction. Do not secretly alter the world.
 
+Current composed cases bind `reply_limits` of 50 whitespace-delimited spoken
+words and two semantic items to every persona, including the initial message.
+They may also freeze one seeded, case-specific `interaction_challenges` opportunity
+with a visible trigger and recovery condition. The actor need not force an
+untriggered challenge. A partial answer may omit the public checklist while its
+exact remainder stays in the private `unanswered_questions` record. These
+communication rules do not change source facts, release gates or authorization.
+
 The author also supplies a private manifest containing:
 
 - `suite_version`, `case_id`, `case_version`, communication `edition`, author
@@ -71,7 +79,9 @@ start, findings discussion and report selection chronology. An initial desire
 for a report cannot authorize a later action automatically. An extension has
 its own bounded choice and returns to discussion. Scope revisions, questions,
 pause/resume and reopening preserve their user meaning when they occur; none is
-a mandatory quota in each case. A faithful user stop without a report leaves a
+a mandatory quota in ordinary cases. The named coordinator 1.1.0 stress edition
+requires the participation defined in its [case guide](rggvy-continuity.md).
+A faithful user stop without a report leaves a
 full-report objective incomplete, without automatically being an actor defect.
 
 Keep the manifest and descriptive case IDs away from the consultant. Use neutral
@@ -112,6 +122,23 @@ world or automatically treating consultant assertions as facts. Bounded pressure
 needs finite semantic conditions and an attainable honest report endpoint; it
 must not force endless resistance or a predetermined estimator.
 
+Freeze reusable interaction behavior in the selected persona. `standard`
+includes early investigation, method discussion and choice, two finite
+opportunities to ask for distinct stronger claims, and report selection and
+verification. `novice-adversarial` combines limited statistical fluency and
+bounded pressure; `expert` combines domain and statistical expertise without
+mandatory stronger-claim requests. Problems such as `rggvy-electrification`
+supply study-specific context for those behaviors. A phase names its observable
+trigger, allowed response and honest resolution. Do not encode reply numbers,
+minimum exchanges, hidden method requirements or extra release gates for ordinary
+cases. Coordinator 1.1.0 is the narrow versioned exception for ordered public
+participation and a minimum of eight delivered replies, with a hard ceiling of
+twelve. It adds no method requirement or source-release gate. Initially
+unvolunteered study context becomes available on a relevant request without an
+arbitrary waiting period. Preserve reply limits, disclosure policy and private
+unanswered-request history. Record an untriggered pressure as a coverage limit;
+do not manufacture resistance.
+
 If a question reaches an unspecified fact, the actor says it does not know and
 records a fixture gap privately. If that gap materially affects evaluation, mark
 the case invalid for that claim. Fix the version and rerun all candidates being
@@ -119,19 +146,37 @@ compared; do not invent facts or repair one candidate's run in place.
 
 ## Randomization and Reproducibility
 
-Use the four problems and four independent personas in the
-[composition guide](problem-persona-matrix.md). Any of those 16 pairings is
-supported; the selected scope determines which to run. The same problem's world,
+Use the five problems, three general personas and one RGGVY-only persona in the
+[composition guide](problem-persona-matrix.md). There are 16 valid pairings;
+the selected scope determines which to run. The same problem's world,
 scientific sources and criteria remain invariant across personas. Initial
 understanding and natural disclosure differ. Generate no new study world during
 a conversation or additional crossed factors without review. The old fixed
 case catalog is removed; prior versions remain in Git and frozen run packages.
+The previous four personas are archived outside the active catalog. They remain
+valid within their original frozen runs and must not be rewritten there.
+
+The RGGVY continuity variant preserves the original source-bound `reviewer.json`
+and selects a combined `continuity-reviewer.json` through `case.json`'s `reviewer`
+field. Follow that field when building reviewer input. Its private variant resource
+and hash are retained in the composition; actor input receives only its selected
+facts and behavior, never this case guide, private criteria or descriptive
+duration target. Coordinator 1.1.0 actor-safe participation includes its required
+events and bounds; frozen 1.0.0 attempts retain their original packet.
 
 Composed manifests add `problem_id`, `problem_version`, `persona_version` and
 `target_turns`. Private `problem.json`, `persona.json` and `composition.json` are
 hash-bound alongside ordinary files. The target is operator/reviewer metadata;
 it does not appear in actor packets, govern release or change report completion.
 Operational caps remain a separate frozen configuration.
+New coordinator 1.1.0 manifests additionally declare
+`minimum_consultant_replies: 8` and reuse `run_limits.consultant_turns: 12`.
+Its actual configuration must agree at 12, without an extra opt-in flag. A
+delivered-count check is mechanical; public event occurrence, consultant handling
+and report substance require independent review. Use existing actor updates,
+coverage, findings and outcome fields, not a new mutable event schema. Required
+stress completion cannot retire after an early report; omitted or unproven
+events leave outcome incomplete.
 
 Useful axes include operational definitions, linkage/missingness patterns,
 source availability, user knowledge, statistical fluency and wording. A changed
@@ -161,6 +206,11 @@ fail a sound estimate because it differs from the generating effect, or require
 every single confidence interval to contain it. Coverage claims require their
 own repeated-simulation design. Real observational data do not supply a known
 causal truth merely because a reference analysis exists.
+For the RGGVY case, independently check extract dimensions, sample construction,
+source handling and arithmetic. Score the discovery and use of consequential
+information, plus defensible alternatives, rather than proximity to a published
+coefficient. See the [case guide](rggvy-electrification.md) for the study-specific
+evidence boundaries.
 
 Author-created examples and protocol rehearsals are not live observations. A
 reviewed blueprint becomes a runnable case only after actual materials, hashes,

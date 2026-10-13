@@ -2,7 +2,7 @@
   "assumption_boundary": "Known randomized assignment supports offer effects under the documented design. Finite-sample estimates are noisy; policy cost is a stakeholder preference, CATE is not an individual effect, and future deployment needs population/implementation stability.",
   "generation": {
     "generator": "scripts/generate_problem_bank.py",
-    "generator_sha256": "79db1abef53959d6c4a250e6abd8e79ea93a3708d17d9c049dd0a15ffce649c4",
+    "generator_sha256": "a24e15dbc3e8b59cb802e1dd6ef5a742171a61905f7893b1375c9d2843780d26",
     "numeric_note": "CSV values are frozen to six decimal places where indicated. Seed alone does not replace preserved bytes.",
     "seed": 26091003,
     "specification": {
@@ -28,9 +28,9 @@
   "privacy": "World and oracle are reviewer-only. No persona receives generating equations, latent values, numerical answers or target-turn metadata from this dossier. Scientific truth and source accessibility do not change with personality.",
   "reference_outputs": {
     "checker_file": "check_oracle.py",
-    "checker_sha256": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
+    "checker_sha256": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
     "oracle_file": "oracle.json",
-    "oracle_sha256": "0c365195d1c88e226595ad43ae179cc56202ebebdfa50a16f264690a08f8635b"
+    "oracle_sha256": "63a5b5f57a0078173f8ac3fe8378d0eae828e62b554e49831cfe7b55bc646225"
   },
   "scientific_truth": {
     "allocation": "Independent Bernoulli(0.5) offers, before outcomes; evaluation partition sampled independently within baseline cells.",

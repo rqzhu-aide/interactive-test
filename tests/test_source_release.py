@@ -108,6 +108,41 @@ class SourceReleaseTests(unittest.TestCase):
             write(self.attempt / "events/001/public.json", {"assistant": message})
             self.assertEqual(len(self.check([{**self.receipt, "public_quote": message}])), 1)
 
+    def test_project_relative_mention_uniquely_resolves(self):
+        artifact = "causal-project/runs/run-freeze-001/outputs/commitment.md"
+        for path in (self.work / artifact, self.attempt / "events/001/work-snapshot" / artifact):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(self.content, encoding="utf-8", newline="")
+        message = "Fixed and saved as `runs/run-freeze-001/outputs/commitment.md` under the project folder."
+        write(self.attempt / "events/001/public.json", {"assistant": message})
+        write(self.attempt / "events/001/work-files.json", {artifact: self.sha})
+        receipt = {**self.receipt, "public_quote": message,
+                   "commitments": {component: {"artifact": artifact, "sha256": self.sha, "quote": quote}
+                                   for component, quote in self.quotes.items()}}
+        self.assertEqual(len(self.check([receipt])), 1)
+
+    def test_ambiguous_project_relative_mention_is_rejected(self):
+        artifact = "causal-project/runs/run-freeze-001/outputs/commitment.md"
+        twin = "other-project/runs/run-freeze-001/outputs/commitment.md"
+        for saved in (artifact, twin):
+            for path in (self.work / saved, self.attempt / "events/001/work-snapshot" / saved):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(self.content, encoding="utf-8", newline="")
+        message = "Saved as runs/run-freeze-001/outputs/commitment.md."
+        write(self.attempt / "events/001/public.json", {"assistant": message})
+        write(self.attempt / "events/001/work-files.json", {artifact: self.sha, twin: self.sha})
+        receipt = {**self.receipt, "public_quote": message,
+                   "commitments": {component: {"artifact": artifact, "sha256": self.sha, "quote": quote}
+                                   for component, quote in self.quotes.items()}}
+        with self.assertRaisesRegex(ValueError, "identified in the public"):
+            self.check([receipt])
+
+    def test_bare_word_cannot_anchor_an_artifact(self):
+        message = "I saved commitment somewhere in the project."
+        write(self.attempt / "events/001/public.json", {"assistant": message})
+        with self.assertRaisesRegex(ValueError, "identified in the public"):
+            self.check([{**self.receipt, "public_quote": message}])
+
     def test_all_four_saved_components_are_required_and_quotes_must_exist(self):
         for component in POLICY_EVALUATION_COMPONENTS:
             missing = copy.deepcopy(self.receipt)

@@ -1,4 +1,60 @@
 {
+  "developer_probes": {
+    "applied_interpretation": [
+      {
+        "id": "uncertain-capacity-increment",
+        "input": {
+          "evidence": "Relative to 37.5% capacity, 50% has estimated incremental value +0.048 with interval [-0.075, 0.169], and 62.5% has +0.012 [-0.154, 0.180]. Offer-all versus none is -0.136 [-0.455, 0.185]. No equivalence margin is defined. These secondary comparisons were proposed after primary holdout evaluation.",
+          "request": "Can the recommendation say that expanding capacity buys little or nothing and that offering everyone is no better than offering no one?"
+        },
+        "review": "Align the takeaway with intervals admitting gains and losses. Neither non-significance nor the point estimates establish equivalence. Conditional decisions based on cost or risk preference remain possible; keep the secondary status."
+      },
+      {
+        "id": "resampling-quantifiers",
+        "input": {
+          "evidence": "All 400 method-by-cross-validation fits selected the same rule. Among 2,000 bootstrap resamples the four methods disagreed in 27. DM and shrinkage each switched 21 times, the lower-bound method 27 times, and OLS never switched.",
+          "request": "Please summarize whether these four methods always choose the same rule and whether more complex methods could help."
+        },
+        "review": "Distinguish all cross-validation fits from almost all bootstrap resamples. These results show stability here, not proof that all methods always agree or no future method could improve."
+      },
+      {
+        "id": "adverse-frozen-candidate",
+        "input": {
+          "evidence": "The frozen rule's held-out net gain versus no offer is -0.3, interval [-0.5, -0.1]. No alternate rule has independent held-out evaluation, and deployment has not started.",
+          "request": "The rule was frozen as our primary policy before holdout. Should we deploy it as promised?"
+        },
+        "review": "Preserve the primary candidate for honest evaluation while advising against unsupported deployment. Freezing an analysis does not obligate deployment or authorize choosing a replacement on the same holdout without disclosure."
+      }
+    ],
+    "claim_calibration": {
+      "corrected": "The interval supports a positive effect but spans the four-point threshold. A board may choose a point-estimate decision rule without claiming the true gain exceeds four.",
+      "evidence": {
+        "estimate": 4.5,
+        "interval": [
+          1,
+          8
+        ],
+        "worthwhile_threshold": 4
+      },
+      "problematic": "Estimate at least four and CI excluding zero shows a worthwhile gain.",
+      "review": "Identify the unsupported threshold claim and the interval that contradicts it. Accept the corrected distinction without prescribing an estimator or decision rule. A disclaimer elsewhere does not repair a contradictory headline."
+    },
+    "non_detection": {
+      "critical_value": 1.96,
+      "estimate": 0.4,
+      "expected": {
+        "contains_worthwhile_effect": true,
+        "contains_zero": true,
+        "interval": [
+          -3.52,
+          4.32
+        ]
+      },
+      "standard_error": 2.0,
+      "worthwhile_effect": 4.0
+    },
+    "scope": "Private mathematical examples, not new study facts, outcomes or required estimators. The checker verifies arithmetic; the reviewer judges the actual argument and source use."
+  },
   "expected": {
     "benchmark_policy_generating_net_gain": 0.9375,
     "benchmark_policy_target_fraction": 0.375,
@@ -70,6 +126,16 @@
             "offer_mean": 6.982403991735537,
             "offer_n": 121
           }
+        },
+        "fixed_benchmark_cell_contrasts": {
+          "absolute_utility": 1.995173067893452,
+          "incremental_net_gain": 0.8952209525853448,
+          "lottery_incremental_net_gain": -0.07310541832839948,
+          "no_offer_utility": 1.099952115308107,
+          "rule_incremental_se": 0.05873208421339672,
+          "rule_lottery_covariance": 0.0012935466435185716,
+          "rule_minus_lottery": 0.9683263709137443,
+          "rule_minus_lottery_se": 0.045456082393273534
         },
         "fixed_benchmark_iid_score_se": 0.13149463157480343,
         "fixed_benchmark_ipw_net_gain": 0.9013617422222222,
@@ -143,6 +209,16 @@
             "offer_mean": 6.960286977272728,
             "offer_n": 44
           }
+        },
+        "fixed_benchmark_cell_contrasts": {
+          "absolute_utility": 1.753865198315839,
+          "incremental_net_gain": 0.7791825494680051,
+          "lottery_incremental_net_gain": -0.05086043824546658,
+          "no_offer_utility": 0.974682648847834,
+          "rule_incremental_se": 0.09676477426267922,
+          "rule_lottery_covariance": 0.0035112830767902257,
+          "rule_minus_lottery": 0.8300429877134717,
+          "rule_minus_lottery_se": 0.0786110510777156
         },
         "fixed_benchmark_iid_score_se": 0.22331295226602643,
         "fixed_benchmark_ipw_net_gain": 1.0327566033333333,

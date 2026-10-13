@@ -1,5 +1,8 @@
 # Implementation Plan for the V7 Testing Skill
 
+This is a historical implementation and validation record for version 7.0.9.
+Current release identity and compatibility are specified in [SKILL.md](../SKILL.md).
+
 - Class: implementation record
 - Status: consultation-loop testing and evidence corrections implemented and locally verified; live qualification pending
 - Date: 2026-09-12

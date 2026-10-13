@@ -17,11 +17,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import compose_case as composer
 from source_release import policy_evaluation_prerequisite
-from session_driver import validate_case
+from session_driver import validate_case, inventory as fixture_inventory
 
+# Preserve the synthetic regression matrix; the larger real-data fixture has
+# dedicated coverage in test_rggvy_case.py.
 PROBLEMS = {"study-design": 5, "observational-did": 10,
             "cate-policy": 15, "data-quality-edge": 8}
-PERSONAS = ("novice", "domain-expert", "statistician", "adversarial")
+CATALOG_PROBLEMS = {**PROBLEMS, "rggvy-electrification": 10}
+PERSONAS = ("standard", "novice-adversarial", "expert")
+RETIRED_PERSONAS = ("novice", "domain-expert", "statistician", "adversarial")
 
 
 def read(path):
@@ -53,14 +57,14 @@ class ModularCases(unittest.TestCase):
                 manifest = composer.compose_case(problem, persona, directory)
                 cls.cases[problem, persona] = (directory, manifest)
 
-    def test_all_sixteen_combinations_pass_existing_standalone_validation(self):
-        self.assertEqual(len(self.cases), 16)
+    def test_all_twelve_synthetic_combinations_pass_standalone_validation(self):
+        self.assertEqual(len(self.cases), 12)
         for (problem, persona), (directory, returned) in self.cases.items():
             with self.subTest(problem=problem, persona=persona):
                 manifest = validate_case(directory)
                 self.assertEqual(returned, manifest)
                 self.assertEqual(manifest["schema_version"], 1)
-                self.assertEqual(manifest["suite_version"], "7.0.9")
+                self.assertEqual(manifest["suite_version"], "8.2.0")
                 self.assertEqual(manifest["completion_contract"], "full_report")
                 self.assertEqual(manifest["problem_id"], problem)
                 self.assertEqual(manifest["persona_id"], persona)
@@ -69,6 +73,19 @@ class ModularCases(unittest.TestCase):
                 actual = inventory(directory)
                 self.assertEqual(manifest["files"], {k: v for k, v in actual.items() if k != "case.json"})
                 self.assertFalse(list(directory.rglob("__pycache__")))
+
+    def test_current_and_supported_recent_suites_cannot_omit_reply_limits(self):
+        original, _ = self.cases["study-design", "standard"]
+        for version in ("7.3.3", "7.3.4", "8.0.0", "8.1.0", "8.1.1", "8.2.0"):
+            with self.subTest(suite=version), tempfile.TemporaryDirectory(prefix="required-reply-limits-") as temporary:
+                directory = Path(temporary) / "case"
+                shutil.copytree(original, directory)
+                manifest = read(directory / "case.json")
+                manifest["suite_version"] = version
+                del manifest["reply_limits"]
+                (directory / "case.json").write_text(json.dumps(manifest), encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "requires 50-word and two-item limits"):
+                    validate_case(directory)
 
     def test_composition_is_reproducible_and_does_not_modify_its_inputs(self):
         for (problem, persona), (directory, _) in self.cases.items():
@@ -79,9 +96,25 @@ class ModularCases(unittest.TestCase):
         self.assertEqual(self.original_bank, inventory(ROOT / "problems"))
         self.assertEqual(self.original_personas, inventory(ROOT / "personas"))
 
+    def test_interaction_seed_changes_only_frozen_communication(self):
+        plain, first = self.cases["cate-policy", "expert"]
+        alternate = self.root / "alternate-interaction-seed"
+        second = composer.compose_case("cate-policy", "expert", alternate, interaction_seed=1)
+        self.assertEqual(first["interaction_seed"], 0)
+        self.assertEqual(second["interaction_seed"], 1)
+        self.assertEqual(first["sources"], second["sources"])
+        self.assertEqual((plain / "world.json").read_bytes(), (alternate / "world.json").read_bytes())
+        self.assertEqual((plain / "public/initial-message.txt").read_bytes(),
+                         (alternate / "public/initial-message.txt").read_bytes())
+        original_actor = read(plain / "actor.json")
+        alternate_actor = read(alternate / "actor.json")
+        self.assertNotEqual(original_actor.pop("interaction_challenges"),
+                            alternate_actor.pop("interaction_challenges"))
+        self.assertEqual(original_actor, alternate_actor)
+
     def test_persona_changes_cannot_change_scientific_world_or_source_access(self):
         for problem in PROBLEMS:
-            baseline, expected = self.cases[problem, "novice"]
+            baseline, expected = self.cases[problem, "standard"]
             reference = {name: sha for name, sha in expected["files"].items()
                          if (name.startswith("public/") and name != expected["initial_message"])
                          or name in ("world.json", "oracle.json", "check_oracle.py", "problem.json")}
@@ -108,6 +141,7 @@ class ModularCases(unittest.TestCase):
                 text = (directory / manifest["initial_message"]).read_text(encoding="utf-8")
                 self.assertIn("causal-consultant", text)
                 self.assertIn("report", text.lower())
+                self.assertLessEqual(len(text.split()), 50)
                 self.assertNotIn("target_turns", text)
                 self.assertNotIn("oracle.json", text)
                 self.assertNotIn("reviewer.json", text)
@@ -140,17 +174,18 @@ class ModularCases(unittest.TestCase):
             marker.write_text("Existing work must remain intact.", encoding="utf-8")
             before = inventory(output)
             with self.assertRaises((ValueError, FileExistsError)):
-                composer.compose_case("study-design", "novice", output)
+                composer.compose_case("study-design", "standard", output)
             self.assertEqual(before, inventory(output))
             empty = Path(temporary) / "empty"
             empty.mkdir()
             with self.assertRaises((ValueError, FileExistsError)):
-                composer.compose_case("study-design", "novice", empty)
+                composer.compose_case("study-design", "standard", empty)
             self.assertEqual(list(empty.iterdir()), [])
 
     def test_invalid_selectors_do_not_create_an_output(self):
-        invalid = [("unknown", "novice"), ("study-design", "unknown"),
-                   ("../study-design", "novice"), ("study-design", "../novice")]
+        invalid = [("unknown", "standard"), ("study-design", "unknown"),
+                   ("../study-design", "standard"), ("study-design", "../standard")]
+        invalid.extend(("study-design", persona) for persona in RETIRED_PERSONAS)
         with tempfile.TemporaryDirectory(prefix="modular-invalid-") as temporary:
             for index, (problem, persona) in enumerate(invalid):
                 with self.subTest(problem=problem, persona=persona):
@@ -160,7 +195,7 @@ class ModularCases(unittest.TestCase):
                     self.assertFalse(output.exists())
 
     def test_compiled_fixture_tampering_is_rejected_by_existing_driver(self):
-        original, manifest = self.cases["data-quality-edge", "novice"]
+        original, manifest = self.cases["data-quality-edge", "standard"]
         with tempfile.TemporaryDirectory(prefix="modular-tamper-") as temporary:
             output = Path(temporary) / "copied"
             shutil.copytree(original, output)
@@ -176,6 +211,12 @@ class ModularCases(unittest.TestCase):
                 profile = read(ROOT / "personas" / (persona + ".json"))
                 actor = read(directory / manifest["actor"])
                 self.assertEqual(actor["persona_profile"], profile)
+                self.assertEqual(manifest["reply_limits"], {"max_words": 50, "max_items": 2})
+                self.assertEqual(actor["reply_limits"], manifest["reply_limits"])
+                self.assertEqual(profile["reply_limits"], manifest["reply_limits"])
+                self.assertEqual(len(actor["interaction_challenges"]), 1)
+                self.assertEqual(set(actor["interaction_challenges"][0]),
+                                 {"id", "trigger", "behavior", "recovery"})
                 self.assertEqual(actor["goal"], definition["goal"])
                 expected_facts = [{key: value for key, value in entry.items() if key != "knowledge_tier"}
                                   for entry in definition["actor_facts"]
@@ -194,6 +235,26 @@ class ModularCases(unittest.TestCase):
                 for rule in actor["rules"]:
                     self.assertTrue(set(rule["fact_ids"]) <= fact_ids, rule["rule_id"])
                     self.assertTrue(set(rule["source_ids"]) <= set(source_map), rule["rule_id"])
+
+    def test_active_profiles_have_distinct_knowledge_without_owning_study_facts(self):
+        self.assertEqual(tuple(composer.GENERAL_PERSONA_IDS), PERSONAS)
+        self.assertEqual(tuple(composer.PERSONA_IDS), PERSONAS + ("rggvy-research-coordinator",))
+        self.assertFalse(set(RETIRED_PERSONAS) & set(composer.PERSONA_IDS))
+        tiers = {"standard": ["practical"], "novice-adversarial": ["practical"],
+                 "expert": ["practical", "domain", "statistical"]}
+        for persona, expected in tiers.items():
+            with self.subTest(persona=persona):
+                profile = read(ROOT / "personas" / (persona + ".json"))
+                self.assertEqual(profile["initial_knowledge_tiers"], expected)
+                self.assertFalse({"goal", "sources", "world", "target_turns", "completion_contract"}
+                                 & profile.keys())
+                # Progression, discussion and pressure belong to reusable profiles;
+                # their quality and semantic trigger behavior still require review.
+                for field in ("behavior", "disclosure_policy", "learning_policy", "pressure_policy"):
+                    self.assertTrue(profile[field])
+                serialized = json.dumps(profile)
+                self.assertNotIn("Chhattisgarh", serialized)
+                self.assertNotIn("RGGVY", serialized)
 
     def test_private_definitions_and_answers_cannot_be_public_source_destinations(self):
         private = {"world.json", "oracle.json", "check_oracle.py", "problem.json", "persona.json",
@@ -221,12 +282,12 @@ class ModularCases(unittest.TestCase):
             original = changed.read_bytes()
             changed.write_bytes(original + b"\nThis is an unrecorded change.\n")
             with self.assertRaisesRegex(ValueError, "problem file identity mismatch"):
-                composer.compose_case("study-design", "novice", sandbox / "changed", bank_root=bank)
+                composer.compose_case("study-design", "standard", sandbox / "changed", bank_root=bank)
             self.assertFalse((sandbox / "changed").exists())
             changed.write_bytes(original)
             (bank / "study-design/unexpected.txt").write_text("Not declared.", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "problem file identity mismatch"):
-                composer.compose_case("study-design", "novice", sandbox / "unexpected", bank_root=bank)
+                composer.compose_case("study-design", "standard", sandbox / "unexpected", bank_root=bank)
             self.assertFalse((sandbox / "unexpected").exists())
 
     def test_persona_identity_mismatch_and_endpoint_overrides_are_rejected(self):
@@ -234,16 +295,16 @@ class ModularCases(unittest.TestCase):
             sandbox = Path(temporary)
             personas = sandbox / "personas"
             shutil.copytree(ROOT / "personas", personas)
-            profile = read(personas / "novice.json")
-            for field, value in (("persona_id", "statistician"), ("goal", "Produce a favorable estimate"),
+            profile = read(personas / "standard.json")
+            for field, value in (("persona_id", "expert"), ("goal", "Produce a favorable estimate"),
                                  ("sources", []), ("world", {}), ("target_turns", 1),
                                  ("completion_contract", "focused")):
                 with self.subTest(field=field):
                     modified = {**profile, field: value}
-                    (personas / "novice.json").write_text(json.dumps(modified), encoding="utf-8")
+                    (personas / "standard.json").write_text(json.dumps(modified), encoding="utf-8")
                     output = sandbox / ("output-" + field)
                     with self.assertRaisesRegex(ValueError, "identity mismatch|cannot override"):
-                        composer.compose_case("study-design", "novice", output, personas_root=personas)
+                        composer.compose_case("study-design", "standard", output, personas_root=personas)
                     self.assertFalse(output.exists())
 
     def test_operational_limit_is_validated_independently_of_problem_target(self):
@@ -252,10 +313,10 @@ class ModularCases(unittest.TestCase):
                 with self.subTest(value=value):
                     output = Path(temporary) / ("invalid-" + str(index))
                     with self.assertRaisesRegex(ValueError, "positive integer"):
-                        composer.compose_case("cate-policy", "novice", output, max_consultant_turns=value)
+                        composer.compose_case("cate-policy", "standard", output, max_consultant_turns=value)
                     self.assertFalse(output.exists())
             # Operators may intentionally stop an incomplete run; a cap is not a completion rule.
-            low = composer.compose_case("cate-policy", "novice", Path(temporary) / "low",
+            low = composer.compose_case("cate-policy", "standard", Path(temporary) / "low",
                                         max_consultant_turns=2)
             self.assertEqual(low["target_turns"], 15)
             self.assertEqual(low["run_limits"]["consultant_turns"], 2)
@@ -266,30 +327,32 @@ class ModularCases(unittest.TestCase):
             sandbox = Path(temporary)
             personas = sandbox / "personas"
             shutil.copytree(ROOT / "personas", personas)
-            original = read(personas / "novice.json")
+            original = read(personas / "standard.json")
             for index, value in enumerate((None, [], "share everything", [""], [12])):
                 profile = {**original, "disclosure_policy": value}
                 if value is None:
                     del profile["disclosure_policy"]
-                (personas / "novice.json").write_text(json.dumps(profile), encoding="utf-8")
+                (personas / "standard.json").write_text(json.dumps(profile), encoding="utf-8")
                 output = sandbox / str(index)
                 with self.subTest(value=value), self.assertRaisesRegex(ValueError, "disclosure"):
-                    composer.compose_case("study-design", "novice", output, personas_root=personas)
+                    composer.compose_case("study-design", "standard", output, personas_root=personas)
                 self.assertFalse(output.exists())
 
-    def test_cli_lists_only_the_four_by_four_catalog_and_composes_a_valid_case(self):
+    def test_cli_lists_current_catalog_and_composes_a_valid_case(self):
         script = ROOT / "scripts/compose_case.py"
         listed = subprocess.run([sys.executable, "-B", str(script), "--list"],
                                 capture_output=True, text=True, timeout=30)
         self.assertEqual(listed.returncode, 0, listed.stderr)
         catalog = json.loads(listed.stdout)
         self.assertEqual(catalog["combinations"], 16)
-        self.assertEqual({item["id"]: item["target_turns"] for item in catalog["problems"]}, PROBLEMS)
-        self.assertEqual({item["id"] for item in catalog["personas"]}, set(PERSONAS))
+        self.assertEqual(catalog["combinations"], len(CATALOG_PROBLEMS) * len(PERSONAS) + 1)
+        self.assertEqual({item["id"]: item["target_turns"] for item in catalog["problems"]}, CATALOG_PROBLEMS)
+        self.assertEqual({item["id"] for item in catalog["personas"]},
+                         set(PERSONAS) | {"rggvy-research-coordinator"})
         with tempfile.TemporaryDirectory(prefix="modular-cli-") as temporary:
             output = Path(temporary) / "case"
             result = subprocess.run([sys.executable, "-B", str(script), "--problem", "observational-did",
-                                     "--persona", "statistician", "--output", str(output),
+                                     "--persona", "expert", "--output", str(output),
                                      "--max-consultant-turns", "50"],
                                     capture_output=True, text=True, timeout=30)
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -297,8 +360,35 @@ class ModularCases(unittest.TestCase):
             self.assertEqual(json.loads(result.stdout)["case_id"], manifest["case_id"])
             self.assertEqual(manifest["run_limits"]["consultant_turns"], 50)
 
+    def test_cli_defaults_to_standard_and_rejects_retired_personas(self):
+        script = ROOT / "scripts/compose_case.py"
+        with tempfile.TemporaryDirectory(prefix="modular-cli-personas-") as temporary:
+            root = Path(temporary)
+            output = root / "default"
+            result = subprocess.run([sys.executable, "-B", str(script), "--problem", "study-design",
+                                     "--output", str(output)],
+                                    capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            manifest = validate_case(output)
+            self.assertEqual(manifest["persona_id"], "standard")
+            self.assertEqual(read(output / "actor.json")["persona_id"], "standard")
+            api_output = root / "api-default"
+            api_manifest = composer.compose_case("study-design", output=api_output)
+            self.assertEqual(api_manifest["persona_id"], "standard")
+            self.assertEqual((api_output / "actor.json").read_bytes(),
+                             (output / "actor.json").read_bytes())
+            for persona in RETIRED_PERSONAS:
+                with self.subTest(persona=persona):
+                    rejected = root / persona
+                    result = subprocess.run([sys.executable, "-B", str(script), "--problem", "study-design",
+                                             "--persona", persona, "--output", str(rejected)],
+                                            capture_output=True, text=True, timeout=30)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("invalid choice", result.stderr)
+                    self.assertFalse(rejected.exists())
+
     def test_design_problem_contains_planning_units_and_no_trial_outcomes(self):
-        directory, _ = self.cases["study-design", "novice"]
+        directory, _ = self.cases["study-design", "standard"]
         centers = rows(directory / "public/centers.csv")
         planning = read(directory / "public/planning-inputs.json")
         oracle = read(directory / "oracle.json")
@@ -321,7 +411,7 @@ class ModularCases(unittest.TestCase):
         self.assertAlmostEqual(normal_multiplier * math.sqrt(variance), expected["normal_approx_mde_at_icc_005"])
 
     def test_did_reference_keeps_all_site_ate_distinct_from_adopter_att(self):
-        directory, _ = self.cases["observational-did", "statistician"]
+        directory, _ = self.cases["observational-did", "expert"]
         panel = rows(directory / "public/panel.csv")
         roster = rows(directory / "public/site-roster.csv")
         self.assertEqual(len(panel), 600)
@@ -350,7 +440,7 @@ class ModularCases(unittest.TestCase):
         self.assertNotEqual(float(att), 5)
 
     def test_cate_data_splits_and_capacity_constrained_benchmark_are_coherent(self):
-        directory, _ = self.cases["cate-policy", "domain-expert"]
+        directory, _ = self.cases["cate-policy", "standard"]
         datasets = {split: rows(directory / ("public/" + split + ".csv"))
                     for split in ("development", "evaluation")}
         ids = {split: {r["learner_id"] for r in data} for split, data in datasets.items()}
@@ -431,11 +521,11 @@ class ModularCases(unittest.TestCase):
                 path.write_text(json.dumps(problem), encoding="utf-8")
                 output = sandbox / str(index)
                 with self.subTest(prerequisite=prerequisite), self.assertRaisesRegex(ValueError, "source release prerequisite"):
-                    composer.compose_case("cate-policy", "novice", output, bank_root=bank)
+                    composer.compose_case("cate-policy", "standard", output, bank_root=bank)
                 self.assertFalse(output.exists())
 
     def test_edge_person_level_denominators_and_completion_bounds_are_independent(self):
-        directory, _ = self.cases["data-quality-edge", "adversarial"]
+        directory, _ = self.cases["data-quality-edge", "novice-adversarial"]
         extract = rows(directory / "public/extract.csv")
         roster = rows(directory / "public/participant-roster.csv")
         by_id = {}
@@ -466,7 +556,7 @@ class ModularCases(unittest.TestCase):
         for problem in PROBLEMS:
             regenerated = generator.build(problem)
             directory = ROOT / "problems" / problem
-            self.assertEqual(set(regenerated), set(inventory(directory)))
+            self.assertEqual(set(regenerated), set(fixture_inventory(directory)))
             for filename, expected in regenerated.items():
                 self.assertEqual((directory / filename).read_bytes(), expected, problem + "/" + filename)
         self.assertEqual(inventory(ROOT / "problems"), before)
@@ -483,9 +573,9 @@ class ModularCases(unittest.TestCase):
                 criteria = {item["id"]: item for item in read(directory / manifest["reviewer"])["criteria"]}
                 self.assertTrue({"c-loop-permissions", "c-loop-steering"} <= criteria.keys())
                 self.assertTrue(criteria["c-loop-permissions"]["required"])
-                self.assertEqual(manifest["problem_version"], "1.0.2")
-                self.assertEqual(manifest["case_version"], "1.0.2")
-                self.assertEqual(manifest["persona_version"], "1.0.1")
+                self.assertEqual(manifest["problem_version"], "1.3.0")
+                self.assertEqual(manifest["case_version"], "1.3.0")
+                self.assertEqual(manifest["persona_version"], read(directory / "persona.json")["persona_version"])
                 self.assertEqual(read(directory / "persona.json"), read(ROOT / "personas" / (persona + ".json")))
 
 

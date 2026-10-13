@@ -7,6 +7,8 @@ const crypto = require("node:crypto");
 module.exports = function prepare(scripts, root, plan, suffix, offered = null, prepareOnly = false) {
   const store = require(path.join(scripts, "lib/store.cjs"));
   const policy = require(path.join(scripts, "lib/authorizations.cjs"));
+  const renderer = require(path.join(scripts, "lib/exchanges.cjs")).RENDERER;
+  const concise = store.capabilities().capabilities.includes("concise-authoring-v1");
   for (const input of plan.inputs) input.sha256 = crypto.createHash("sha256").update(fs.readFileSync(input.path)).digest("hex");
   const protocol = "durable-exchanges-v1";
   const state = () => store.readJournal(root).state;
@@ -22,7 +24,7 @@ module.exports = function prepare(scripts, root, plan, suffix, offered = null, p
   }
   function exchange(it, name, response, completed=[]) {
     const receipt=record("exchange_prepared",{protocol,exchange:{exchange_id:"exchange-"+name,turn_id:it.turn_id,
-      interpretation_ref:it.interpretation_id,basis_refs:[],completed_work_refs:completed,renderer:"lead-markdown-v4",
+      interpretation_ref:it.interpretation_id,basis_refs:[],completed_work_refs:completed,renderer,
       reconciliation:{changes:[],limitations:["Synthetic structural test only."],unresolved:[],next_direction:"The user chooses."},response}},"exchange-"+name);
     const delivery="delivery-"+name;
     if (fs.existsSync(path.join(scripts,"lib/delivery.cjs"))) {
@@ -57,17 +59,22 @@ module.exports = function prepare(scripts, root, plan, suffix, offered = null, p
     record("review_completed",{review},"completed-"+name);
     exchange(it,name,{status:"Source review is complete.",questions:[],questions_none:"No source questions remain in this fixture.",next_steps:[],next_steps_none:"Discuss findings or pause.",
       findings:{work_refs:[review.review_id],summary:"The synthetic source supports a limited account.",diagnostics:["Inspected source provenance."],limitations:["Test fixture only."]}},[review.review_id]);
+    const targetDecision="decision-target-"+suffix;
+    record("memory_updated",{changes:{decisions:[{decision_id:targetDecision,kind:"target",
+      statement:"Report only what the supplied source supports for its review question.",
+      status:"current",basis_refs:[],user_contribution_refs:it.incoming_refs}]}},"target-"+suffix);
     const proposal=interpret("proposal-"+suffix,{kind:"lead_only",scope:"Present the report scope.",reason:"A later choice is required."});
-    const refs=policy.requiredBasisRefs(state(),[...plan.evidence_refs,review.review_id]);
+    const roots=[...plan.evidence_refs,review.review_id,targetDecision];
+    const refs=concise ? roots : policy.requiredBasisRefs(state(),roots,{current:true});
     const reportAssignment={specialist_id:"report_writer",operation:"reporting"};
     const scope={scope_id:"scope-"+suffix,action:"report",assignment:reportAssignment,
       public_scope:{target:plan.purpose,population:"Population described by the supplied source",evidence:"The supplied source and its review",
         approach:"Synthesize the discussed source evidence",checks:[],outputs:plan.format+" report",claim_boundary:plan.claim_boundary},
-      execution_plan:plan,basis_versions:refs.map(ref=>({ref,event_ref:state().history_index[ref].event_ref})),findings_refs:[review.review_id]};
+      execution_plan:plan,...(concise ? {basis_refs:refs} : {basis_versions:refs.map(ref=>({ref,event_ref:state().history_index[ref].event_ref}))}),findings_refs:[review.review_id]};
     record("memory_updated",{changes:{action_scopes:[scope]}},"scope-"+suffix);
     const receipt=exchange(proposal,"proposal-"+suffix,{status:"Here is the proposed report scope.",questions:[],questions_none:"No additional information is needed to choose.",
       next_steps:[{option_id:"choose-"+suffix,kind:"action",label:"Save this report",actor:"consultant",scope:"Use the presented scope.",basis_refs:refs,
-        assignment:reportAssignment,scope_ref:scope.scope_id,proposal:scope.public_scope,execution_plan:plan}],
+        scope_ref:scope.scope_id,...(concise ? {} : {assignment:reportAssignment,proposal:scope.public_scope,execution_plan:plan})}],
       findings:{work_refs:[review.review_id],summary:"The source permits a limited account.",diagnostics:["Source provenance was reviewed."],limitations:[plan.claim_boundary]}});
     offered={scope,exchange_ref:receipt.exchange_id,option_id:"choose-"+suffix,delivery_ref:receipt.delivery_ref,rendered_response:receipt.rendered_response};
   }

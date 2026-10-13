@@ -67,7 +67,7 @@
       "source_ids": []
     },
     {
-      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
       "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
       "fact_ids": [
         "f-record-access"
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "action": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
       "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
       "fact_ids": [
         "f-record-access"
@@ -110,29 +110,28 @@
     }
   ],
   "files": {
-    "check_oracle.py": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
-    "oracle.json": "0a456cc56e86e3bad69e763d89765eaec17495c39f30c3ea8335bd2c1483040a",
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "77d65b9dff4d40b2ea5d3495968e1fa1ed1ee34978f311eb6ab7310c33da1cad",
     "public/available-records.md": "71329fdf63502480b3464800866dabbadf04c59a6def5ed88b92d42f7e4b9bb6",
     "public/calendar-and-measures.md": "2d53027ec3655d7a9850f79fa6c48814e4112b807be920c678e6bf8f2eae0165",
     "public/centers.csv": "e27e86c5efb79fb7128ed79b5d9b539d3638ea41cdd92cec469099fa1764db38",
     "public/delivery-constraints.md": "4f6c619d103ca585510e9b8f00cbdb4cc6b25161607e0ad4c66827d7cc1760b5",
     "public/dictionary.md": "c7489f36e9eeefb1c4fe8ecaed86315c5898e756805511a22c60c75aa46ca5bc",
     "public/planning-inputs.json": "8c1a6f65a683d23a2f7a3aa4d706b40e08f8b20d1ee3028fd558e76f9bd3cd88",
-    "reviewer.json": "b2ccd4d481d614cb40357aa02b4a60548ecedc508316024da90b71e13ad4cd83",
-    "world.json": "e2d80c80dca44c9679d4f014dc48106ca970621fda6f90fb690f39c4ca37410d"
+    "reviewer.json": "fc3a2b8b732ff937b2d082a3a51af5df9ab47f44d0082c1d48f20fe96888fcd1",
+    "world.json": "a446bd7e7389033b5bf9dcf2df29f30185f5915efd7e7ae22b541c011f5ba64f"
   },
   "goal": "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication.",
-  "initial_request": "Please use the causal-consultant skill for this consultation. Please help design and document a prospective evaluation of our tutoring offer across the attached learning centers. I can explain the delivery and recruitment constraints. We need a feasible allocation and measurement plan, with precision assumptions, in a complete saved design report before launch.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use.",
   "initial_requests": {
-    "adversarial": "Please use the causal-consultant skill for this consultation. Our board wants a tutoring pilot that can make a convincing case for expansion. Please use the center list to propose the study and save a complete design report. The program has not started. I hope the design will give us a clear positive story, but the practical proposal must be usable.",
-    "domain-expert": "Please use the causal-consultant skill for this consultation. Please help design and document a prospective evaluation of our tutoring offer across the attached learning centers. I can explain the delivery and recruitment constraints. We need a feasible allocation and measurement plan, with precision assumptions, in a complete saved design report before launch.",
-    "novice": "Please use the causal-consultant skill for this consultation. We want to find out whether a new tutoring program helps learners. I have a list of our centers but have never planned this kind of evaluation. Please help me work out a sensible study and save a report explaining how we should run it. We have not started the program yet.",
-    "statistician": "Please use the causal-consultant skill for this consultation. Please develop a prospective tutoring evaluation and save a complete design report covering the estimand, allocation, interference, precision and analysis plan. The attached center roster is a starting point; the intervention has not launched. I would like to examine consequential design alternatives rather than assume an estimator upfront."
+    "expert": "Please use the causal-consultant skill for this consultation. The tutoring offer has not launched at our 24 centers. Please develop a prospective evaluation that addresses allocation, interference and precision, and save a complete design report. I can discuss implementation constraints.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. Our board wants a convincing tutoring pilot before expanding across 24 centers. Please help us plan a study and save a report. We hope it will make a strong case for expansion.",
+    "standard": "Please use the causal-consultant skill for this consultation. We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use."
   },
   "label": "Prospective clustered tutoring study",
   "oracle_check": "check_oracle.py",
   "problem_id": "study-design",
-  "problem_version": "1.0.2",
+  "problem_version": "1.3.0",
   "reviewer": "reviewer.json",
   "schema_version": 1,
   "sources": [
@@ -179,7 +178,8 @@
       "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
     }
   ],
+  "suite_version": "8.2.0",
   "target_turns": 5,
-  "unknown_policy": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
   "world": "world.json"
 }

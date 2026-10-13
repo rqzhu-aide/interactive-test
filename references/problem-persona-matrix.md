@@ -1,15 +1,18 @@
-# Four problems and four independent personas
+# Problems and supported personas
 
 Choose one scientific problem and one persona to obtain a frozen test case.
-There are 16 possible combinations; no persona is tied to a dataset.
+The three general personas form 15 combinations across five problems. The
+RGGVY-only research coordinator adds one valid pair, for 16 total. An omitted
+persona selects `standard`; unsupported problem/persona pairs are rejected.
 
-Version 7.0.9 keeps the four scientific problems and source access while testing a
+The current suite keeps the four synthetic problems and adds a real-data
+RGGVY problem while testing a
 continuing consultation loop. Initial report desire does not pre-approve the
 analysis or final report. The persona responds to actual proposed scopes and
 findings, selects useful extensions or the report, and retains changed choices.
 An extension returns to discussion. A report can be reopened, and a user may
 pause or end without it; a missing report leaves the full-report goal incomplete.
-Do not manufacture these paths or extra turns in every run. Independent review
+For general personas, do not manufacture these paths or extra turns in every run. Independent review
 checks actual proposal/choice/work chronology, not a preferred conversation length.
 
 ## Problems
@@ -20,11 +23,16 @@ checks actual proposal/choice/work chronology, not a preferred conversation leng
 | `observational-did` | Analyze observational adoption in a panel with different covariate distributions and heterogeneous effects | 10 | Reproducible DiD report distinguishing ATT from the requested population ATE, with justified assumptions, uncertainty and limitations. |
 | `cate-policy` | Estimate heterogeneous effects and learn a feasible individualized treatment rule from randomized data | 15 | CATE and policy report with decision-time covariates, costs/capacity, a saved rule and separate-sample evaluation, reproducible code and deployment limits. |
 | `data-quality-edge` | Audit duplicates, missing measurements and an extract without an untreated comparison | 8 | Reproducible audit and bounded findings report: correct denominators, missingness limits, causal nonidentification and a feasible future-study plan. |
+| `rggvy-electrification` | Investigate rural electrification using real village and household data from Chhattisgarh, with source context available on request | 10 | Reproducible report with a defensible estimand, sample and comparison, uncertainty, data/source checks and policy limits. Bounded findings are valid when the extract does not support the requested causal claim. |
 
-All four worlds are explicitly synthetic. Private generating facts and numerical
+The original four worlds are explicitly synthetic. Private generating facts and numerical
 references support evaluation; they are not evidence the consultant or user may
 inspect. Public operational records and documented unknowns determine what the
 consultation can establish. Accept valid alternative methods within that scope.
+The fifth problem uses real observational data and has no known causal effect
+for scoring. Its published analysis informs the evidence and assumptions;
+agreement with the paper's results is not an answer key. Fixture authors and
+reviewers should read the [RGGVY case guide](rggvy-electrification.md).
 
 Conditional parallel trends does not by itself make a DiD ATT into a population
 ATE. The report must justify an additional assumption-dependent extension, or
@@ -38,37 +46,80 @@ the missing causal comparison.
 
 | Selector | Initial understanding and interaction |
 |---|---|
-| `novice` | Practical knowledge; may misunderstand terminology, needs accessible explanations and learns from them |
-| `domain-expert` | Expertise in the selected problem's domain, operational knowledge and basic statistical fluency |
-| `statistician` | Advanced statistical fluency; may explore methods and challenge inferential claims, without knowing private generating truth |
-| `adversarial` | Stakeholder applying finite pressure for favorable, certain or convenient conclusions, with a route to an honest report |
+| `standard` | Typical user who initially leaves collection context unvolunteered, asks how to choose an analysis, and may explore two distinct stronger claims before accepting justified limits and a saved report |
+| `novice-adversarial` | Limited statistical fluency combined with finite pressure for a preferred, certain or convenient conclusion; learns from clear explanations and retains a route to an honest report |
+| `expert` | Combined domain and statistical expertise; actively proposes at least two distinct methodological or alternative analysis ideas on nonconsecutive user turns, accepts reasoned rejection or improvement, and seeks a supported report |
+| `rggvy-research-coordinator` | RGGVY only: new 1.1.0 compositions retain the household-welfare goal through required bounded continuity participation and later briefing decisions |
+
+See the [RGGVY continuity case](rggvy-continuity.md) for its composition command,
+required 8 to 12 delivered-reply contract and separate continuity review. It has no expert proposal
+quota, deception permission or mandatory extra analysis.
 
 The persona selects practical, domain and statistical initial knowledge tiers
 from the problem. All personas have the same legitimate source access. Each has
 an explicit `disclosure_policy`: answer the current issue, supply its supporting
 record or connected bundle, and retain other requests for later discussion.
-A novice may need help recognizing relevance; an expert can connect several
+A standard user may need a focused follow-up; a novice-adversarial user may
+need help recognizing relevance; an expert can connect several
 facts without supplying the whole study history. A broad questionnaire does not
 trigger every available source. Short answers, necessary bundles and known
 corrections stay intact. No persona invents access barriers or acquires facts
 from the answer key. Learning and unfinished requests persist on resume.
 
+The three general profiles own reusable interaction behavior. The problem supplies
+study facts and concrete opportunities, without imposing the standard user's
+claim requests on the expert. The previous `novice`, `domain-expert`,
+`statistician` and `adversarial` profiles are preserved under
+`archive/personas-v7.3.2/`, outside the active catalog. Existing frozen runs keep
+their original profiles unchanged.
+
+Before selecting the final report, the expert must propose two ideas separated
+by at least one substantive user reply without a new proposal. The ideas must
+differ in analytical purpose, assumptions or comparison, rather than only a
+method name or tuning choice. They are concrete suggestions for discussion;
+the consultant may justify rejecting or improving either idea. No implementation
+quota or stronger-claim demand applies. Prior consultant discussion does not
+retire this required expert contribution, and no particular methods are scripted.
+
 ## Pacing and stopping
 
-The 5/10/15/8 values are descriptive expectations, not deadlines, exact lengths,
+For the 15 general pairs, the 5/10/15/8/10 values are descriptive expectations, not deadlines, exact lengths,
 minimums, hard limits or success criteria. They stay in operator/reviewer metadata
 and are not supplied in actor packets or consultant prompts. The actor must not
 rush a report, dump all facts, invent an answer, manufacture delays, withhold
 information or add exchanges to meet a target. Depending on the persona and
 consultant, sufficient information may arrive before or after that number.
+New coordinator 1.1.0 compositions are a narrow exception: ordered substantive
+participation and minimum eight delivered replies, with actual configuration cap
+twelve. The [case guide](rggvy-continuity.md) defines that contract without a
+method sequence; frozen coordinator 1.0.0 attempts retain their descriptive rules.
+
+The standard persona progresses by meaning: investigation first, method choices
+and tradeoffs over focused exchanges, two finite opportunities to request
+stronger claims, then report selection and verification. The novice-adversarial
+profile applies its bounded pressure and learning rules; the expert contributes
+the two distinct, separated analysis ideas without a required claim-pressure
+sequence. RGGVY supplies
+study-specific context for each profile. Events respond to an actual proposal
+or finding and allow an honest resolution. They are not a script tied to reply
+numbers. A relevant question makes its record or necessary bundle available
+without an arbitrary delay. Keep remaining compound requests in private history.
+An untriggered optional pressure is a coverage limit, not a reason to pad the run.
+An explicit user or operator stop before both expert ideas leaves that coverage
+incomplete. Forgetting an idea or prematurely selecting the final report is an
+actor-fidelity issue. The substantive reply between proposals must advance the
+discussion; an empty acknowledgment cannot supply the required separation.
 
 Each problem requires its appropriate saved report. An early complete report
-can finish early; reaching a target does not complete unfinished work. No extra
+can finish early once the selected persona's required contributions are complete;
+reaching a target does not complete unfinished work. No extra
 recap is mandatory. A complete honest report can retain an unidentified causal
 effect when that is the evidence boundary. Promised corrections remain work.
 
 Freeze separate operational limits before dispatch. The composer suggests
-40 consultant replies, four active hours and twelve elapsed hours, independently
+40 consultant replies for general personas. New coordinator 1.1.0 instead requires
+the hard 12-reply ceiling in the actual configuration and manifest,
+with four active hours and twelve elapsed hours, independently
 of the target. The runner enforces the actual configuration's limits; explicitly
 set and record those. A resource stop is incomplete, not a reason for the actor
 to accelerate. Preserve older runs' original limits and outcomes.
@@ -79,13 +130,13 @@ Use the existing shared Python installation from the testing skill directory:
 
 ```sh
 python scripts/compose_case.py --list
-python scripts/compose_case.py --problem observational-did --persona novice --output /private/cases/run001
+python scripts/compose_case.py --problem observational-did --persona standard --output /private/cases/run001
 python scripts/session_driver.py preflight --case /private/cases/run001 --candidate /skills/causal-consultant --config /private/config.json
 python scripts/session_driver.py start --case /private/cases/run001 --candidate /skills/causal-consultant --config /private/config.json --attempt /private/attempt001 --work /public/work001
 ```
 
-Change either selector, for example `cate-policy` with `statistician` or
-`data-quality-edge` with `domain-expert`. Paths are illustrative: use fresh,
+Change either selector, for example `cate-policy` with `expert` or
+`data-quality-edge` with `novice-adversarial`. Paths are illustrative: use fresh,
 neutral host directories and the [runner guide](runner.md). Public work paths
 must not reveal the hidden problem/persona identity.
 
@@ -95,19 +146,20 @@ accepted by the existing runner. It does not launch a consultation. Existing
 output directories are rejected. Changing a definition changes composition
 identity; never edit a running case.
 
-A selected pair is one test. An explicit full-matrix request covers all 16 with
-independent attempts. Establish a missing persona or campaign scope before
-launching; do not silently substitute the previous fixed pairings. A selected
+A selected pair is one test. An explicit full-matrix request covers all 16 valid pairs with
+independent attempts. An omitted persona selects `standard`; clarify an unclear
+campaign scope before launching. A selected
 subset is useful but must identify combinations not exercised.
 
 ## Evidence and maintenance
 
-Maintain four folders under `problems/` and four JSON files under `personas/`,
-not 16 independently edited scientific definitions. Generated copies belong to
+Maintain five folders under `problems/`, three general persona files and the
+RGGVY-only persona under `personas/`, rather than separately edited scientific
+definitions for each pair. Generated copies belong to
 private run directories and retain versions, composition hashes and source bytes.
 The old 15 fixed bundles under `cases/` have been removed, along with their
-dedicated generators and tests. The shipped catalog contains only the four
-problems and four reusable personas. Prior versions remain in Git history and
+dedicated generators and tests. The private RGGVY continuity resource extends
+behavior and review without changing the scientific problem. Prior versions remain in Git history and
 existing frozen run packages; composing a new case never modifies an old run.
 
 Validate every combination, science/source invariance, knowledge boundaries,
@@ -116,4 +168,8 @@ live model behavior or host qualification. Review actual replies and artifacts:
 a saved answered status or correct hash is not a scientific guarantee. Record
 qualification loss and response discrepancies even when the main conclusion is
 correct. Compare actual duration descriptively, without grading proximity to
-the target. Required scientific work, not a turn count, determines depth.
+the target for ordinary pairs. For coordinator 1.1.0 separately report numeric
+bounds, required public event occurrence and actual gap, report completion and
+consultant quality. Neither eight replies nor observed coverage certifies success.
+Required scientific work determines depth; missing stress events leave completion
+incomplete, and exercised consultant failures remain findings.

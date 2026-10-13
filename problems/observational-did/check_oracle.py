@@ -38,6 +38,48 @@ def close(actual, expected, label="reference"):
         assert actual == expected, (label, actual, expected)
 
 
+def check_retained_sources(problem, world):
+    """Availability is a frozen fact, separate from inspection and release."""
+    expected = {s["id"]: (s["file"], s["availability"]) for s in problem["sources"]}
+    retained = {s["source_id"]: (s["file"], s["availability"]) for s in world["source_inventory"]}
+    assert expected == retained, "source availability differs from frozen world"
+    for source in world["source_inventory"]:
+        assert hashlib.sha256((ROOT / source["file"]).read_bytes()).hexdigest() == source["sha256"], source["file"]
+
+
+def check_developer_probes(probes):
+    """Check explicit private examples, not the consultant's prose or estimator."""
+    p = probes["non_detection"]
+    interval = [p["estimate"] - p["critical_value"] * p["standard_error"],
+                p["estimate"] + p["critical_value"] * p["standard_error"]]
+    close({"interval": interval, "contains_zero": interval[0] <= 0 <= interval[1],
+           "contains_worthwhile_effect": interval[0] <= p["worthwhile_effect"] <= interval[1]}, p["expected"], "non_detection")
+    if "cluster_covariance" in probes:
+        p = probes["cluster_covariance"]
+        between, within = p["cluster_variance"], p["learner_variance"]
+        n, k = p["learners_per_cluster"], p["clusters_per_arm"]
+        marginal, cluster_mean, ses = [], [], []
+        variance_mean = between + within / n
+        for cross in p["cross_time_covariances"]:
+            # Each component covariance matrix must be positive definite.
+            assert abs(cross["cluster"]) < between and abs(cross["learner"]) < within
+            marginal.append((cross["cluster"] + cross["learner"]) / (between + within))
+            correlation = (cross["cluster"] + cross["learner"] / n) / variance_mean
+            cluster_mean.append(correlation)
+            ses.append(math.sqrt(2 * variance_mean * (1 - correlation ** 2) / k))
+        close({"marginal_correlations": marginal, "cluster_mean_correlations": cluster_mean,
+               "cluster_mean_adjusted_se": ses}, p["expected"], "cluster_covariance")
+    if "lee_weighting" in probes:
+        p = probes["lee_weighting"]
+        q, s, effects = p["roster_shares"], p["always_assessed_shares"], p["stratum_effects"]
+        assert len(q) == len(s) == len(effects) and math.isclose(sum(q), 1)
+        mass = [a * b for a, b in zip(q, s)]
+        weights = [m / sum(mass) for m in mass]
+        close({"always_assessed_weights": weights,
+               "always_assessed_effect": sum(w * e for w, e in zip(weights, effects)),
+               "roster_weighted_effect": sum(w * e for w, e in zip(q, effects))}, p["expected"], "lee_weighting")
+
+
 def check_design():
     data = rows("centers.csv")
     planning = read_json("public/planning-inputs.json")
@@ -52,6 +94,7 @@ def check_design():
     mde = z * planning["outcome_sd_assumption"] * math.sqrt(2 / effective_arm_size)
     return {"centers": len(data), "eligible_learners": sum(int(r["planned_eligible_learners"]) for r in data),
         "centers_per_region": dict(Counter(r["region"] for r in data)), "retained_per_center_assumption": retained,
+        "worthwhile_effect_assumption": planning["planning_effect_points"],
         "retained_total_assumption": retained * len(data), "design_effects_at_retained_size": effects,
         "normal_approx_mde_at_icc_005": mde}
 
@@ -133,18 +176,34 @@ def check_cate():
             scores.append(score)
             score_cells.setdefault(key, []).append(score)
         assert len(cells) == 8
-        result_cells = {}
+        result_cells, cell_variances = {}, {}
         for key, groups in cells.items():
             assert sum(map(len, groups)) == (225 if split == "development" else 75)
             assert all(len(g) > 1 for g in groups), "within-cell offer overlap"
             result_cells[key] = {"n": sum(map(len, groups)), "control_n": len(groups[0]), "offer_n": len(groups[1]),
                 "control_mean": statistics.mean(groups[0]), "offer_mean": statistics.mean(groups[1]),
                 "difference": statistics.mean(groups[1]) - statistics.mean(groups[0])}
+            cell_variances[key] = statistics.variance(groups[0]) / len(groups[0]) + statistics.variance(groups[1]) / len(groups[1])
         assert selected / len(data) == 0.375
         output["partitions"][split] = {"n": len(data), "offer_n": sum(int(r["offer"]) for r in data), "cells": result_cells,
             "fixed_benchmark_ipw_net_gain": statistics.mean(scores),
             "fixed_benchmark_stratified_score_se": math.sqrt(sum((1 / len(score_cells)) ** 2 * statistics.variance(g) / len(g) for g in score_cells.values())),
             "fixed_benchmark_iid_score_se": statistics.stdev(scores) / math.sqrt(len(scores))}
+        # Cell differences use the fixed target distribution. Covariance is
+        # retained because the rule and capacity lottery use the same sample.
+        rule = {key: float(key.split(",")[0] == "1" and
+                          (key.split(",")[1] == "1" or key.split(",")[2] == "0.5")) for key in cells}
+        weight, lottery_fraction, cost = 1 / len(cells), 3 / 8, 2
+        gain = sum(weight * rule[k] * (c["difference"] - cost) for k, c in result_cells.items())
+        baseline = sum(weight * c["control_mean"] for c in result_cells.values())
+        lottery = sum(weight * lottery_fraction * (c["difference"] - cost) for c in result_cells.values())
+        output["partitions"][split]["fixed_benchmark_cell_contrasts"] = {
+            "incremental_net_gain": gain, "no_offer_utility": baseline, "absolute_utility": baseline + gain,
+            "lottery_incremental_net_gain": lottery, "rule_minus_lottery": gain - lottery,
+            "rule_incremental_se": math.sqrt(sum((weight * rule[k]) ** 2 * v for k, v in cell_variances.items())),
+            "rule_minus_lottery_se": math.sqrt(sum((weight * (rule[k] - lottery_fraction)) ** 2 * v for k, v in cell_variances.items())),
+            "rule_lottery_covariance": sum(weight ** 2 * rule[k] * lottery_fraction * v for k, v in cell_variances.items()),
+        }
     return output
 
 
@@ -185,11 +244,14 @@ def check_edge():
 def main():
     problem = read_json("problem.json")
     oracle = read_json("oracle.json")
+    world = read_json("world.json")
     identity = problem["problem_id"]
     assert oracle["problem_id"] == identity
     for name, expected_hash in problem["files"].items():
         actual_hash = hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
         assert actual_hash == expected_hash, (name, "frozen bytes changed")
+    check_retained_sources(problem, world)
+    check_developer_probes(oracle["developer_probes"])
     functions = {"study-design": check_design, "observational-did": check_did,
                  "cate-policy": check_cate, "data-quality-edge": check_edge}
     actual = functions[identity]()

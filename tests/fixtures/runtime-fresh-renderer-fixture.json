@@ -1,0 +1,403 @@
+{
+  "capabilities": {
+    "ok": true,
+    "version": "7.5.3",
+    "journal_schema": 7,
+    "capabilities": [
+      "assisted-authoring-v1",
+      "claude-transcript-capture-v1",
+      "four-section-responses-v1",
+      "message-bound-delivery-v2",
+      "pending-intake-v1",
+      "durable-exchanges-v1",
+      "user-question-routing-v1",
+      "consultation-loop-v1",
+      "captured-delivery-v1",
+      "proposal-preflight-v1",
+      "intact-reply-recovery-v1",
+      "source-attributed-memory-v1",
+      "reply-reconciliation-v1",
+      "case-brief-v1",
+      "compact-proposals-v1",
+      "concise-authoring-v1",
+      "conversational-responses-v1",
+      "deferred-release-v1",
+      "operational-summary-v1",
+      "report-deliverables-v1",
+      "report-presentation-adjustment-v1"
+    ],
+    "renderers": [
+      "lead-markdown-v1",
+      "lead-markdown-v2",
+      "lead-markdown-v3",
+      "lead-markdown-v4",
+      "lead-markdown-v5",
+      "lead-markdown-v6",
+      "lead-markdown-v7",
+      "lead-markdown-v8",
+      "lead-markdown-v9"
+    ],
+    "compatibility": {
+      "minimum_extension_reader": "7.0.7",
+      "historical_events": "replayed unchanged",
+      "additional_reader_requirements": {
+        "captured_observations": "captured-delivery-v1",
+        "recovered_observations": "intact-reply-recovery-v1",
+        "reconciled_questions_and_paused_acceptance": "reply-reconciliation-v1",
+        "case_brief_selections_and_message_coverage": "case-brief-v1",
+        "compact_proposal_exchanges": "compact-proposals-v1 (7.0.11); full saved scope export with lead-markdown-v5",
+        "conversational_exchanges": "conversational-responses-v1 (7.0.13); lead-markdown-v6",
+        "flat_option_exchanges": "7.5.1; lead-markdown-v7",
+        "sectioned_exchanges": "7.5.2; lead-markdown-v8",
+        "four_section_exchanges": "7.5.3; lead-markdown-v9; response explanations and derived items",
+        "message_bound_delivery": "7.5.3; captured-delivery-v2 and message-bound-delivery-v2",
+        "pending_intakes": "7.5.3; primary-message-v1 source marker",
+        "deferred_analysis_inputs": "deferred-release-v1 (7.2.0); one unreleased analysis input"
+      },
+      "new_report_reader": "7.5.0 for report-deliverables-v1 and report-presentation-adjustment-v1; legacy plans and manifests retain their frozen contracts",
+      "protected_work_enforcement": "helper identities, order, scope and current record versions; semantic consent and host bypass require observation",
+      "host_closeout_enforcement": "instruction_only",
+      "delivery": "observe-exchange compares retained actual text; capture attribution remains host/agent supplied; historical hash-only observations are unverified"
+    }
+  },
+  "root": "C:\\Users\\zrq\\projects\\skills\\causal-consultant\\development-support\\structured-response-audit-2026-09-30\\synthetic-fresh-renderer-oxxjzY",
+  "frames": [
+    {
+      "event": "001",
+      "public": {
+        "user": "Explain notation.",
+        "assistant": "[What has been done]\n\nChecked the notation."
+      },
+      "journal": [
+        {
+          "event_id": "event-init",
+          "payload": {
+            "consultation_policy": "consultation-loop-v1",
+            "project_understanding": {
+              "objective": "Explain notation in a synthetic consultation."
+            }
+          },
+          "previous_event_id": null,
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "ef26cdd36ea87745accd425398da4b6b19ca28a5d1e124fb4a8be43a8f63ee7b",
+          "schema_version": 7,
+          "sequence": 1,
+          "sha256": "b806d3b4a24ba98be2b27a6fd127b160c0d79673ae9b2a6dc68dce492bd571fa",
+          "timestamp": "2026-10-01T03:03:01.196Z",
+          "type": "init"
+        },
+        {
+          "event_id": "event-in-v9",
+          "payload": {
+            "changes": {
+              "evidence": [
+                {
+                  "complete_message": true,
+                  "evidence_id": "user-v9",
+                  "kind": "user_statement",
+                  "source_excerpt": "Explain notation.",
+                  "source_intake": "primary-message-v1",
+                  "source_ref": "conversation:user-v9",
+                  "summary": "Explain notation."
+                }
+              ]
+            },
+            "interpretation": {
+              "basis_refs": [],
+              "components": [
+                {
+                  "established": [],
+                  "kind": "instruction",
+                  "meaning": "Explain notation.",
+                  "unresolved": []
+                }
+              ],
+              "delivery_binding": "message-bound-delivery-v2",
+              "incoming_refs": [
+                "user-v9"
+              ],
+              "interpretation_id": "interpretation-v9",
+              "next_action": {
+                "kind": "lead_only",
+                "reason": "Answer the bounded request.",
+                "scope": "Explain notation."
+              },
+              "turn_id": "turn-v9"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-init",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "5f20e828012d94cae2cab81cf242cba20765eb177c98378dfbdbe61c9df0c505",
+          "schema_version": 7,
+          "sequence": 2,
+          "sha256": "d9d99d621da1aa1959af6bc20d5d5c77d46466121745b35f3e14b55edfe94971",
+          "timestamp": "2026-10-01T03:03:01.224Z",
+          "type": "reply_interpreted"
+        },
+        {
+          "event_id": "event-out-v9",
+          "payload": {
+            "exchange": {
+              "basis_refs": [],
+              "completed_work_refs": [],
+              "exchange_id": "exchange-v9",
+              "interpretation_ref": "interpretation-v9",
+              "reconciliation": {
+                "changes": [],
+                "limitations": [
+                  "Synthetic fixture only."
+                ],
+                "next_direction": "The user chooses the next bounded action.",
+                "unresolved": []
+              },
+              "renderer": "lead-markdown-v9",
+              "response": {
+                "next_steps": [],
+                "questions": [],
+                "status": "Checked the notation."
+              },
+              "turn_id": "turn-v9"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-in-v9",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "a2296271eaccb6563e69e8ac27df8103a715f2115e7e7451dc0bbabf7b29af89",
+          "schema_version": 7,
+          "sequence": 3,
+          "sha256": "63320d9e24e4fc51ae979219d969e9ca6d15d30f92c50d332a230f70af970558",
+          "timestamp": "2026-10-01T03:03:01.244Z",
+          "type": "exchange_prepared"
+        }
+      ],
+      "files": {},
+      "plans": {}
+    },
+    {
+      "event": "002",
+      "public": {
+        "user": "Explain notation.",
+        "assistant": "Plain current output with no agreed sections.\n- A nested list."
+      },
+      "journal": [
+        {
+          "event_id": "event-init",
+          "payload": {
+            "consultation_policy": "consultation-loop-v1",
+            "project_understanding": {
+              "objective": "Explain notation in a synthetic consultation."
+            }
+          },
+          "previous_event_id": null,
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "ef26cdd36ea87745accd425398da4b6b19ca28a5d1e124fb4a8be43a8f63ee7b",
+          "schema_version": 7,
+          "sequence": 1,
+          "sha256": "b806d3b4a24ba98be2b27a6fd127b160c0d79673ae9b2a6dc68dce492bd571fa",
+          "timestamp": "2026-10-01T03:03:01.196Z",
+          "type": "init"
+        },
+        {
+          "event_id": "event-in-v9",
+          "payload": {
+            "changes": {
+              "evidence": [
+                {
+                  "complete_message": true,
+                  "evidence_id": "user-v9",
+                  "kind": "user_statement",
+                  "source_excerpt": "Explain notation.",
+                  "source_intake": "primary-message-v1",
+                  "source_ref": "conversation:user-v9",
+                  "summary": "Explain notation."
+                }
+              ]
+            },
+            "interpretation": {
+              "basis_refs": [],
+              "components": [
+                {
+                  "established": [],
+                  "kind": "instruction",
+                  "meaning": "Explain notation.",
+                  "unresolved": []
+                }
+              ],
+              "delivery_binding": "message-bound-delivery-v2",
+              "incoming_refs": [
+                "user-v9"
+              ],
+              "interpretation_id": "interpretation-v9",
+              "next_action": {
+                "kind": "lead_only",
+                "reason": "Answer the bounded request.",
+                "scope": "Explain notation."
+              },
+              "turn_id": "turn-v9"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-init",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "5f20e828012d94cae2cab81cf242cba20765eb177c98378dfbdbe61c9df0c505",
+          "schema_version": 7,
+          "sequence": 2,
+          "sha256": "d9d99d621da1aa1959af6bc20d5d5c77d46466121745b35f3e14b55edfe94971",
+          "timestamp": "2026-10-01T03:03:01.224Z",
+          "type": "reply_interpreted"
+        },
+        {
+          "event_id": "event-out-v9",
+          "payload": {
+            "exchange": {
+              "basis_refs": [],
+              "completed_work_refs": [],
+              "exchange_id": "exchange-v9",
+              "interpretation_ref": "interpretation-v9",
+              "reconciliation": {
+                "changes": [],
+                "limitations": [
+                  "Synthetic fixture only."
+                ],
+                "next_direction": "The user chooses the next bounded action.",
+                "unresolved": []
+              },
+              "renderer": "lead-markdown-v9",
+              "response": {
+                "next_steps": [],
+                "questions": [],
+                "status": "Checked the notation."
+              },
+              "turn_id": "turn-v9"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-in-v9",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "a2296271eaccb6563e69e8ac27df8103a715f2115e7e7451dc0bbabf7b29af89",
+          "schema_version": 7,
+          "sequence": 3,
+          "sha256": "63320d9e24e4fc51ae979219d969e9ca6d15d30f92c50d332a230f70af970558",
+          "timestamp": "2026-10-01T03:03:01.244Z",
+          "type": "exchange_prepared"
+        },
+        {
+          "event_id": "event-in-v8",
+          "payload": {
+            "changes": {
+              "evidence": [
+                {
+                  "complete_message": true,
+                  "evidence_id": "user-v8",
+                  "kind": "user_statement",
+                  "source_excerpt": "Explain notation.",
+                  "source_intake": "primary-message-v1",
+                  "source_ref": "conversation:user-v8",
+                  "summary": "Explain notation."
+                }
+              ]
+            },
+            "interpretation": {
+              "basis_refs": [],
+              "components": [
+                {
+                  "established": [],
+                  "kind": "instruction",
+                  "meaning": "Explain notation.",
+                  "unresolved": []
+                }
+              ],
+              "delivery_binding": "message-bound-delivery-v2",
+              "incoming_refs": [
+                "user-v8"
+              ],
+              "interpretation_id": "interpretation-v8",
+              "next_action": {
+                "kind": "lead_only",
+                "reason": "Answer the bounded request.",
+                "scope": "Explain notation."
+              },
+              "turn_id": "turn-v8"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-out-v9",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "f0bb4fada2c5296b05341e23c76ae3f394eaccff5a49f11b9287b6d63f87fb20",
+          "schema_version": 7,
+          "sequence": 4,
+          "sha256": "bb12ecba5dc739c198ee2cde08a9db9875023ae5cd7ed91ceedc2d10a7dcba28",
+          "timestamp": "2026-10-01T03:03:01.268Z",
+          "type": "reply_interpreted"
+        },
+        {
+          "event_id": "event-out-v8",
+          "payload": {
+            "exchange": {
+              "basis_refs": [],
+              "completed_work_refs": [],
+              "exchange_id": "exchange-v8",
+              "interpretation_ref": "interpretation-v8",
+              "reconciliation": {
+                "changes": [],
+                "limitations": [
+                  "Synthetic fixture only."
+                ],
+                "next_direction": "The user chooses the next bounded action.",
+                "unresolved": []
+              },
+              "renderer": "lead-markdown-v8",
+              "response": {
+                "next_steps": [],
+                "questions": [],
+                "status": "Checked the notation."
+              },
+              "turn_id": "turn-v8"
+            },
+            "protocol": "durable-exchanges-v1"
+          },
+          "previous_event_id": "event-in-v8",
+          "project_id": "fresh-renderer-audit",
+          "request_sha256": "6794e860f5b750a7655d7d8b60ec61b9794fd99effb46b49c1ea3ba76ef55f7e",
+          "schema_version": 7,
+          "sequence": 5,
+          "sha256": "068291d775b7835a655d48747de732013330216bfe64875cf4cdd55e37c92d39",
+          "timestamp": "2026-10-01T03:03:01.288Z",
+          "type": "exchange_prepared"
+        }
+      ],
+      "files": {},
+      "plans": {}
+    }
+  ],
+  "fresh_exchange": {
+    "event_ref": "event-out-v8",
+    "sequence": 5,
+    "renderer": "lead-markdown-v8",
+    "appeared_in_previous_snapshot": false
+  },
+  "fresh_interpretation": {
+    "basis_refs": [],
+    "components": [
+      {
+        "established": [],
+        "kind": "instruction",
+        "meaning": "Explain notation.",
+        "unresolved": []
+      }
+    ],
+    "delivery_binding": "message-bound-delivery-v2",
+    "incoming_refs": [
+      "user-v8"
+    ],
+    "interpretation_id": "interpretation-v8",
+    "next_action": {
+      "kind": "lead_only",
+      "reason": "Answer the bounded request.",
+      "scope": "Explain notation."
+    },
+    "turn_id": "turn-v8"
+  },
+  "journal_replay_valid": true
+}

@@ -6,7 +6,7 @@
     {
       "id": "c-evidence",
       "required": true,
-      "rule": "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions."
+      "rule": "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions. Distinguish accessible, inspected and released records: an unreleased available record is not unavailable, and an unavailable record does not prove the underlying event never occurred. Attribute failures to obtain or supply a requested attainable record to the responsible consultant or actor."
     },
     {
       "id": "c-report",
@@ -26,7 +26,7 @@
     {
       "id": "c-persona-boundary",
       "required": true,
-      "rule": "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies address the current issue with persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply their supporting records. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Artificial delay, forgotten requests and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."
+      "rule": "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies reflect persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply supporting records. A one-turn partial or nearby answer is plausible when the unresolved request stays in private tracking and the actor repairs the omission or misunderstanding after clarification. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Persistent lost requests, repeated off-target replies, artificial delay and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."
     },
     {
       "id": "c-loop-permissions",
@@ -37,6 +37,11 @@
       "id": "c-loop-steering",
       "required": true,
       "rule": "Check that bounded work returns findings, diagnostics and limitations with useful directions to the user. Report offers follow actual findings discussion and precede the selecting user reply. Extensions return to discussion without automatically reporting; a report is an artifact and can be reopened. Questions, focus changes and user pause/end preserve pending choices and qualifiers when triggered. Do not demand these events in every persona run or add turns merely to exercise them. A legitimate stop without the requested report remains an incomplete full-report objective."
+    },
+    {
+      "id": "c-claim-meaning",
+      "required": true,
+      "rule": "Read the actual report's scientific claims against the selected target, formulas and original source meaning, not just matching displayed numbers. Non-detection is not absence: inspect whether uncertainty still admits a worthwhile effect, and do not infer equivalence without a justified margin and analysis. Observational causal claims retain their identifying assumptions. Judge resolved earlier mistakes separately from defects remaining in the report; do not require a specific estimator or favorable result. Use the oracle's private claim_calibration and applied_interpretation examples to identify specific unsupported claims and accept sound corrections; these are independent probes, not new study facts or mandatory conversation turns."
     },
     {
       "id": "c-cate-identification",
@@ -56,7 +61,7 @@
     {
       "id": "c-policy-evaluation",
       "required": true,
-      "rule": "Save and visibly identify the fixed rule and evaluation plan before obtaining evaluation outcomes. Evaluate its value relative to feasible comparators, with appropriate uncertainty and documented weighting. Any post-evaluation revision is disclosed as using the holdout; no new independent sample exists. Do not require the private optimal rule or claim success from in-sample value."
+      "rule": "Save and visibly identify the fixed rule and evaluation plan before obtaining evaluation outcomes. Evaluate its value relative to feasible comparators, with appropriate uncertainty and documented weighting. Identify whether a reported quantity is absolute utility E[Y(pi)-2*pi] or incremental net gain over no offer E[pi*(tau-2)]. A zero no-offer reference is valid when normalization is explicit; do not call a correct paired contrast invalid merely because the baseline label needs clarification. For a rule-versus-lottery contrast, account for covariance from evaluating both on the same observations. The oracle's fixed-rule references are numerical checks, not a required learned policy or estimator. Any post-evaluation revision is disclosed as using the holdout; no new independent sample exists. Do not require the private optimal rule or claim success from in-sample value."
     },
     {
       "id": "c-policy-conclusion",
@@ -66,7 +71,7 @@
   ],
   "numeric_reference": "oracle.json and standalone check_oracle.py. Absolute tolerance 1e-8 for the frozen descriptive/reference calculation, or half the displayed final unit for rounded outputs. Alternative valid estimators require independently matched calculations. Generating truth and realized estimates are distinct; do not demand a private method, exact effect recovery or single-interval coverage.",
   "problem_id": "cate-policy",
-  "problem_version": "1.0.2",
+  "problem_version": "1.3.0",
   "required_observations": [
     "actual public exchanges",
     "actor disclosures and learning",

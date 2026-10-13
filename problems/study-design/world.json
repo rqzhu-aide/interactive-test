@@ -2,7 +2,7 @@
   "assumption_boundary": "No trial effect is known; feasibility facts are distinct from uncertain power inputs and identification assumptions for the future study.",
   "generation": {
     "generator": "scripts/generate_problem_bank.py",
-    "generator_sha256": "79db1abef53959d6c4a250e6abd8e79ea93a3708d17d9c049dd0a15ffce649c4",
+    "generator_sha256": "a24e15dbc3e8b59cb802e1dd6ef5a742171a61905f7893b1375c9d2843780d26",
     "numeric_note": "CSV values are frozen to six decimal places where indicated. Seed alone does not replace preserved bytes.",
     "seed": 26091001,
     "specification": {
@@ -19,9 +19,9 @@
   "privacy": "World and oracle are reviewer-only. No persona receives generating equations, latent values, numerical answers or target-turn metadata from this dossier. Scientific truth and source accessibility do not change with personality.",
   "reference_outputs": {
     "checker_file": "check_oracle.py",
-    "checker_sha256": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
+    "checker_sha256": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
     "oracle_file": "oracle.json",
-    "oracle_sha256": "0a456cc56e86e3bad69e763d89765eaec17495c39f30c3ea8335bd2c1483040a"
+    "oracle_sha256": "77d65b9dff4d40b2ea5d3495968e1fa1ed1ee34978f311eb6ab7310c33da1cad"
   },
   "scientific_truth": {
     "centers_offered": 12,

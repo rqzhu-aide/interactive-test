@@ -68,7 +68,7 @@
       "source_ids": []
     },
     {
-      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
       "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
       "fact_ids": [
         "f-record-access"
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "action": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
       "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
       "fact_ids": [
         "f-record-access"
@@ -112,8 +112,8 @@
     }
   ],
   "files": {
-    "check_oracle.py": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
-    "oracle.json": "7c071bf4ceb64a01d7a1d51f0b7c95eb4985b2b6f86f5786e18890f08975081a",
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "b434ea87f8904017d027e217a32fb3874e3b934473abb56386023eef39b581ea",
     "public/available-records.md": "a54a92f831aea99142809cef99c61c80424f111f2486f5034c924c1fe5149792",
     "public/collection-and-selection.md": "dea91e849bf443172f9da968eeb68b73cd6aeeb96ebe0743277e0570c162f606",
     "public/dictionary.md": "116d5502e744cee692eae3cf05c6ca4f300edb5897956658d0c9b0e906a45846",
@@ -121,21 +121,20 @@
     "public/extract.csv": "b2c2bfe1aae32c2f6bbf055254a69982f6dac940a2a0e00a3442b7d8fe16a27f",
     "public/participant-roster.csv": "9f1fa36f8e599d265e60cf4a501aed29c97035040a3557757ecb1247acbe69a4",
     "public/report-decision.md": "d3798d86dea0d08273295f10f9275ebb876546d3b82b5b16b52467c8d236b388",
-    "reviewer.json": "a8c822b4da40284b4a39aa50a2ff4d5de70a257662dd98280acfdc2340ce85b3",
-    "world.json": "816fc67590fca86d8ad431c44d767e9343793a3c5df9868575de4a6c3e2d5c92"
+    "reviewer.json": "1a78713349e071910c564f3e3f47825dad1e0f12c32ccd090181331bdfe7d958",
+    "world.json": "eb0324ac595da98b0b76856eb2fc8413a3c2a9e633f2bec2e1170422c8c42e15"
   },
   "goal": "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication.",
-  "initial_request": "Please use the causal-consultant skill for this consultation. Please audit our tutoring participant extract and assess whether it can support the claim that the program improved completion. I can supply the roster and export records. We need a complete saved report with reliable summaries, unresolved limitations and a practical plan for better evidence.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude.",
   "initial_requests": {
-    "adversarial": "Please use the causal-consultant skill for this consultation. The program needs a strong completion story for its renewal. Please clean this spreadsheet, assess whether tutoring worked, and save a complete report. There are some blanks and repeated entries, but I hope we can still produce a convincing result.",
-    "domain-expert": "Please use the causal-consultant skill for this consultation. Please audit our tutoring participant extract and assess whether it can support the claim that the program improved completion. I can supply the roster and export records. We need a complete saved report with reliable summaries, unresolved limitations and a practical plan for better evidence.",
-    "novice": "Please use the causal-consultant skill for this consultation. Can you tell me whether our tutoring program worked? This is the spreadsheet I was sent, but some entries are blank and I am not sure it is complete. Please help make sense of it and save a complete report explaining what we can say and what we should do next.",
-    "statistician": "Please use the causal-consultant skill for this consultation. Please investigate the data quality and identification limits in this program extract, then save a complete reproducible report. Assess missingness, duplicated records, denominators and whether any causal estimand is supported. A justified descriptive or partial-identification endpoint is acceptable when the causal target is not identified."
+    "expert": "Please use the causal-consultant skill for this consultation. Please assess whether our incomplete tutoring extract supports any causal effect claim, then save a complete reproducible report with justified descriptive findings if it does not. I can share the roster and export records.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. Our program needs a strong completion story for renewal. Please assess whether tutoring worked using these records and save a report we can present to the board.",
+    "standard": "Please use the causal-consultant skill for this consultation. Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude."
   },
   "label": "Incomplete participant extract and causal limits",
   "oracle_check": "check_oracle.py",
   "problem_id": "data-quality-edge",
-  "problem_version": "1.0.2",
+  "problem_version": "1.3.0",
   "reviewer": "reviewer.json",
   "schema_version": 1,
   "sources": [
@@ -189,7 +188,8 @@
       "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
     }
   ],
+  "suite_version": "8.2.0",
   "target_turns": 8,
-  "unknown_policy": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
   "world": "world.json"
 }

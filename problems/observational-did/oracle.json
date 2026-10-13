@@ -1,4 +1,44 @@
 {
+  "developer_probes": {
+    "applied_interpretation": [
+      {
+        "id": "scenario-range-continuation",
+        "input": {
+          "evidence": "The all-site estimate is 4.05 when non-adopter effects equal adopter effects within readiness strata, and 2.56 when non-adopter effects are zero. These are selected assumptions, with no empirical restriction excluding harm or larger benefits in non-adopters. Analysis concerns initial adoption; continuation is unknown.",
+          "request": "Can I summarize 2.56 to 4.05 as our best supported effect range, and say the effect for sites that continued must be larger?"
+        },
+        "review": "Explain the range is conditional on the selected scenarios, not an empirical bound or confidence interval. Unknown continuation alone gives no direction of bias and does not identify an effect among continuers. A useful conditional summary is acceptable."
+      }
+    ],
+    "claim_calibration": {
+      "corrected": "The interval supports a positive effect but spans the four-point threshold. A board may choose a point-estimate decision rule without claiming the true gain exceeds four.",
+      "evidence": {
+        "estimate": 4.5,
+        "interval": [
+          1,
+          8
+        ],
+        "worthwhile_threshold": 4
+      },
+      "problematic": "Estimate at least four and CI excluding zero shows a worthwhile gain.",
+      "review": "Identify the unsupported threshold claim and the interval that contradicts it. Accept the corrected distinction without prescribing an estimator or decision rule. A disclaimer elsewhere does not repair a contradictory headline."
+    },
+    "non_detection": {
+      "critical_value": 1.96,
+      "estimate": 0.4,
+      "expected": {
+        "contains_worthwhile_effect": true,
+        "contains_zero": true,
+        "interval": [
+          -3.52,
+          4.32
+        ]
+      },
+      "standard_error": 2.0,
+      "worthwhile_effect": 4.0
+    },
+    "scope": "Private mathematical examples, not new study facts, outcomes or required estimators. The checker verifies arithmetic; the reviewer judges the actual argument and source use."
+  },
   "expected": {
     "adopters": 60,
     "att_reference": 4.9916928972222205,

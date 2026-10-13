@@ -12,6 +12,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import package_evidence as package
+from claude_transport import explicit_candidate
 
 
 class PackageEvidenceTests(unittest.TestCase):
@@ -86,6 +87,68 @@ class PackageEvidenceTests(unittest.TestCase):
                 archive.writestr(name, data)
         return target
 
+    def explicit_loading(self):
+        skill = self.work / ".claude/skills/causal-consultant/SKILL.md"
+        skill.write_bytes(b"Frozen test candidate.\r\n")
+        prompt, receipt = explicit_candidate(self.work)
+        command = {"argv": ["claude", "--session-id", "test-session", "--disable-slash-commands",
+                            "--append-system-prompt", prompt], "cwd": str(self.work)}
+        self.write(self.event / "transport/command.json", command)
+        self.write(self.event / "transport/candidate-loading.json", receipt)
+        (self.event / "transport/candidate-system-prompt.txt").write_bytes(prompt.encode("utf-8"))
+        self.write(self.event / "transport/transport.json", {**command, "candidate_loading": receipt,
+            "session_id": "test-session", "message": "Exact public reply.", "error": None})
+        self.write(self.event / "transport/stdout.txt", json.dumps({"type": "result", "session_id": "test-session",
+                                                                   "result": "Exact public reply."}) + "\n")
+        self.state["session_id"] = "test-session"
+        self.write(self.attempt / "state.json", self.state)
+        frozen = json.loads((self.attempt / "freeze.json").read_text())
+        frozen["configuration"] = {"claude_command": ["claude"], "candidate_loading": "claude_explicit"}
+        frozen["candidate_files"] = self.inventory(skill.parent)
+        self.write(self.attempt / "freeze.json", frozen)
+        self.write(self.event / "work-files.json", self.inventory(self.work))
+        shutil.copytree(self.work, self.event / "work-snapshot", dirs_exist_ok=True)
+        self.index()
+
+    def test_explicit_loading_round_trip_reconciles_prompt_and_receipt(self):
+        self.explicit_loading()
+        result = package.export_package(self.attempt, self.output)
+        self.assertEqual(result["completeness"], "complete")
+        self.assertEqual(package.check_package(self.output), result)
+
+    def test_explicit_loading_receipt_must_exist_and_be_review_bound(self):
+        self.explicit_loading()
+        ref = "private/events/001/transport/candidate-loading.json"
+        del self.review_index["files"][ref]
+        self.review_index["sha256"] = package._identity(self.review_index["files"])
+        self.write(self.attempt / "review-index.json", self.review_index)
+        with self.assertRaisesRegex(ValueError, "candidate_loading_missing_indexed_capture"):
+            package.export_package(self.attempt, self.output)
+        (self.event / "transport/candidate-loading.json").unlink()
+        self.index()
+        with self.assertRaisesRegex(ValueError, "candidate_loading_missing_indexed_capture"):
+            package.export_package(self.attempt, self.output)
+
+    def test_reindexed_loading_conflict_remains_partial_in_archive(self):
+        self.explicit_loading()
+        target = self.event / "transport/command.json"
+        command = json.loads(target.read_text())
+        command["argv"][-1] = "Different supplied entry"
+        self.write(target, command)
+        self.index()
+        result = package.export_package(self.attempt, self.output, allow_partial=True)
+        self.assertEqual(result["completeness"], "partial")
+        self.assertIn("candidate_loading_prompt_argument_mismatch", [item["reason"] for item in result["omissions"]])
+        self.assertEqual(package.check_package(self.output, require_complete=False), result)
+
+    def test_explicit_loading_frozen_candidate_hash_must_be_review_bound(self):
+        self.explicit_loading()
+        del self.review_index["files"]["private/freeze.json"]
+        self.review_index["sha256"] = package._identity(self.review_index["files"])
+        self.write(self.attempt / "review-index.json", self.review_index)
+        with self.assertRaisesRegex(ValueError, "freeze.json.*not_bound_to_review_index"):
+            package.export_package(self.attempt, self.output)
+
     def test_complete_round_trip_preserves_every_file_and_raw_bytes(self):
         before = self.inventory(self.attempt)
         result = package.export_package(self.attempt, self.output)
@@ -93,10 +156,22 @@ class PackageEvidenceTests(unittest.TestCase):
         self.assertEqual(result, package.check_package(self.output))
         self.assertEqual(before, self.inventory(self.attempt))
         with zipfile.ZipFile(self.output) as archive:
+            self.assertEqual(json.loads(archive.read(package.MANIFEST))["format"], package.PACKAGE_FORMAT)
             self.assertEqual(archive.read("work/unexpected-noise.txt"), (self.work / "unexpected-noise.txt").read_bytes())
             self.assertEqual(archive.read("private/events/001/transport/stdout.txt"), (self.event / "transport/stdout.txt").read_bytes())
             self.assertIn("private/events/001/project-verify/stdout.txt", archive.namelist())
             self.assertIn("private/events/001/work-snapshot/project/report.html", archive.namelist())
+
+    def test_legacy_review_package_format_remains_readable(self):
+        package.export_package(self.attempt, self.output)
+
+        def legacy(entries):
+            manifest = json.loads(entries[package.MANIFEST])
+            manifest["format"] = package.LEGACY_PACKAGE_FORMAT
+            entries[package.MANIFEST] = json.dumps(manifest).encode()
+
+        legacy_package = self.rewrite_zip(legacy)
+        self.assertEqual(package.check_package(legacy_package)["completeness"], "complete")
 
     def test_indexed_file_missing_refuses_before_output_and_partial_names_omission(self):
         (self.event / "work-snapshot/project/report.html").unlink()

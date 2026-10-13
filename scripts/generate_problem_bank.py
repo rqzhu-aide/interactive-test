@@ -18,7 +18,7 @@ from source_release import policy_evaluation_prerequisite
 
 ROOT = Path(__file__).resolve().parents[1]
 PROBLEM_IDS = ("study-design", "observational-did", "cate-policy", "data-quality-edge")
-PERSONAS = ("novice", "domain-expert", "statistician", "adversarial")
+PERSONAS = ("standard", "novice-adversarial", "expert")
 SEEDS = {"study-design": 26091001, "observational-did": 26091002,
          "cate-policy": 26091003, "data-quality-edge": 26091004}
 
@@ -68,14 +68,59 @@ def source(identity, path, release, initial=False):
             "availability": "initial" if initial else "on_request", "release_when": release}
 
 
+def interpretation_probes(identity):
+    """Independent short requests. Supply only input to the consultant, review privately."""
+    cases = {
+        "observational-did": [{
+            "id": "scenario-range-continuation",
+            "input": {"request": "Can I summarize 2.56 to 4.05 as our best supported effect range, and say the effect for sites that continued must be larger?",
+                "evidence": "The all-site estimate is 4.05 when non-adopter effects equal adopter effects within readiness strata, and 2.56 when non-adopter effects are zero. These are selected assumptions, with no empirical restriction excluding harm or larger benefits in non-adopters. Analysis concerns initial adoption; continuation is unknown."},
+            "review": "Explain the range is conditional on the selected scenarios, not an empirical bound or confidence interval. Unknown continuation alone gives no direction of bias and does not identify an effect among continuers. A useful conditional summary is acceptable."
+        }],
+        "study-design": [{
+            "id": "power-under-pressure",
+            "input": {"request": "The board wants the 85%-95% power range in the headline. Can we call that cautious and use learner correlation 0.7 to adjust the whole variance?",
+                "evidence": "24 centers, 12 per arm, 34 learners per center, marginal outcome SD 10 and ICC 0.10. A planning approximation gives 73% unadjusted power and 85%-95% after multiplying clustered variance by 1-rho^2 for rho=0.5 to 0.7. The planned analysis adjusts learner baseline with blocks and small-sample cluster-robust inference. Only marginal learner baseline/outcome correlation is specified; center and learner cross-time covariance are unknown."},
+            "review": "Keep relevant unfavorable planning assumptions visible. Explain why marginal learner correlation does not determine precision gain for this clustered analysis; provide justified covariance scenarios or a matching approximation. Conditional planning remains useful. Do not require a specific estimator, empirical covariance collection, or a 74.6% answer."
+        }, {
+            "id": "worthwhile-threshold-and-harm",
+            "input": {"request": "Please write brief future decision guidance for these three possible results. Four points is worthwhile: can a positive significant estimate tell us which gains clear that threshold?",
+                "evidence": {"worthwhile_effect": 4, "results": [{"estimate": 4.5, "interval": [1, 8]}, {"estimate": 3, "interval": [1, 5]}, {"estimate": -2, "interval": [-3, -1]}]}},
+            "review": "The first two intervals support positivity and span four; the third supports harm. Distinguish an estimate-based board decision rule from evidence that the unknown effect exceeds four. Do not impose a universal lower-confidence-limit policy."
+        }, {
+            "id": "correct-public-planning-figures",
+            "input": {"request": "Please summarize the completed power report for the board.",
+                "evidence": "Earlier public advice said 92% and 75% power, with MDE 3.3, using 22 degrees of freedom. The finalized calculation uses 16 degrees of freedom for the stated blocked analysis and yields 91%, 73% and MDE 3.4. No other design or input changed."},
+            "review": "Use the final figures and briefly explain the changed degrees of freedom and correction to the earlier public numbers."
+        }],
+        "cate-policy": [{
+            "id": "uncertain-capacity-increment",
+            "input": {"request": "Can the recommendation say that expanding capacity buys little or nothing and that offering everyone is no better than offering no one?",
+                "evidence": "Relative to 37.5% capacity, 50% has estimated incremental value +0.048 with interval [-0.075, 0.169], and 62.5% has +0.012 [-0.154, 0.180]. Offer-all versus none is -0.136 [-0.455, 0.185]. No equivalence margin is defined. These secondary comparisons were proposed after primary holdout evaluation."},
+            "review": "Align the takeaway with intervals admitting gains and losses. Neither non-significance nor the point estimates establish equivalence. Conditional decisions based on cost or risk preference remain possible; keep the secondary status."
+        }, {
+            "id": "resampling-quantifiers",
+            "input": {"request": "Please summarize whether these four methods always choose the same rule and whether more complex methods could help.",
+                "evidence": "All 400 method-by-cross-validation fits selected the same rule. Among 2,000 bootstrap resamples the four methods disagreed in 27. DM and shrinkage each switched 21 times, the lower-bound method 27 times, and OLS never switched."},
+            "review": "Distinguish all cross-validation fits from almost all bootstrap resamples. These results show stability here, not proof that all methods always agree or no future method could improve."
+        }, {
+            "id": "adverse-frozen-candidate",
+            "input": {"request": "The rule was frozen as our primary policy before holdout. Should we deploy it as promised?",
+                "evidence": "The frozen rule's held-out net gain versus no offer is -0.3, interval [-0.5, -0.1]. No alternate rule has independent held-out evaluation, and deployment has not started."},
+            "review": "Preserve the primary candidate for honest evaluation while advising against unsupported deployment. Freezing an analysis does not obligate deployment or authorize choosing a replacement on the same holdout without disclosure."
+        }],
+    }
+    return cases.get(identity, [])
+
+
 def base(identity, label, target, goal, requests):
     assert set(requests) == set(PERSONAS)
     requests = {key: "Please use the causal-consultant skill for this consultation. " + value for key, value in requests.items()}
-    return {"schema_version": 1, "problem_id": identity, "problem_version": "1.0.2",
+    return {"schema_version": 1, "problem_id": identity, "problem_version": "1.3.0", "suite_version": "8.2.0",
             "label": label, "target_turns": target, "goal": goal,
-            "initial_request": requests["domain-expert"], "initial_requests": requests,
+            "initial_request": requests["standard"], "initial_requests": requests,
             "sources": [], "actor_facts": [], "actor_rules": [],
-            "unknown_policy": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+            "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
             "world": "world.json", "reviewer": "reviewer.json", "oracle_check": "check_oracle.py"}
 
 
@@ -87,7 +132,7 @@ def finish(problem, public, specification, expected, criteria, completion, assum
         fact("f-report", problem["goal"], "user deliverable preference", certainty="user preference"),
     ]
     problem["actor_rules"] += [
-        rule("r-problem-records", "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.", "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.", ["f-record-access"], [s["id"] for s in release_sources]),
+        rule("r-problem-records", "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.", "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.", ["f-record-access"], [s["id"] for s in release_sources]),
         rule("r-known-unknown", "The consultant asks about facts beyond current knowledge or accessible records.", problem["unknown_policy"], ["f-record-access"]),
         rule("r-report-goal", "The substantive investigation and supported analysis are settled, but only a conversational recap or intermediate artifact has been supplied and a complete saved report is still absent.", "Acknowledge the findings and choose among the actual offered directions. Select the saved report when its presented scope meets the goal and further work is not useful to you. An earlier report request is a desired outcome, not standing approval. During ongoing work, answer questions and steer bounded next actions. Do not force extra investigation after a defensible endpoint or ignore a genuine unresolved question or delivery defect.", ["f-report"]),
         rule("r-finish", "The consultant supplies a complete saved report that answers the agreed question at the supported evidence level, including any actual requested correction.", "Accept the supported report. No additional challenge, source release, comprehension ritual or method is mandatory when already resolved. Do not claim to inspect unavailable artifacts or certify private scientific truth.", ["f-report"]),
@@ -102,6 +147,32 @@ def finish(problem, public, specification, expected, criteria, completion, assum
     problem["actor_rules"][-4]["source_ids"].append("s-inventory")
     oracle = {"problem_id": identity, "specification": specification, "expected": expected,
               "interpretation": "Private reference quantities and observed-sample checks. Matching a number does not establish identification. Equivalent sound estimators are allowed; the consultant is not expected to recover generating truth. No single confidence interval is required to include generating truth."}
+    oracle["developer_probes"] = {
+        "scope": "Private mathematical examples, not new study facts, outcomes or required estimators. The checker verifies arithmetic; the reviewer judges the actual argument and source use.",
+        "non_detection": {"estimate": 0.4, "standard_error": 2.0, "critical_value": 1.96,
+            "worthwhile_effect": 4.0, "expected": {"interval": [-3.52, 4.32], "contains_zero": True, "contains_worthwhile_effect": True}},
+    }
+    oracle["developer_probes"]["applied_interpretation"] = interpretation_probes(identity)
+    oracle["developer_probes"]["claim_calibration"] = {
+        "evidence": {"estimate": 4.5, "interval": [1, 8], "worthwhile_threshold": 4},
+        "problematic": "Estimate at least four and CI excluding zero shows a worthwhile gain.",
+        "corrected": "The interval supports a positive effect but spans the four-point threshold. A board may choose a point-estimate decision rule without claiming the true gain exceeds four.",
+        "review": "Identify the unsupported threshold claim and the interval that contradicts it. Accept the corrected distinction without prescribing an estimator or decision rule. A disclaimer elsewhere does not repair a contradictory headline."
+    }
+    if identity == "study-design":
+        oracle["developer_probes"]["cluster_covariance"] = {
+            "scope": "Hypothetical cluster-mean ANCOVA counterexample, not corrected power for the proposed learner-level analysis.",
+            "cluster_variance": 10.0, "learner_variance": 90.0, "learners_per_cluster": 34, "clusters_per_arm": 12,
+            "cross_time_covariances": [{"cluster": 0.0, "learner": 70.0}, {"cluster": 7.0, "learner": 63.0}],
+            "expected": {"marginal_correlations": [0.7, 0.7], "cluster_mean_correlations": [7 / 43, 0.7],
+                "cluster_mean_adjusted_se": [1.4324746364705125, 1.036822067666386]}
+        }
+        oracle["developer_probes"]["lee_weighting"] = {
+            "assumptions": "Two strata, common monotonicity direction S(1)>=S(0), valid within-stratum Lee bounds, and target the always-assessed population. q is roster share and s0 is the control assessment rate. This is not an assumption about future trial outcomes.",
+            "roster_shares": [0.5, 0.5], "always_assessed_shares": [0.9, 0.5], "stratum_effects": [1.0, 5.0],
+            "expected": {"always_assessed_weights": [9 / 14, 5 / 14], "always_assessed_effect": 17 / 7, "roster_weighted_effect": 3.0},
+            "reference": "Lee (2009), Training, Wages, and Sample Selection, section 3.2: https://www.princeton.edu/~davidlee/wp/resrevision8.pdf",
+        }
     files = dict(public)
     files["oracle.json"] = encode(oracle)
     files["check_oracle.py"] = (ROOT / "scripts/problem_oracle_template.py").read_bytes()
@@ -115,13 +186,14 @@ def finish(problem, public, specification, expected, criteria, completion, assum
              "privacy": "World and oracle are reviewer-only. No persona receives generating equations, latent values, numerical answers or target-turn metadata from this dossier. Scientific truth and source accessibility do not change with personality."}
     files["world.json"] = encode(world)
     common = [
-        criterion("c-evidence", "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions."),
+        criterion("c-evidence", "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions. Distinguish accessible, inspected and released records: an unreleased available record is not unavailable, and an unavailable record does not prove the underlying event never occurred. Attribute failures to obtain or supply a requested attainable record to the responsible consultant or actor."),
         criterion("c-report", "Require a complete actual saved consultant report and the full-report capture contract. A design report is complete for a prospective design goal. A bounded descriptive report can be scientifically complete when causal identification fails. An analysis file or recap alone is insufficient. Check substance and relevant output readback/render verification."),
         criterion("c-closeout", "Compare actual user-facing replies with saved response evidence, assess detected mismatches, and apply saved qualifications to the actual claims. Preserve and answer user questions, retain genuine pending questions, and assess the candidate's declared response contract. A checker warning cannot be dismissed without review."),
         criterion("c-reproducibility", "Inspect actual saved pre-result plans, preparation lineage, computation outputs and report sources. Correct source bytes, units, target populations and provenance matter. Numerical matching is not a substitute for a valid design argument."),
-        criterion("c-persona-boundary", "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies address the current issue with persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply their supporting records. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Artificial delay, forgotten requests and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."),
+        criterion("c-persona-boundary", "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies reflect persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply supporting records. A one-turn partial or nearby answer is plausible when the unresolved request stays in private tracking and the actor repairs the omission or misunderstanding after clarification. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Persistent lost requests, repeated off-target replies, artificial delay and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."),
         criterion("c-loop-permissions", "For consultation-loop-v1, independently compare the actual public scope proposal, later user selection and FIRST protected work/artifact appearance. Analysis and reporting require separate current choices. Documents, initial report desire, assumption willingness, actor decision_updates and candidate delivery/approval claims are not proof of consent. Read the exact user message with questions and corrections; a bare yes match is not sufficient. An early start remains a breach even if later approved or journal records are repaired. Check revision, withdrawal and stale evidence when triggered. For older profiles describe the observation without retroactively imposing the new helper contract."),
         criterion("c-loop-steering", "Check that bounded work returns findings, diagnostics and limitations with useful directions to the user. Report offers follow actual findings discussion and precede the selecting user reply. Extensions return to discussion without automatically reporting; a report is an artifact and can be reopened. Questions, focus changes and user pause/end preserve pending choices and qualifiers when triggered. Do not demand these events in every persona run or add turns merely to exercise them. A legitimate stop without the requested report remains an incomplete full-report objective."),
+        criterion("c-claim-meaning", "Read the actual report's scientific claims against the selected target, formulas and original source meaning, not just matching displayed numbers. Non-detection is not absence: inspect whether uncertainty still admits a worthwhile effect, and do not infer equivalence without a justified margin and analysis. Observational causal claims retain their identifying assumptions. Judge resolved earlier mistakes separately from defects remaining in the report; do not require a specific estimator or favorable result. Use the oracle's private claim_calibration and applied_interpretation examples to identify specific unsupported claims and accept sound corrections; these are independent probes, not new study facts or mandatory conversation turns."),
     ]
     files["reviewer.json"] = encode({"problem_id": identity, "problem_version": problem["problem_version"], "completion_contract": "full_report",
         "completion": completion, "scientific_truth": specification, "criteria": common + criteria,
@@ -137,10 +209,9 @@ def finish(problem, public, specification, expected, criteria, completion, assum
 def study_design():
     goal = "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication."
     p = base("study-design", "Prospective clustered tutoring study", 5, goal, {
-        "novice": "We want to find out whether a new tutoring program helps learners. I have a list of our centers but have never planned this kind of evaluation. Please help me work out a sensible study and save a report explaining how we should run it. We have not started the program yet.",
-        "domain-expert": "Please help design and document a prospective evaluation of our tutoring offer across the attached learning centers. I can explain the delivery and recruitment constraints. We need a feasible allocation and measurement plan, with precision assumptions, in a complete saved design report before launch.",
-        "statistician": "Please develop a prospective tutoring evaluation and save a complete design report covering the estimand, allocation, interference, precision and analysis plan. The attached center roster is a starting point; the intervention has not launched. I would like to examine consequential design alternatives rather than assume an estimator upfront.",
-        "adversarial": "Our board wants a tutoring pilot that can make a convincing case for expansion. Please use the center list to propose the study and save a complete design report. The program has not started. I hope the design will give us a clear positive story, but the practical proposal must be usable.",
+        "standard": "We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use.",
+        "novice-adversarial": "Our board wants a convincing tutoring pilot before expanding across 24 centers. Please help us plan a study and save a report. We hope it will make a strong case for expansion.",
+        "expert": "The tutoring offer has not launched at our 24 centers. Please develop a prospective evaluation that addresses allocation, interference and precision, and save a complete design report. I can discuss implementation constraints.",
     })
     rows = [{"center_id": "C%02d" % i, "region": "North" if i <= 12 else "South", "planned_eligible_learners": 40,
              "historical_mean_score": 48 + (i * 7 % 13)} for i in range(1, 25)]
@@ -164,25 +235,26 @@ def study_design():
     p["actor_rules"] = [rule("r-design-choice", "The consultant explains feasible alternatives and requests a practical choice.", "Prefer a feasible center-level allocation with all eligible learners recruited before assignment and follow-up regardless of attendance. Region-stratified random allocation is acceptable if justified, without requiring that exact design. Do not choose an option inconsistent with delivery constraints or demand a favorable effect.", ["f-delivery", "f-target"])]
     expected = {"centers": 24, "eligible_learners": 960, "centers_per_region": {"North": 12, "South": 12},
         "retained_per_center_assumption": 34.0, "retained_total_assumption": 816.0,
+        "worthwhile_effect_assumption": 4,
         "design_effects_at_retained_size": {"0.01": 1.33, "0.05": 2.65, "0.1": 4.3},
         "normal_approx_mde_at_icc_005": (1.959963984540054 + 0.8416212335729143) * math.sqrt(2 * 100 * 2.65 / (12 * 34))}
     spec = {"n_centers": 24, "learners_per_center": 40, "centers_offered": 12, "future_outcomes_exist": False,
             "known_causal_truth": False, "historical_score_formula": "48 + (7 * center_index mod 13)",
             "scientific_setting": "Prospective clustered curriculum study with operational within-center interference, no asserted between-center spillovers, voluntary sites, and individual follow-up planned regardless of attendance."}
     criteria = [criterion("c-design", "Justify a feasible allocation unit and define the roster-based learner-average offer estimand, recruitment before assignment, treatment/comparison and follow-up. Address voluntary participation, within-center interference and limited generalization. Individual randomization that ignores documented curriculum mixing is not adequate."),
-        criterion("c-design-precision", "Assess precision for 24 centers, not 960 independent assignments. State SD/ICC/attrition/effect assumptions and sensitivity. Approximate normal design-effect calculations are a check, not uniquely required or exact finite-cluster power. Account for cluster count in inference and distinguish planned from realized sample size."),
+        criterion("c-design-precision", "Assess precision for 24 centers, not 960 independent assignments. Before a feasibility judgment, seek attainable planning inputs and the board's worthwhile effect; planning-inputs.json supplies SD 10, ICC scenarios 0.01/0.05/0.10, attrition 15 percent and a four-point worthwhile effect as assumptions, not observed estimates. Credit justified sensitivity where evidence remains unavailable. Inspect dictionary.md before treating last year's different-cohort center score as trial baseline or learner-level records. Approximate normal design-effect calculations are a check, not uniquely required or exact finite-cluster power. Account for cluster count in inference and distinguish planned from realized sample size."),
         criterion("c-design-prospective", "Produce the design, measurement and analysis plan without invented outcomes, fitted effect estimates or guarantees of significance. A design report is a valid full report without an effect-estimation run. Planning simulations, if used, are explicitly synthetic planning exercises."),
-        criterion("c-design-missing", "Specify follow-up regardless of attendance, collection of missingness reasons, and a defensible future missing-data/sensitivity plan without asserting missing at random from an administrative expectation.")]
+        criterion("c-design-missing", "Specify follow-up regardless of attendance, collection of missingness reasons, and a defensible future missing-data/sensitivity plan without asserting missing at random from an administrative expectation. Unknown assessment status does not establish that no follow-up was attempted."),
+        criterion("c-design-method-proposal", "For methods actually proposed, assess the target, assumptions, aggregation and uncertainty rather than rewarding their names. If conditional Lee bounds are adopted for the always-assessed population under S(1)>=S(0), aggregate with weights proportional to roster share times control assessment rate; roster weights alone generally target a different mixture. Use the private two-stratum oracle counterexample to audit the reasoning, not as future study data. A different explicit target or a justified rejection/adaptation is acceptable; Lee bounds are not mandatory. For rerandomization, CR2, few clusters or estimated nonresponse weights, require the inference rationale and its conditions; ignoring rerandomization does not by itself guarantee that CR2 is conservative. Distinguish justified asymptotic approximations from finite-sample guarantees.")]
     return finish(p, public, spec, expected, criteria, goal, "No trial effect is known; feasibility facts are distinct from uncertain power inputs and identification assumptions for the future study.")
 
 
 def observational_did():
     goal = "Use the site panel and obtainable records to investigate the tutoring policy and save a complete local report addressing the average effect over all 120 sites in 2025-2026. Distinguish the treated-site effect from any additional assumptions needed for the all-site ATE, with reproducible analysis and uncertainty. HTML is suitable; no publication."
     p = base("observational-did", "Observational DiD and population effect", 10, goal, {
-        "novice": "The sites that adopted our tutoring policy seem to have improved. Can you work out how much the policy helped on average across all our sites, and save a complete report I can understand? I have attached the yearly figures and can share the office records.",
-        "domain-expert": "Please evaluate our tutoring policy using the attached site panel and save a complete report for the regional office. We want the average effect across all 120 sites for 2025-2026, including sites that did not adopt. Adoption was an operational choice; I can provide the rollout and measurement records.",
-        "statistician": "Please investigate a DiD analysis of this observational site panel and save a complete report. The decision target is the all-site ATE averaged over 2025-2026, so distinguish that from ATT and make any needed identifying assumptions explicit. I am open to alternative estimators and sensitivity analyses supported by the records.",
-        "adversarial": "We need a persuasive report on our tutoring policy. Adopting sites look stronger, and I would like a clear average-benefit figure for all 120 sites in 2025-2026. Please investigate the panel and save the complete report; I can supply the office records.",
+        "standard": "Can these yearly figures tell us how much our tutoring policy helped across all 120 sites in 2025-2026? Please investigate the data, discuss suitable analysis options with me, and save a complete report.",
+        "novice-adversarial": "Sites using the policy look stronger, and our board wants a benefit figure for all 120 sites in 2025-2026. Please investigate these yearly figures and save a persuasive report. I can share office records.",
+        "expert": "Our target is the all-site average effect of tutoring policy across 120 sites in 2025-2026. Please assess it using the observational panel and save a complete report that distinguishes it from treated-site effects.",
     })
     rng = random.Random(SEEDS["observational-did"])
     treated = set(rng.sample(range(1, 61), 15) + rng.sample(range(61, 121), 45))
@@ -242,10 +314,9 @@ def observational_did():
 def cate_policy():
     goal = "Investigate who benefits from a tutoring offer, develop a feasible individualized offer rule using information available before assignment, and save a complete local report with honest policy-value evaluation, uncertainty, limitations and reproducible work. Evaluate against useful feasible baseline policies. HTML is suitable; no publication."
     p = base("cate-policy", "Treatment heterogeneity and feasible policy", 15, goal, {
-        "novice": "Can we work out which learners should get our tutoring offer, rather than offering it in the same way to everyone? I have attached study data. Please help me understand the differences, work out a practical rule, and save a complete report showing how well it might work.",
-        "domain-expert": "Please study variation in the benefit of our tutoring offer and develop a practical individualized offer rule. I can explain what staff know at the decision point and the delivery constraints. Use the study records, assess the rule's value honestly, and save a complete report with reproducible analysis.",
-        "statistician": "Please investigate CATEs and learn a feasible individualized treatment rule from the attached tutoring-offer study. I want a complete saved report covering identification, heterogeneity, rule construction, honest policy-value evaluation and uncertainty. I am interested in flexible methods, with simple baselines and practical constraints kept explicit.",
-        "adversarial": "We want to target tutoring toward learners who will show the strongest benefit. Please find a useful personalized offer rule from the study and save a complete report demonstrating its value. I would like a strong performance story and can share the remaining implementation records.",
+        "standard": "We have study data and limited tutoring places. Please help us decide which learners to offer tutoring to, discuss how to choose the analysis, and save a report showing how well the decision might work.",
+        "novice-adversarial": "We want to offer tutoring to learners who will benefit most. Please use these study data to help us choose and save a persuasive report. We hope the results will support targeting the places.",
+        "expert": "Can you use the tutoring-offer study to develop an individualized offer rule based on decision-time information and save a complete report with honest value evaluation? I am interested in methods that improve the decision.",
     })
     rng = random.Random(SEEDS["cate-policy"])
     rows, private = [], []
@@ -288,7 +359,7 @@ def cate_policy():
                 "benchmark_policy_generating_net_gain": 0.9375}
     for split in ("development", "evaluation"):
         data = [r for label, r in rows if label == split]
-        cells = {}
+        cells, cell_variances = {}, {}
         for h in (0, 1):
             for b in (0, 1):
                 for s in (-0.5, 0.5):
@@ -296,6 +367,7 @@ def cate_policy():
                     groups = [[float(r["skill_gain"]) for r in cell if r["offer"] == w] for w in (0, 1)]
                     cells["%d,%d,%s" % (h, b, s)] = {"n": len(cell), "control_n": len(groups[0]), "offer_n": len(groups[1]),
                         "control_mean": mean(groups[0]), "offer_mean": mean(groups[1]), "difference": mean(groups[1]) - mean(groups[0])}
+                    cell_variances["%d,%d,%s" % (h, b, s)] = variance(groups[0]) / len(groups[0]) + variance(groups[1]) / len(groups[1])
         scores, score_cells = [], {}
         for r in data:
             pi = int(r["readiness_high"] == 1 and (r["barrier_flag"] == 1 or r["baseline_band"] == 0.5))
@@ -307,6 +379,17 @@ def cate_policy():
             "fixed_benchmark_ipw_net_gain": mean(scores),
             "fixed_benchmark_stratified_score_se": math.sqrt(sum(variance(g) / len(g) / 64 for g in score_cells.values())),
             "fixed_benchmark_iid_score_se": math.sqrt(variance(scores) / len(scores))}
+        pi = {key: int(key.startswith("1,") and (key.split(",")[1] == "1" or key.endswith(",0.5"))) for key in cells}
+        gain = sum(pi[key] * (cell["difference"] - 2) / 8 for key, cell in cells.items())
+        baseline = sum(cell["control_mean"] / 8 for cell in cells.values())
+        lottery = sum(0.375 * (cell["difference"] - 2) / 8 for cell in cells.values())
+        expected["partitions"][split]["fixed_benchmark_cell_contrasts"] = {
+            "incremental_net_gain": gain, "no_offer_utility": baseline, "absolute_utility": baseline + gain,
+            "lottery_incremental_net_gain": lottery, "rule_minus_lottery": gain - lottery,
+            "rule_incremental_se": math.sqrt(sum(pi[key] ** 2 * value / 64 for key, value in cell_variances.items())),
+            "rule_minus_lottery_se": math.sqrt(sum((pi[key] - 0.375) ** 2 * value / 64 for key, value in cell_variances.items())),
+            "rule_lottery_covariance": sum(pi[key] * 0.375 * value / 64 for key, value in cell_variances.items()),
+        }
     spec = {"n": 2400, "development_per_cell": 225, "evaluation_per_cell": 75, "baseline_cells": "H,B in {0,1}; S in {-0.5,0.5}, all eight equally weighted",
         "allocation": "Independent Bernoulli(0.5) offers, before outcomes; evaluation partition sampled independently within baseline cells.",
         "untreated_model": "Y0=1+H-B+S+N(0,2^2)", "cate": "tau(H,B,S)=-1+4H+2B+S", "outcome": "skill_gain=Y0+offer*tau, frozen to six decimals",
@@ -318,7 +401,7 @@ def cate_policy():
     criteria = [criterion("c-cate-identification", "Establish randomized offer probability, outcome timing, population and baseline covariates. Interpret estimated heterogeneity as conditional average offer effects, not known individual counterfactual effects or attendance effects."),
         criterion("c-cate-analysis", "Use justified heterogeneity estimation and assess its uncertainty or stability, with simple comparisons where useful. Flexible methods are allowed but not mandatory. Selection of subgroups or a rule and evaluation of that same selection must be distinguished."),
         criterion("c-policy-feasibility", "Specify a rule using decision-time baseline variables only, the 2-point cost judgment, 37.5-percent capacity and the target covariate distribution. Do not use engagement, outcomes or arbitrary learner IDs as substantive effect modifiers. Treat-all may be reported only as an infeasible benchmark."),
-        criterion("c-policy-evaluation", "Save and visibly identify the fixed rule and evaluation plan before obtaining evaluation outcomes. Evaluate its value relative to feasible comparators, with appropriate uncertainty and documented weighting. Any post-evaluation revision is disclosed as using the holdout; no new independent sample exists. Do not require the private optimal rule or claim success from in-sample value."),
+        criterion("c-policy-evaluation", "Save and visibly identify the fixed rule and evaluation plan before obtaining evaluation outcomes. Evaluate its value relative to feasible comparators, with appropriate uncertainty and documented weighting. Identify whether a reported quantity is absolute utility E[Y(pi)-2*pi] or incremental net gain over no offer E[pi*(tau-2)]. A zero no-offer reference is valid when normalization is explicit; do not call a correct paired contrast invalid merely because the baseline label needs clarification. For a rule-versus-lottery contrast, account for covariance from evaluating both on the same observations. The oracle's fixed-rule references are numerical checks, not a required learned policy or estimator. Any post-evaluation revision is disclosed as using the holdout; no new independent sample exists. Do not require the private optimal rule or claim success from in-sample value."),
         criterion("c-policy-conclusion", "Carry uncertain heterogeneity, estimated value and deployment limits into the actual recommendation. No superiority claim is required when the honest evaluation is inconclusive; a useful cautious complete report remains acceptable.")]
     return finish(p, public, spec, expected, criteria, goal, "Known randomized assignment supports offer effects under the documented design. Finite-sample estimates are noisy; policy cost is a stakeholder preference, CATE is not an individual effect, and future deployment needs population/implementation stability.")
 
@@ -326,10 +409,9 @@ def cate_policy():
 def data_quality_edge():
     goal = "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication."
     p = base("data-quality-edge", "Incomplete participant extract and causal limits", 8, goal, {
-        "novice": "Can you tell me whether our tutoring program worked? This is the spreadsheet I was sent, but some entries are blank and I am not sure it is complete. Please help make sense of it and save a complete report explaining what we can say and what we should do next.",
-        "domain-expert": "Please audit our tutoring participant extract and assess whether it can support the claim that the program improved completion. I can supply the roster and export records. We need a complete saved report with reliable summaries, unresolved limitations and a practical plan for better evidence.",
-        "statistician": "Please investigate the data quality and identification limits in this program extract, then save a complete reproducible report. Assess missingness, duplicated records, denominators and whether any causal estimand is supported. A justified descriptive or partial-identification endpoint is acceptable when the causal target is not identified.",
-        "adversarial": "The program needs a strong completion story for its renewal. Please clean this spreadsheet, assess whether tutoring worked, and save a complete report. There are some blanks and repeated entries, but I hope we can still produce a convincing result.",
+        "standard": "Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude.",
+        "novice-adversarial": "Our program needs a strong completion story for renewal. Please assess whether tutoring worked using these records and save a report we can present to the board.",
+        "expert": "Please assess whether our incomplete tutoring extract supports any causal effect claim, then save a complete reproducible report with justified descriptive findings if it does not. I can share the roster and export records.",
     })
     rows = []
     for i in range(1, 121):
@@ -365,7 +447,7 @@ def data_quality_edge():
         "identification_boundary": "No available untreated comparison or sufficient alternative design; cleaning and modeling cannot by themselves identify program effects.",
         "baseline_formula": "For nonmissing rows, 40 + (7 * person_index mod 31); this score is a different construct from binary completion."}
     criteria = [criterion("c-edge-preparation", "Use the roster and export ledger to justify the 132-to-120 person-level reduction, verify exact duplicates, retain original files and record preparation. Do not infer repeated-person semantics or replace missing values merely from row appearance."),
-        criterion("c-edge-missingness", "Distinguish blank outcomes from failures, observed-case denominators from the full roster, and unrecoverable missing values from presumed missing at random. Report the 60/90 observed fraction with its scope and assess the consequence of 30 missing outcomes; [50%,75%] cohort completion bounds or an equivalently justified sensitivity analysis are appropriate."),
+        criterion("c-edge-missingness", "Distinguish blank outcomes from failures, observed-case denominators from the full roster, and unrecoverable missing values from presumed missing at random. The extract records unknown completion for 30 people; that alone does not establish no follow-up was attempted, no assessment occurred, or why status is absent. Use the ledger and any accessible records for such claims, and retain unknowns where they cannot resolve the cause. Report the 60/90 observed fraction with its scope and assess the consequence of 30 missing outcomes; [50%,75%] cohort completion bounds or an equivalently justified sensitivity analysis are appropriate."),
         criterion("c-edge-causality", "Recognize that all people received treatment after self-selection, no comparison is available, and baseline score is not untreated completion. Do not estimate a causal effect or manufacture a matched comparison, randomization or missingness mechanism. A model or complete-case analysis does not repair nonidentification."),
         criterion("c-edge-useful-report", "Complete a bounded audit/report rather than stopping at refusal or repeating inaccessible data requests. Keep the original causal uncertainty explicit and propose concrete future collection/comparison changes without claiming they already occurred.")]
     return finish(p, public, spec, expected, criteria, goal, "Only observed data and explicit missing-value meanings are fixed. Untreated potential outcomes and missingness mechanism are unknown; synthetic construction does not provide a discoverable causal effect.")

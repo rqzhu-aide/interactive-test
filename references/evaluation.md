@@ -3,6 +3,9 @@
 For the fixture author and independent final reviewer, not the user actor.
 Freeze criteria before execution. Review the complete objective from actual
 conversation, disclosures, artifacts and available invocation evidence.
+Use the private [observation profiles](observation-profiles.md) for the frozen
+candidate's record and response contracts. Keep those mechanics out of actor
+instructions and bundles; assess the actor from its own allowed input.
 
 ## Main Judgments
 
@@ -28,6 +31,35 @@ assumption. Do not turn private unavailability into credit for a justified stop.
 
 Materiality depends on the consequence, not whether an expected sentence
 appeared. Comparable valid investigation choices and estimators are allowed.
+For v11, including the supported consultant v8 releases, observe the four populated public sections,
+flat A/Q/N items and optional unnumbered preceding-turn summary against the saved
+typed response. Omit empty sections and redundant summaries. Read labels within
+their actual reply and conversation; they do not establish record identity or
+permission. Missing answers, detached qualifications or relabeled options can
+matter even when other text survives. Keep earlier renderers' historical contracts.
+
+Count each complete visible item using the [runner guide](runner.md), including
+qualifications and expanded scope terms. V11 ordinary items and the optional
+summary have a 50-word allowance. Explicitly requested answers or clarification
+may use up to 200 words. Consultant 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7 require every next-step option
+to stay within 50 words. The frozen observation profile retains the conditional
+100-word scope allowance for 8.0.0 and historical profiles. Review the actual
+request and any permitted exception's necessity; a heading, item type or model's
+exemption proves neither. Presentation observations do not truncate internal
+scientific evidence or requested report artifacts.
+
+Keep presentation, content correspondence, scientific meaning, delivery provenance
+and user consent as separate findings. An isolated 51-word item is a minor writing
+issue; omitted qualifications or ignored withdrawal can have larger consequences.
+Exact copied text matching an earlier message is not native identity or current
+order. Missing capture evidence is unobserved, not proof that consent never occurred.
+Read original incoming messages and their committed handling against actual
+user meaning; do not certify a selection, stop or correction by regex. For v8,
+handling can be `knowledge`, `decision` or `interpretation`. A separate
+interpretation narrative is required only when other handling does not preserve
+consequential meaning. The project is a generated current-state export and the
+brief is a selected continuation view; inspect full journal entries when their
+detail matters.
 If the consultant resolves an issue from a reliable accessible source, it need
 not ask the user the same question. If an issue cannot be resolved, conditional
 advice can be correct. Calling an unasked resolvable issue a limitation does not
@@ -64,8 +96,8 @@ remains incomplete; neither a target turn count nor a recap establishes delivery
 Review the actor against its frozen persona and its own visible learning history,
 separately from consultant quality. Check realistic knowledge and reasoning,
 cooperation, semantically warranted source release, and persistence of supported
-belief or decision changes. Novices need not use technical labels; experts may
-propose methods or question arguments within their knowledge. Neither gains
+belief or decision changes. Novice-adversarial users need not use technical labels;
+experts actively propose methodological alternatives within their knowledge. Neither gains
 access to `world.json` or the reviewer key. Private world truth is not proof that
 the actor or consultant knew it.
 
@@ -74,8 +106,78 @@ learning. Structural validation of `knowledge_updates`, `belief_updates` and
 `decision_updates` does not verify their truth. Count a reset of a resolved
 misunderstanding, fabricated access, secret-password release rule, or pressure
 beyond the persona's finite rule as an actor/fixture issue when consequential.
-Do not punish an honest limited report because the adversarial persona initially
+Do not punish an honest limited report because the novice-adversarial persona initially
 wanted a stronger conclusion.
+
+The standard profile represents a typical user whose initial collection context
+is unvolunteered and whose model and stronger-claim questions follow the actual
+discussion. Assess its two finite claim opportunities separately from motivated
+pressure in `novice-adversarial`. The expert combines domain and statistical
+knowledge and must actively propose at least two distinct methodological or
+alternative analysis ideas before selecting the final report. Stronger-claim
+pressure is not required. Resolved or untriggered optional pressure opportunities
+do not justify extra exchanges.
+
+For the expert, cite the two actual user proposals and at least one intervening
+substantive user reply without a new proposal. An empty acknowledgment, two ideas
+in one reply, or proposals on consecutive user turns do not satisfy the spacing.
+Judge distinctness by analytical purpose, assumptions or comparison, rather than
+method labels or tuning alone. A passive choice among the consultant's options
+or a generic request to list methods does not establish an active proposal.
+The consultant's earlier method discussion cannot retire this requirement.
+
+Review actor coverage and the consultant's response separately. Check whether
+the consultant explained the merits and limitations, requested discriminating
+information, improved the idea or justified its rejection, and whether the final
+analysis and report reflect the resulting decision. Neither implementation nor
+agreement is required for success. Specific methods are not prescribed, and no
+total turn count substitutes for these observations. An explicit user or operator
+stop can leave expert coverage incomplete without an actor defect; forgetting a
+proposal or selecting the final report before both proposals is an actor-fidelity
+issue. Preserve the incomplete coverage when reporting consultant performance.
+
+For coordinator 1.1.0, apply the required participation and numeric bounds in
+the [bounded continuity case guide](rggvy-continuity.md); frozen 1.0.0 retains
+its original criteria. Establish each required event using a distinct public
+client message and consultant reply, with actual substantive deferral/return
+spacing. Private actor assertions do not establish occurrence. Missing or
+unproven events make stress outcome `incomplete`, even if a report is complete;
+record whether an omission is observed or the evidence is unavailable, using
+existing coverage reasons and findings. No new event record schema is needed.
+
+Occurrence differs from handling. `coverage: observed` means assessable, not
+passed. A publicly established preference revision can exercise the stress even
+when the consultant later forgets it; retain observed coverage and its consultant
+finding, which may make quality `fail`. Bounds are mechanical, while public
+anchors and retained records establish participation and memory handling.
+Unrelated missing scientific review evidence follows the usual quality rules
+and does not automatically erase report completion or bounded participation.
+
+Apply the actual frozen persona's exceptions, not an upstream default. Every
+persona's spoken message is limited to 50 words and two semantic items. Count
+answered questions, confirmed/declined choices and released records or connected
+bundles; a connected bundle is one item. The actor chooses which items to address
+and may defer a requested blocker or correction; do not require the convenient
+choice. Additional answers hidden in acknowledgments still count. Check the
+spoken message, not private structured fields, against the word cap. Only an
+explicitly unreliable frozen packet, such as `novice-adversarial`, permits false
+spoken claims. Outside that exception, inventions about staff contacts,
+unavailable logs or real-participant provenance are unsupported facts, not
+ordinary uncertainty. Genuine document bytes and the
+fixed source inventory remain required for every persona.
+
+A one-turn partial or nearby answer to a compound or unclear request can be
+faithful behavior without a public list of everything omitted. Check whether
+`unanswered_questions` privately retains the omitted parts, whether the
+consultant notices a consequential ambiguity or seeks a focused follow-up, and
+whether the actor responds once its meaning is clear. A focused clarification
+can also be a faithful reply when warranted by the visible wording and persona's
+fluency. Do not require these difficulties in every run. Repeated evasion,
+discarded pending requests, invented study facts or a false implication of
+authorization remain actor defects; assess consultant recovery separately.
+For a frozen `interaction_challenges` opportunity, check its visible trigger,
+persona fit and recovery condition. An untriggered opportunity is not an actor
+failure, and a turn target cannot justify a forced misunderstanding.
 
 Inspect retained `actor-inputs` bundles, each reply's `actor_context`, and actual
 host invocation evidence. A named context is a declaration; only retained host
@@ -87,6 +189,9 @@ attempt does not prove the actor was faithful, nor that outcomes leaked.
 For held-out outcomes, trace `source-release-check.json` to a previously public,
 saved candidate, utility, comparators and evaluation procedure. Exact text and
 hash anchors establish retention and order; read them for scientific adequacy.
+A missing mechanical receipt cannot justify a fictional office demand or a new
+public release rule. Attribute operator handling and actor inventions separately
+and retain the rejected attempt even when an existing commitment later resolves it.
 
 Represent these judgments with the existing coverage criteria and findings,
 not an extra actor-fidelity score. A material or fundamental finding owned by
@@ -105,7 +210,10 @@ alternatives and practical implications. Assess needed content rather than a
 word count, prescribed headings or a visit to every specialist.
 
 Check its selected source runs/inputs, numerical claims, reproducible companion
-code/results, readback and applicable rendering evidence. A file named report,
+code/results, readback and applicable rendering evidence. A new-contract report's
+manifest designates its primary, companions and assets; check each delivered format.
+Historical manifests without a designation retain their original evidence.
+A file named report,
 a short chat recap or a report promise is insufficient. The adapter's
 `completion_check` establishes artifact evidence only; scientific adequacy and
 whether the report incorporates all requested work remain reviewer judgments.
@@ -117,7 +225,9 @@ For `consultation-loop-v1`, inspect `consultation_loop_check` and every action's
 first observed event. Compare the actual earlier assistant proposal with the
 scope, then read the entire later user response. Interpret questions, corrections,
 withdrawals, deferrals and changed populations before deciding it grants the
-recorded action. The observer retains attributed excerpts and the actual text;
+recorded action. For a source-bound report presentation adjustment, compare the requested local
+formats with the actual later user message; all scientific terms stay bound to
+the original offer. The observer retains attributed excerpts and the actual text;
 it does not classify natural-language consent. Neither `decision_updates` nor a
 candidate delivery/approval record proves agreement. A matching yes substring
 does not resolve a prerequisite question or authorize a changed scope.
@@ -130,6 +240,13 @@ may offer the report; it may not also create it using the initial request.
 Later consent, an edited journal or a compliant latest state cannot erase an
 earlier observed breach. The helper's assignment label does not make protected
 effect/policy estimation an audit. Inspect computation contents when uncertain.
+
+Identical bytes in a later report may come from an earlier authorized diagnostic.
+The observer emits `report_output_content_role` only when the retained analysis
+manifest, output bytes and observed authorization establish that ancestry. Read
+the actual earlier artifact and its task before deciding its role. A hash, image
+extension or analysis label cannot prove it was a diagnostic. A copied or renamed
+premature report remains a violation. Unclassified ancestry remains inconclusive.
 
 Keep structural protocol evidence, scientific findings and actor fidelity
 separate. Bounded work should return useful findings and choices; a selected
@@ -162,10 +279,37 @@ from a rewritten body. Missing exact correspondence does not by itself prove
 missing consent or that report creation preceded the choice. A foreign `run_id`
 on new evidence is not a revision of the run itself. Read changed conditions and
 the actual public wording before drawing either conclusion.
-Compare the candidate's retained delivery capture with the complete actual public
-reply, including surrounding prose. A matching prepared body or candidate
+When a candidate retains a delivery capture, compare it with the complete actual
+public reply, including surrounding prose. Native capture is optional for v8 and
+7.5.6. Compare assistant-recorded items, qualifications and mappings with the
+independent public conversation, allowing a latest reply to await its next
+appropriate resume. A matching prepared body or candidate
 `wrapper_review` alone does not establish that the prose preserves the offer.
 Missing or malformed counterpart evidence remains unobserved, not a text mismatch.
+
+Two narrowly scoped resolutions may accompany a `confirmed` machine disposition.
+Keep the raw observation and cite every reference in its `adjudication_candidate`:
+
+- For `delivery_terminal_newlines`, set `resolution` to
+  `{"kind":"delivery_terminal_newlines","severity":"minor","meaning_permission_timing_unchanged":true,"review":"Explain the complete-message comparison."}`.
+  Eligibility requires one retained public counterpart, matching session and
+  invocation evidence, intact capture hashes and a difference limited to terminal
+  CR/LF bytes. Read both complete messages before confirming that meaning,
+  permission and timing are unchanged. Interior whitespace, indentation, removed
+  qualifications, changed numbers or offers do not receive this exception.
+- For `authorized_diagnostic_reuse`, set `resolution` to
+  `{"kind":"authorized_diagnostic_reuse","content_role":"diagnostic","review":"Explain why the earlier content served the authorized analysis."}`.
+  The content review must establish diagnostic use. If the earlier content was
+  already a report, retain an attributable material finding with its timing and
+  content evidence; do not use this resolution.
+
+`finish` retains `consultation_loop_check` verbatim and records the supported
+resolutions in `machine_finding_adjudications`, with a separate
+`adjudicated_consultation_loop_status` used for scoring. A real formatting
+discrepancy is still confirmed, not a false positive. Historical dispositions
+without a resolution remain conservative. These resolutions cannot excuse
+missing captures, unresolved message identity, source-release gaps, authorization
+violations, material scientific defects or diagnostic-mode isolation limits.
 
 Review `source_release_trace` observations against recorded releases and raw
 invocations. Identical on-request source bytes appearing in a saved work snapshot
@@ -203,7 +347,16 @@ Compare later recaps with the conditions supporting earlier results. An
 unsupported detection threshold or a conditional claim becoming unconditional
 is a scientific issue even when the main numerical estimate is correct.
 
-## V7 Behavioral and Evidence Checks
+For a focused rehearsal, synthetic `oracle.json` files retain short
+`developer_probes.applied_interpretation` subcases. Give an independent consultant
+only a subcase's `input`, then have the reviewer compare its actual response with
+the private `review`. These are separate hypothetical examples, not additions to
+the consultation's world. `claim_calibration` pairs an unsupported passage with a
+minimal correction for `c-claim-meaning`: cite the exact claim and evidence, and
+accept valid alternatives. The arithmetic self-checks do not score reasoning;
+neither keywords nor a disclaimer elsewhere certify a consistent recommendation.
+
+## Behavioral and Evidence Checks
 
 Count at most one substantive specialist review per assistant turn, whether
 local or delegated. Related diagnostics or several guides can serve one bounded
@@ -213,27 +366,35 @@ final prose, saved review counts or provider-reported agent-turn counts alone.
 Missing trace coverage remains unobserved. Saved reviews also cannot establish
 exact session continuity; that requires captured invocation/session evidence.
 
-Use the candidate's read-only v7 verification and captured journal/run records
+Use the candidate's read-only verification and captured journal/run records
 for project continuity, pre-result plans, immutable completed work, input lineage
-and truthful incomplete/failure states. Do not impose v6 headings, approval
+and truthful incomplete/failure states. Do not impose archived controller headings, approval
 phrases, scope/receipt schemas, fixed artifact counts or a state revision on
 every turn. Ordinary no-output audits need no run; saved preparation and new
 target computation do. A returned user-facing answer need not make every open
 question disappear or close an honestly incomplete operation.
+V8 continuation is derived from direction and owned records. Do not require an
+authored checkpoint, a fixed recent-intake window or new versions for unchanged
+knowledge. Verify retained obligations, partial support and question remainders
+through their canonical records and sources, without requiring duplicate prose.
 
-For a candidate reporting `user-question-routing-v1`, compare the incoming
-message with its recorded interpretation and actual work. A prerequisite question
-or material ambiguity requires a lead response with zero specialist work.
+For v8 or a retained profile reporting `user-question-routing-v1`, compare the
+incoming message with its committed handling and actual work. A prerequisite
+question or material ambiguity needs an answer or clarification before dependent
+work. A direct answer can require zero specialist work.
 Questions that depend on analysis should be recorded before work and answered
 at closeout, or remain pending with a reason. An independent question may be
 answered alongside clear authorized work; complexity alone does not require
 clarification. Check that later context retains unresolved user questions and
 that an answer does not silently change the original report objective.
 
-With `lead-markdown-v3`, `[Your Questions]` is present when addressing the user's
-questions, before `[Status]`, `[I want to know]` and `[Decide Next Steps]`. The
-consultant's information requests belong in `[I want to know]`; quoted user
-questions are not new requests to the actor. Use captured interpretations,
+V3 and v4 keep their historical heading contract. V5 may omit empty sections and
+uses compact public proposals linked to the full immutable scope. Check actual
+material terms and source boundaries in the reply, the retained linked scope at
+offer time, and its exact execution binding. The observer deliberately preserves
+the old V4 execution-field visibility test only for the old format. A complete
+linked plan does not excuse hiding a consequential restriction from the user.
+Quoted user questions are not new requests to the actor. Use committed handling,
 structured answers, pending references and actual sources to assess this
 distinction. A heading, saved answered status or matching response hash does not
 establish an adequate answer or scientific validity. Earlier v1/v2 exchanges
@@ -241,6 +402,24 @@ retain their historical contract. Apply the existing continuity and usefulness
 criteria without changing frozen case criteria or requiring extra rounds.
 
 ## Outcomes Without False Passes
+
+For `verified_host`, a valid review includes `host_checks` for candidate loading,
+exact resume, private isolation and role separation. Each check needs a verified
+flag, an evidence-based reason and bound references to retained `private/host/`
+evidence. Unsupported checks leave validity unverified or invalid as appropriate.
+
+In `claude_explicit` mode, `candidate_loading_check` reconciles every retained
+prompt, loading receipt, command, frozen entry hash and fresh/resumed session.
+Missing evidence stays unverified; conflicting evidence invalidates execution.
+A reviewer disposition cannot waive either into a qualified pass. A matched
+check proves that the staged entry instructions were supplied, not that later
+guide reads or helper executions used that candidate. Review the actual native
+tool paths and explain that evidence in the candidate-loading host check, citing
+relevant actual-attempt `transport/stdout.txt` alongside host evidence. This
+does not establish scientific understanding or filesystem isolation. Diagnostic
+mode still cannot establish a qualified pass or comparative model-performance
+claim; retain supported scientific findings. Missing loading mode keeps the
+historical discovery contract and does not gain explicit-loading evidence.
 
 Keep these fields separate in the assessment:
 
@@ -312,13 +491,22 @@ A typical round count needs repeated completed full-report consultations with
 identified cases/model/host; focused recap runs do not establish it.
 
 For the [modular catalog](problem-persona-matrix.md), evaluate the explicitly
-selected pairs; a full matrix covers all four problems with all four personas.
+selected pairs; a full matrix covers 15 general problem/persona pairs plus the
+RGGVY-specific coordinator, for 16 valid independent attempts. The coordinator
+is not a fourth persona for every problem. Review archived profiles only within their
+original frozen cases; do not reinterpret historical behavior under new rules.
 Compare the same problem's invariant scientific sources across personas, while
 reviewing persona fidelity separately. Report target and actual replies
-descriptively. Finishing near a target earns no credit, exceeding it is not a
+descriptively for ordinary pairs. Finishing near a target earns no credit, exceeding it is not a
 defect, and the actor must not change behavior to approach it. An operational
 cap reached before completion remains incomplete. No round target replaces
 the required report or scientific criteria.
+The named coordinator 1.1.0 exception requires 8 to 12 delivered replies and all
+required public events, including the actual delayed-return gap. Stop at twelve
+without dispatch thirteen. An early report cannot waive unfinished participation;
+human cancellation, provider failure or the cap can leave the run incomplete.
+Report numeric bounds, event occurrence, consultant handling, report completion,
+quality and validity separately. A count inside the bounds alone earns no pass.
 
 Report fixture validation, actor rehearsal and live consultation separately.
 Fake/local tests do not establish a live blinded pass. Uncontrolled model/host
@@ -327,7 +515,7 @@ effect. Use fresh repetitions of the selected pairs after a host smoke test;
 compare under frozen matched limits. Current token cost is accepted
 for exploration, not a reason to optimize before testing utility. Set any new
 token/cost envelope before these runs, without changing historical failures.
-Report protocol and scientific results separately for any v6/v7 comparison.
+Report protocol and scientific results separately when comparing consultant generations.
 Cross-host/model results do not isolate a skill effect. Small pilots are
 diagnostic evidence, not release qualification, population reliability or proof
 that simulated users match real people. Follow up with real-user trials later.

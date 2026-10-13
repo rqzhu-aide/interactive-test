@@ -1,26 +1,43 @@
-# Hermes to Claude Code Contract
+# Agent-Host Contract
 
-For run operators and adapter developers. This describes the required v7
-transport; the minimal CLI is documented in [runner.md](runner.md).
+For run operators and adapter developers. This describes consultation transport
+for the frozen candidate profile; the current executable CLI is documented in
+[runner.md](runner.md).
 
 ## Deployment Profile
 
-Keep Hermes as coordinator/user actor and Claude Code as consultant host. Use
-only available, authorized host tools and shared user/machine installations.
-Do not introduce a model API client, local virtual environment, private runtime
-download or extra agent service merely to implement this loop.
+Keep the operator, simulated user actor, consultant host and independent reviewer
+separate. Choose and record the actual agent host and model provider. The
+current runner supports Claude Code directly and Kimi and Pi through transport
+shims; a different host needs a verified adapter with the same boundaries and
+evidence capture. Use only authorized host tools and shared user/machine
+installations. An API client may serve as an adapter when it preserves the same
+session, isolation and evidence contract. Do not create a local virtual
+environment, download a private runtime or add an extra agent service merely
+to implement this loop.
 
 Before live work, pin and record the actual testing package and consultant
-snapshot hashes, resolved runtime roots, Claude executable/version, model and
-provider configuration, Hermes/actor and reviewer identity where available,
+snapshot hashes, resolved runtime roots, host executable/version, model and
+provider configuration, operator/actor and reviewer identity where available,
 operating system, shared scientific runtimes/packages, relevant host instruction
 sources, permission profile and trace/usage capabilities. Record unavailable
 identity fields explicitly. Redact secrets; do not dump the environment.
 
-Inspect actual CLI help and installed runtime behavior on the target host.
-Confirm fresh invocation, exact-session resume, error/timeout behavior and what
-the captured usage includes. Do not assume this Windows workspace's observations
-establish Hermes/Linux behavior or hard-code unverified CLI flags. Resolve paths
+For message-bound-delivery-v2, retain native conversation/message identities and
+known conversation order independently of the candidate's capture claims where
+the host exposes them. Exact text matching another message is only text
+correspondence. The adapter can bind a unique main-session assistant stream UUID
+when its complete text matches the returned result; it does not invent a global
+transcript ordinal from per-call stream position. Candidate `.host-order.json`
+and `.host-record.json` files remain retained for cross-checking, with unavailable
+native order reported explicitly. Keep original UTF-8 bytes and hashes; LF/CRLF
+equivalence is a separately named comparison, not raw-byte equality.
+
+Inspect the selected host interface and installed runtime behavior, including
+CLI help when it has a CLI. Confirm fresh invocation, exact-session resume,
+error/timeout behavior and what the captured usage includes. Do not assume
+observations on one host or provider establish behavior on another, or hard-code
+unverified interface options. Resolve paths
 from the installed testing package and explicit configuration, not developer
 machine paths. The consultant receives only its intended runtime package, not
 the testing package, architecture, answer keys or another candidate's state.
@@ -37,12 +54,17 @@ The consultant may read its runtime, public work files and permitted tools. The
 actor packet, unreleased sources, reviewer packet and private results stay
 outside that access. The operator can copy a released immutable source into the
 public area and record its identity; the consultant never receives the private
-source path or ledger. The actor sees the public reply and legitimate material,
-not tool traces or journal content used privately for evaluation.
+source path or ledger. The actor sees its own protocol, setting/persona packet,
+public conversation, legitimate material and its own disclosures/updates.
+Candidate skills and guides, consultant state/tool traces, observer results,
+operator/reviewer references and answer keys stay outside the actor's input
+and permitted access. Keep consultant mechanics in the private
+[observation profiles](observation-profiles.md), not the actor's prompt or bundle.
 
 Use a verified host permission/sandbox boundary, such as separate identities or
 mount visibility, sufficient to deny private reads through allowed tools. A
-different CWD or the v7 project's containment checks are not such a boundary.
+different CWD, a fresh process, disabled skills or the consultant project's
+containment checks are not such a boundary.
 There is no implicit permission-bypass flag. Its absence alone does not prove
 isolation. Any exceptional
 execution profile needs explicit approval and independent boundary verification.
@@ -58,7 +80,7 @@ its validity/claims accordingly. Do not build a general security framework.
 
 The following operations are implemented by `scripts/session_driver.py`; see
 [runner.md](runner.md) for commands. Transport/evidence mechanics stay in the
-adapter and reply selection stays in the Hermes actor.
+adapter and reply selection stays with the simulated user actor.
 
 | Operation | Input | Responsibility/output |
 |---|---|---|
@@ -89,11 +111,12 @@ worker traces. Keep raw failure output instead of only a 2,000-character excerpt
 summaries may abbreviate it. Distinguish proposed, sent, received and accepted
 turns. Preserve raw bytes for diagnosis and sanitized reports for sharing.
 
-## V7 Observation Profile
+## Candidate Observation Profile
 
 Before using the candidate, read its own memory/run reference and verify the
-helper identity. Use `scripts/project.cjs` read operations such as `status`,
-`history` and `verify` for appropriate snapshots, not v6 `statectl.cjs`. Capture
+helper identity and apply the private [observation profiles](observation-profiles.md).
+Use `scripts/project.cjs` read operations such as `status`, `history` and `verify`
+for appropriate snapshots, not v6 `statectl.cjs`. Capture
 the journal and run changes without demanding a write on every turn. Final prose
 alone cannot establish one-specialist compliance or commit ordering. If needed
 invocation evidence is unavailable, leave that criterion unobserved.
@@ -101,7 +124,15 @@ invocation evidence is unavailable, leave that criterion unobserved.
 Keep source inputs immutable. Preserve actual pre-result plans, frozen input
 versions, executed code/commands, outputs and failures. No-output inspection is
 not a missing analysis run. New target computations and saved preparation need
-their v7 run evidence. Do not manufacture state or outputs to satisfy checks.
+their candidate-format run evidence. Do not manufacture state or outputs to satisfy checks.
+
+For v8, retain the primary `journal.jsonl`, generated `project.yaml` and
+`case-brief.md`, full entries and managed run evidence. Current compact views
+do not replace complete source records. Handle `knowledge`, `decision` and
+`interpretation` as valid incoming handling forms; do not require a checkpoint,
+fixed recent-intake window or per-turn knowledge growth. Native reply capture
+is optional. Bind assistant-recorded actual replies to the independent public
+conversation, allowing the latest reply to await its next appropriate resume.
 
 During execution use the candidate's verification against originals when those
 sources are present. For a relocated review archive, explicit snapshot-mode

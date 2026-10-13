@@ -89,7 +89,7 @@
       "source_ids": []
     },
     {
-      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
       "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
       "fact_ids": [
         "f-record-access"
@@ -104,7 +104,7 @@
       ]
     },
     {
-      "action": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
       "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
       "fact_ids": [
         "f-record-access"
@@ -132,8 +132,8 @@
     }
   ],
   "files": {
-    "check_oracle.py": "62ecf5dd7260cedaf7b97c6cd774e33a8b50dc5f6677f4674980c4c12d0e3a7f",
-    "oracle.json": "0c365195d1c88e226595ad43ae179cc56202ebebdfa50a16f264690a08f8635b",
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "63a5b5f57a0078173f8ac3fe8378d0eae828e62b554e49831cfe7b55bc646225",
     "public/assignment-and-sampling.md": "ae715efad3f353a046eeff3002d2395ee69f29049b5c2befbd39abea3fd14e82",
     "public/available-records.md": "b4d7fb9f36ddc90b64fb5f43a6339241423071230b42adab1bc19a67d1dd3f44",
     "public/decision-constraints.md": "159afcf11d1a46f4c7805bad539b9b891e3e8dc789c399d5290f32dbf6b1adfc",
@@ -141,21 +141,20 @@
     "public/dictionary.md": "2942c46e36840eeb7b5ab7dbdb810d52971df05a7d3dad219acfc1466c0308e0",
     "public/evaluation-access.md": "cfb23ddc86c0c176e2190d71f484bad2f17b21e19b494e45e2c263637e3ace70",
     "public/evaluation.csv": "300906f90cbbfbe80bbb6114f6c8723638e89c5887afd0fbad2366f31e132ae3",
-    "reviewer.json": "06867fc9e93125d8ae12c25b5046d84015c2465f1dd4b900fb873bb26ec3fd86",
-    "world.json": "1a8582fe16a338c8511c1b24644d232aa7abc3e28f7aa0ae6acf76c458bcc566"
+    "reviewer.json": "af4b72412439ae6d90ec8611d858f21dc194b8cf6753ea60479d08081b1ec6c0",
+    "world.json": "2ec537c0ff2ad14a2dfa6b8b96b41eeb847909d073bc748c53f040010408d70e"
   },
   "goal": "Investigate who benefits from a tutoring offer, develop a feasible individualized offer rule using information available before assignment, and save a complete local report with honest policy-value evaluation, uncertainty, limitations and reproducible work. Evaluate against useful feasible baseline policies. HTML is suitable; no publication.",
-  "initial_request": "Please use the causal-consultant skill for this consultation. Please study variation in the benefit of our tutoring offer and develop a practical individualized offer rule. I can explain what staff know at the decision point and the delivery constraints. Use the study records, assess the rule's value honestly, and save a complete report with reproducible analysis.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. We have study data and limited tutoring places. Please help us decide which learners to offer tutoring to, discuss how to choose the analysis, and save a report showing how well the decision might work.",
   "initial_requests": {
-    "adversarial": "Please use the causal-consultant skill for this consultation. We want to target tutoring toward learners who will show the strongest benefit. Please find a useful personalized offer rule from the study and save a complete report demonstrating its value. I would like a strong performance story and can share the remaining implementation records.",
-    "domain-expert": "Please use the causal-consultant skill for this consultation. Please study variation in the benefit of our tutoring offer and develop a practical individualized offer rule. I can explain what staff know at the decision point and the delivery constraints. Use the study records, assess the rule's value honestly, and save a complete report with reproducible analysis.",
-    "novice": "Please use the causal-consultant skill for this consultation. Can we work out which learners should get our tutoring offer, rather than offering it in the same way to everyone? I have attached study data. Please help me understand the differences, work out a practical rule, and save a complete report showing how well it might work.",
-    "statistician": "Please use the causal-consultant skill for this consultation. Please investigate CATEs and learn a feasible individualized treatment rule from the attached tutoring-offer study. I want a complete saved report covering identification, heterogeneity, rule construction, honest policy-value evaluation and uncertainty. I am interested in flexible methods, with simple baselines and practical constraints kept explicit."
+    "expert": "Please use the causal-consultant skill for this consultation. Can you use the tutoring-offer study to develop an individualized offer rule based on decision-time information and save a complete report with honest value evaluation? I am interested in methods that improve the decision.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. We want to offer tutoring to learners who will benefit most. Please use these study data to help us choose and save a persuasive report. We hope the results will support targeting the places.",
+    "standard": "Please use the causal-consultant skill for this consultation. We have study data and limited tutoring places. Please help us decide which learners to offer tutoring to, discuss how to choose the analysis, and save a report showing how well the decision might work."
   },
   "label": "Treatment heterogeneity and feasible policy",
   "oracle_check": "check_oracle.py",
   "problem_id": "cate-policy",
-  "problem_version": "1.0.2",
+  "problem_version": "1.3.0",
   "reviewer": "reviewer.json",
   "schema_version": 1,
   "sources": [
@@ -218,7 +217,8 @@
       "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
     }
   ],
+  "suite_version": "8.2.0",
   "target_turns": 15,
-  "unknown_policy": "Answer only from selected actor facts, actual received records and visible conversation. For an unspecified fact, say it is unknown and record the fixture gap privately. A document's existence does not confer knowledge of its contents. No source outside the inventory, new data collection or staff contact is available during this session. Do not invent facts or turn an assumption into a verified fact. A material unspecified fact invalidates only the affected evaluation claim, pending a versioned fixture revision.",
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
   "world": "world.json"
 }
