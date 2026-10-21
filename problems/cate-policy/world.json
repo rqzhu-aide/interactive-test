@@ -2,7 +2,7 @@
   "assumption_boundary": "Known randomized assignment supports offer effects under the documented design. Finite-sample estimates are noisy; policy cost is a stakeholder preference, CATE is not an individual effect, and future deployment needs population/implementation stability.",
   "generation": {
     "generator": "scripts/generate_problem_bank.py",
-    "generator_sha256": "a24e15dbc3e8b59cb802e1dd6ef5a742171a61905f7893b1375c9d2843780d26",
+    "generator_sha256": "78b7211ea709676b41f47c302eec8fc144cbf16ffcb719617b6cf4ed85ce6b36",
     "numeric_note": "CSV values are frozen to six decimal places where indicated. Seed alone does not replace preserved bytes.",
     "seed": 26091003,
     "specification": {
@@ -78,7 +78,7 @@
     {
       "availability": "on_request",
       "file": "public/evaluation-access.md",
-      "sha256": "cfb23ddc86c0c176e2190d71f484bad2f17b21e19b494e45e2c263637e3ace70",
+      "sha256": "c7af7a104c653dc9e03608741f50eb43044526c5fb2340a8bb94f6f1137d6b1c",
       "source_id": "s-evaluation-access"
     },
     {
@@ -90,7 +90,7 @@
     {
       "availability": "on_request",
       "file": "public/available-records.md",
-      "sha256": "b4d7fb9f36ddc90b64fb5f43a6339241423071230b42adab1bc19a67d1dd3f44",
+      "sha256": "04121204018e8384d2054461d9a36bec2e254a043c1e52782bb458312063ff7c",
       "source_id": "s-inventory"
     }
   ],

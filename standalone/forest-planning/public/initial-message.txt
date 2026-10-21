@@ -1,0 +1,1 @@
+$causal-consultant It's 8 February 2027. I want to prepare a study of whether food and school-transport assistance changes forest clearing in rural Peru. Deliveries have not started. What information should we collect, and how could we design the analysis to reach a credible causal conclusion?

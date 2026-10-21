@@ -1,4 +1,4 @@
-"""Focused reply-bound checks of real source functions with mocked transport and observations."""
+"""Reply-bound checks, with separate cap-only and real frozen-runner boundary fixtures."""
 from pathlib import Path
 import copy
 import sys
@@ -13,7 +13,11 @@ sys.path.insert(0, str(ROOT / "interactive-test/scripts"))
 import session_driver as d
 import compose_case as c
 
+PLANNING_IDS = tuple(name for name in c.STANDALONE_IDS if name != c.RGGVY_ID)
+
 class Mechanics(unittest.TestCase):
+    """Cap-only checks: integrity, actor binding and project observation are mocked."""
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
@@ -57,6 +61,101 @@ class Mechanics(unittest.TestCase):
         value={"active_seconds":0.01,"message":"Delivered.","error":None}
         d.write(out / "transport.json",value)
         return value
+
+    def planning_case(self, identity="forest-planning", cap=12):
+        manifest = d.read(ROOT / "interactive-test/standalone" / identity / "case.json")
+        self.case.pop("minimum_consultant_replies", None)
+        self.actor.pop("consultant_reply_bounds", None)
+        for key in ("case_id", "edition", "run_limits", "completion_contract"):
+            self.case[key] = manifest[key]
+        self.config["limits"]["consultant_turns"] = cap
+        d.write(self.a / "case/actor.json", self.actor)
+        d.write(self.a / "freeze.json", self.frozen)
+
+    def test_resumed_planning_cases_reject40_and_dispatch_with12(self):
+        self.seed(1)
+        for identity in PLANNING_IDS:
+            with self.subTest(case=identity):
+                self.planning_case(identity, cap=40)
+                before = d.inventory(self.a)
+                with patch.object(d, "invoke") as invoke, self.assertRaisesRegex(ValueError, "planning run configuration"):
+                    d.step(self.a, self.reply())
+                invoke.assert_not_called()
+                self.assertEqual(d.inventory(self.a), before)
+                self.planning_case(identity)
+                previous_turns = self.state["turns"]
+                with patch.object(d, "invoke", side_effect=self.invoke) as invoke:
+                    self.assertEqual(d.step(self.a, self.reply())["status"], "ready")
+                invoke.assert_called_once()
+                self.state = d.read(self.a / "state.json")
+                self.assertEqual(self.state["turns"], previous_turns + 1)
+
+    def test_planning_preflight_rejects40_before_candidate_validation(self):
+        for identity in PLANNING_IDS:
+            manifest = d.read(ROOT / "interactive-test/standalone" / identity / "case.json")
+            config = {**self.config, "node_command": ["node"], "candidate_loading": "adapter",
+                      "limits": {**self.config["limits"], "consultant_turns": 40}}
+            probe = type("Probe", (), {"returncode": 0, "stdout": b"22.0.0", "stderr": b""})()
+            with self.subTest(case=identity), patch.object(d, "validate_config"), \
+                    patch.object(d, "validate_case", return_value=manifest), \
+                    patch.object(d.subprocess, "run", return_value=probe), \
+                    patch.object(d, "candidate_inventory") as inventory:
+                with self.assertRaisesRegex(ValueError, "planning run configuration"):
+                    d.preflight(self.a / "case", self.a / "candidate", config)
+                inventory.assert_not_called()
+
+    def test_planning_early_useful_stop_needs_no_minimum_or_report(self):
+        self.planning_case()
+        self.seed(3)
+        self.assertEqual(d.step(self.a, self.reply(True))["status"], "awaiting_review")
+        self.state = d.read(self.a / "state.json")
+        review = self.review()
+        review.update(outcome="useful_stop", useful_stop_basis="The chosen preparation step is clear.")
+        result = d.assess(review, self.state, self.frozen, {"sha256": "test", "files": {"p": "hash"}})
+        self.assertEqual(result["outcome"], "useful_stop")
+        self.assertIsNone(result["completion_check"])
+        self.assertEqual(self.state["turns"], 3)
+
+    def test_planning_cap12_never_dispatches13(self):
+        self.planning_case()
+        self.seed(12)
+        with patch.object(d, "invoke") as invoke:
+            self.assertEqual(d.step(self.a, self.reply())["status"], "limit_reached")
+        invoke.assert_not_called()
+        self.state = d.read(self.a / "state.json")
+        self.assertEqual(self.assess(12)["outcome"], "incomplete")
+        self.assertFalse((self.a / "events/013").exists())
+
+    def test_cap_only_planning_stop_and_review_preserve_supplied_historical_finding(self):
+        # The shared integrity/actor mocks isolate the cap exemption and supplied
+        # finding. FrozenRunnerMechanics covers identity and actor binding below.
+        self.planning_case(cap=40)
+        self.seed(20)
+        Path(self.state["work"]).mkdir()
+        d.write(self.a / "case/reviewer.json", self.frozen["reviewer_packet"])
+        frozen_bytes = (self.a / "freeze.json").read_bytes()
+        with patch.object(d, "invoke") as invoke:
+            self.assertEqual(d.step(self.a, self.reply(True))["status"], "awaiting_review")
+        invoke.assert_not_called()
+        observations = {"machine_findings": [], "completion_check": None,
+                        "consultation_loop_check": {"status": "no_structural_breach", "findings": []},
+                        "missing_captures": []}
+        with patch.object(d, "review_observations", return_value=observations):
+            inspected = d.inspect(self.a, "reviewer")
+            review = self.review()
+            review.update(evidence_sha256=inspected["evidence_sha256"],
+                          observations_sha256=inspected["observations_sha256"], outcome="incomplete")
+            review["coverage"]["stress-gap"]["evidence_refs"] = ["private/freeze.json"]
+            review["findings"] = [{"owner": "harness", "severity": "material", "criterion": "stress-gap",
+                                   "description": "Configured 40 replies despite the frozen ceiling of 12.",
+                                   "consequence": "Delivered 20 replies outside the intended test budget.",
+                                   "evidence_refs": ["private/freeze.json"]}]
+            result = d.finish(self.a, review)
+        self.assertEqual(result["findings"], review["findings"])
+        self.assertEqual(result["resources"]["limits"]["consultant_turns"], 40)
+        self.assertEqual(result["outcome"], "incomplete")
+        self.assertEqual(d.read(self.a / "state.json")["status"], "finished")
+        self.assertEqual((self.a / "freeze.json").read_bytes(), frozen_bytes)
 
     def test_early_stop5_rejected_without_mutating_conversation(self):
         self.seed(5)
@@ -253,7 +352,179 @@ class Mechanics(unittest.TestCase):
             inventory.assert_not_called()
 
 
+class FrozenRunnerMechanics(unittest.TestCase):
+    """Synthetic attempts with real integrity, actor binding and retrospective review.
+
+    Only consultant transport and per-dispatch project observation are mocked.
+    These fixtures do not perform startup admission or replay an archived runner.
+    """
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+
+    def attempt(self, identity="forest-planning", cap=40, mismatch=False, turns=0):
+        a = self.root / f"{identity}-{cap}-{int(mismatch)}-{turns}"
+        (a / "case/public").mkdir(parents=True)
+        (a / "events").mkdir()
+        (a / "testing/references").mkdir(parents=True)
+        (a / "testing/scripts").mkdir()
+        (a / "testing/references/user-simulator.md").write_text("Synthetic reply policy.", encoding="utf-8")
+        original = d.read(ROOT / "interactive-test/standalone" / identity / "case.json")
+        case = {key: original[key] for key in ("case_id", "edition", "run_limits", "completion_contract", "reply_limits")}
+        case.update(actor="actor.json", reviewer="reviewer.json", initial_message="public/initial.txt", sources=[])
+        initial = (ROOT / "interactive-test/standalone" / identity / original["initial_message"]).read_text(encoding="utf-8")
+        (a / "case/public/initial.txt").write_text(initial, encoding="utf-8")
+        d.write(a / "case/actor.json", {"facts": [], "rules": []})
+        d.write(a / "case/reviewer.json", {"criteria": [{"id": "planning", "required": True}]})
+        case["files"] = d.inventory(a / "case")
+        d.write(a / "case/case.json", case)
+        skill = a / "work/.claude/skills/causal-consultant"
+        skill.mkdir(parents=True)
+        (skill / "SKILL.md").write_text("Synthetic candidate identity only.", encoding="utf-8")
+        runner = a / "testing/scripts/session_driver.py"
+        runner.write_bytes(Path(d.__file__).read_bytes() + (b"\n# Synthetic different frozen runner.\n" if mismatch else b""))
+        frozen = {"case_manifest": case, "case_sha256": d.digest(a / "case/case.json"),
+                  "configuration": {"limits": {"consultant_turns": cap, "active_seconds": 1000, "elapsed_seconds": 1000},
+                                    "call_timeout_seconds": 10, "mode": "diagnostic"},
+                  "candidate_files": d.inventory(skill), "adapter_files": {"session_driver.py": d.digest(runner)}}
+        d.write(a / "freeze.json", frozen)
+        d.write(a / "state.json", {"status": "ready", "turns": turns, "work": str(a / "work"),
+                                  "session_id": "synthetic-consultant", "started_at": time.time() if turns else None,
+                                  "active_seconds": 0, "breaches": [], "public_files": {}, "released_sources": []})
+        for number in range(1, turns + 1):
+            event = a / "events" / f"{number:03d}"
+            (event / "transport").mkdir(parents=True)
+            d.write(event / "actor.json", self.reply(a))
+            d.write(event / "public.json", {"user": "Please explain.", "assistant": "Synthetic delivered reply."})
+            d.write(event / "transport/transport.json", {"error": None, "message": "Synthetic delivered reply."})
+        return a
+
+    def reply(self, a, stop=False):
+        return {"message": None if stop else (a / "case/public/initial.txt").read_text(encoding="utf-8"),
+                "fact_ids": [], "rule_ids": [], "attachments": [], "unanswered_questions": [], "fixture_gaps": [], "stop": stop}
+
+    def bound_stop(self, a):
+        reply = self.reply(a, stop=True)
+        reply["actor_context"] = {"input_sha256": d.inspect(a, "actor")["input_sha256"], "context_id": "synthetic-actor"}
+        return reply
+
+    def invoke(self, *args):
+        output = args[-1]
+        output.mkdir()
+        result = {"active_seconds": 0.01, "message": "Synthetic delivered reply.", "error": None}
+        d.write(output / "transport.json", result)
+        return result
+
+    def test_initial_dispatch_planning_caps_for_all_four_cases(self):
+        self.assertEqual(len(PLANNING_IDS), 4)
+        for identity in PLANNING_IDS:
+            for cap in (40, 12):
+                with self.subTest(case=identity, cap=cap):
+                    a = self.attempt(identity, cap=cap)
+                    reply = self.reply(a)
+                    before = d.inventory(a)
+                    with patch.object(d, "invoke", side_effect=self.invoke) as invoke, patch.object(d, "observe_project"):
+                        if cap == 40:
+                            with self.assertRaisesRegex(ValueError, "planning run configuration"):
+                                d.step(a, reply)
+                            invoke.assert_not_called()
+                            self.assertEqual(d.inventory(a), before)
+                        else:
+                            self.assertEqual(d.step(a, reply)["status"], "ready")
+                            invoke.assert_called_once()
+                            self.assertTrue(invoke.call_args.args[3])  # First invocation, not resume.
+                            self.assertEqual(invoke.call_args.args[4], reply["message"])
+                            self.assertEqual(d.read(a / "state.json")["turns"], 1)
+                            self.assertEqual(d.delivered_reply_count(a), 1)
+
+    def test_matching_runner_cap40_stop_requires_bound_actor_input(self):
+        a = self.attempt(turns=1)
+        reply = self.bound_stop(a)
+        invalid = [self.reply(a, stop=True), copy.deepcopy(reply)]
+        invalid[1]["actor_context"]["context_id"] = "synthetic-consultant"
+        with patch.object(d, "invoke") as invoke:
+            for candidate, error in zip(invalid, ("later replies require", "contexts must be separate")):
+                with self.subTest(error=error):
+                    before = d.inventory(a)
+                    with self.assertRaisesRegex(ValueError, error):
+                        d.step(a, candidate)
+                    self.assertEqual(d.inventory(a), before)
+            frozen_bytes = (a / "freeze.json").read_bytes()
+            self.assertEqual(d.step(a, reply)["status"], "awaiting_review")
+        invoke.assert_not_called()
+        self.assertEqual(d.read(a / "events/002-stop.json"), reply)
+        self.assertEqual(d.read(a / "state.json")["turns"], 1)
+        self.assertEqual((a / "freeze.json").read_bytes(), frozen_bytes)
+
+    def test_matching_planning_runner_accepts_bound_stop_at12_without_dispatch13(self):
+        a = self.attempt(cap=12, turns=12)
+        reply = self.bound_stop(a)
+        with patch.object(d, "invoke") as invoke:
+            self.assertEqual(d.step(a, reply)["status"], "awaiting_review")
+        invoke.assert_not_called()
+        self.assertEqual(d.read(a / "state.json")["turns"], 12)
+        self.assertEqual(d.delivered_reply_count(a), 12)
+        self.assertEqual(d.read(a / "events/013-stop.json"), reply)
+        self.assertFalse((a / "events/013").exists())
+
+    def test_mismatched_runner_cap40_stop_rejected_without_mutation(self):
+        a = self.attempt(mismatch=True, turns=1)
+        reply = self.bound_stop(a)
+        before = d.inventory(a)
+        with patch.object(d, "invoke") as invoke, self.assertRaisesRegex(ValueError, "adapter changed during attempt"):
+            d.step(a, reply)
+        invoke.assert_not_called()
+        self.assertEqual(d.inventory(a), before)
+        self.assertEqual(d.read(a / "state.json")["status"], "ready")
+
+    def test_mismatched_runner_evidence_can_finish_with_frozen_cap40(self):
+        a = self.attempt(mismatch=True, turns=1)
+        frozen_bytes = (a / "freeze.json").read_bytes()
+        with patch.object(d, "invoke") as invoke:
+            inspected = d.inspect(a, "reviewer")
+            observations = inspected["observations"]
+            # This deliberately incomplete synthetic capture must remain visible.
+            self.assertEqual({item["check"] for item in observations["machine_findings"]}, {"capture_completeness"})
+            review = {"evidence_sha256": inspected["evidence_sha256"],
+                      "observations_sha256": inspected["observations_sha256"], "reviewer": "synthetic reviewer",
+                      "test_validity": "invalid", "test_validity_reason": "Synthetic mechanics fixture; no host execution.",
+                      "outcome": "incomplete", "stop_reason": "Historical identity and cap retained for review.",
+                      "coverage": {"planning": {"status": "unobserved", "reason": "No consultation was evaluated."}},
+                      "findings": [{"owner": "harness", "severity": "material", "criterion": "planning",
+                                    "description": "Frozen configuration permits 40 replies against a case ceiling of 12.",
+                                    "consequence": "This configuration exceeds the intended planning budget.",
+                                    "evidence_refs": ["private/freeze.json"]}],
+                      "machine_finding_dispositions": {item["id"]: {"status": "confirmed",
+                          "reason": "The synthetic fixture omits full transport and project captures.",
+                          "evidence_refs": ["private/events/001/public.json"]} for item in observations["machine_findings"]}}
+            result = d.finish(a, review)
+        invoke.assert_not_called()
+        self.assertEqual(result["outcome"], "incomplete")
+        self.assertEqual(result["quality_rating"], "inconclusive")
+        self.assertEqual(result["findings"], review["findings"])
+        self.assertEqual(result["resources"]["limits"]["consultant_turns"], 40)
+        self.assertEqual(d.read(a / "state.json")["status"], "finished")
+        self.assertEqual((a / "freeze.json").read_bytes(), frozen_bytes)
+
+
 class BoundValidation(unittest.TestCase):
+    def test_planning_admission_requires_integer_frozen_and_configured12(self):
+        case = {"edition": "prospective-single-question", "run_limits": {"consultant_turns": 12}}
+        invalid_limits = (None, {}, {"consultant_turns": True}, {"consultant_turns": 12.0},
+                          {"consultant_turns": 11}, {"consultant_turns": 40})
+        for limits in invalid_limits:
+            with self.subTest(manifest_limits=limits), self.assertRaisesRegex(ValueError, "planning case"):
+                d.validate_reply_bounds({**case, "run_limits": limits}, enforce_planning_cap=True)
+            with self.subTest(config_limits=limits), self.assertRaisesRegex(ValueError, "planning run configuration"):
+                d.validate_reply_bounds(case, config={"limits": limits}, enforce_planning_cap=True)
+        d.validate_reply_bounds(case, config={"limits": {"consultant_turns": 12}}, enforce_planning_cap=True)
+        # Assessment has no new admission gate, and cannot rewrite historical configuration.
+        config = {"limits": {"consultant_turns": 40}}
+        d.validate_reply_bounds(case, config=config)
+        self.assertEqual(config["limits"]["consultant_turns"], 40)
+
     def test_new_stress_edition_requires_minimum(self):
         for case in ({"edition": "case-specific-continuity-stress-v1"},
                      {"edition": "case-specific-continuity-stress-v1", "run_limits": {"consultant_turns": 12}}):
@@ -281,11 +552,13 @@ class BoundValidation(unittest.TestCase):
         for cap in (14, 40):
             d.validate_reply_bounds({"edition": "case-specific-continuity-v1", "run_limits": {"consultant_turns": cap}}, {},
                                     {"limits": {"consultant_turns": cap}})
+            d.validate_reply_bounds({"edition": "case-specific-continuity-v1", "run_limits": {"consultant_turns": cap}}, {},
+                                    {"limits": {"consultant_turns": cap}}, enforce_planning_cap=True)
 
     def test_real_case_validator_checks_frozen_actor_agreement(self):
         with tempfile.TemporaryDirectory() as temporary:
             case = Path(temporary) / "case"
-            manifest = c.compose_case("rggvy-electrification", "standard", case)
+            manifest = c.compose_case("rggvy-electrification", output=case)
             manifest["minimum_consultant_replies"] = 8
             manifest["run_limits"]["consultant_turns"] = 12
             actor = d.read(case / "actor.json")

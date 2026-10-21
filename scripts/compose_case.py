@@ -1,4 +1,4 @@
-"""Compose one frozen problem/persona case for the existing consultation runner."""
+"""Freeze a reusable problem/persona pair or one standalone consultation case."""
 import argparse
 import copy
 import hashlib
@@ -6,17 +6,19 @@ import json
 from pathlib import Path
 import shutil
 
-from session_driver import digest, inventory, member, read, require
+from session_driver import digest, inventory, member, read, require, validate_case
 from source_release import validate_source_prerequisite
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROBLEM_IDS = ("study-design", "observational-did", "cate-policy", "data-quality-edge",
-               "rggvy-electrification")
+PROBLEM_IDS = ("study-design", "observational-did", "cate-policy", "data-quality-edge")
 GENERAL_PERSONA_IDS = ("standard", "novice-adversarial", "expert")
 COORDINATOR_PERSONA_ID = "rggvy-research-coordinator"
-PERSONA_IDS = GENERAL_PERSONA_IDS + (COORDINATOR_PERSONA_ID,)
-CONTINUITY_RESOURCE = ROOT / "references" / "rggvy-continuity.json"
+PERSONA_IDS = GENERAL_PERSONA_IDS
+RGGVY_ID = "rggvy-electrification"
+STANDALONE_IDS = (RGGVY_ID, "masks-planning", "forest-planning", "medication-planning", "surgery-planning")
+RGGVY_ROOT = ROOT / "standalone" / RGGVY_ID
+CONTINUITY_RESOURCE = RGGVY_ROOT / "continuity-variant.json"
 REPLY_LIMITS = {"max_words": 50, "max_items": 2}
 INTERACTION_CHALLENGES = {
     "study-design": [
@@ -59,16 +61,6 @@ INTERACTION_CHALLENGES = {
          "behavior": "Ask what the blank means or state your tentative interpretation as a question; do not assert an unsupported data correction.",
          "recovery": "Use the actual dictionary or explanation to update and retain the distinction."},
     ],
-    "rggvy-electrification": [
-        {"id": "partial-collection-account",
-         "trigger": "A compound question asks both how the records were collected and how electrification was assigned or timed.",
-         "behavior": "Answer one part from legitimate knowledge or supply its relevant record. Retain the other part privately without inventing collection facts.",
-         "recovery": "Supply the omitted answer or accessible record on a focused follow-up; do not delay a specifically requested necessary bundle."},
-        {"id": "clarify-effect-versus-investment",
-         "trigger": "A proposed analysis leaves unclear whether its result describes a measured effect or establishes that a wider investment pays off.",
-         "behavior": "Ask which practical conclusion the proposed work could support, using your current understanding. This is a scope clarification, not another demand for stronger language.",
-         "recovery": "Use the explanation to choose a bounded scope and retain the distinction in later discussion."},
-    ],
 }
 
 
@@ -110,9 +102,19 @@ def save(file, value):
     Path(file).write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def fresh_output(output, *sources):
+    require(output is not None, "output is required")
+    output = Path(output).resolve()
+    require(not output.exists(), "output already exists; compose into a fresh directory")
+    protected = (*sources, ROOT / "problems", ROOT / "personas", ROOT / "standalone")
+    require(not any(output.is_relative_to(Path(source).resolve()) or Path(source).resolve().is_relative_to(output)
+                    for source in protected), "output overlaps definition bank")
+    return output
+
+
 def problem_definition(problem_id, bank_root):
-    require(problem_id in PROBLEM_IDS, "unknown problem selector")
-    directory = member(bank_root, problem_id)
+    require(problem_id in (*PROBLEM_IDS, RGGVY_ID), "unknown problem selector")
+    directory = member(bank_root, "problem" if problem_id == RGGVY_ID else problem_id)
     definition = read(directory / "problem.json")
     require(definition.get("schema_version") == 1 and definition.get("problem_id") == problem_id,
             "problem identity mismatch")
@@ -135,8 +137,9 @@ def problem_definition(problem_id, bank_root):
 
 
 def persona_definition(persona_id, personas_root):
-    require(persona_id in PERSONA_IDS, "unknown persona selector")
-    file = member(personas_root, persona_id + ".json")
+    require(persona_id in (*PERSONA_IDS, COORDINATOR_PERSONA_ID), "unknown persona selector")
+    file = (RGGVY_ROOT / "persona.json" if persona_id == COORDINATOR_PERSONA_ID
+            else member(personas_root, persona_id + ".json"))
     persona = read(file)
     require(persona.get("schema_version") == 1 and persona.get("persona_id") == persona_id,
             "persona identity mismatch")
@@ -155,10 +158,15 @@ def persona_definition(persona_id, personas_root):
     return file, persona
 
 
-def compose_case(problem_id, persona_id="standard", output=None, bank_root=None, personas_root=None,
+def compose_case(problem_id, persona_id=None, output=None, bank_root=None, personas_root=None,
                  max_consultant_turns=None, interaction_seed=0):
-    require(persona_id != COORDINATOR_PERSONA_ID or problem_id == "rggvy-electrification",
+    require(problem_id in (*PROBLEM_IDS, RGGVY_ID), "unknown problem selector")
+    if persona_id is None:
+        persona_id = COORDINATOR_PERSONA_ID if problem_id == RGGVY_ID else "standard"
+    require(persona_id != COORDINATOR_PERSONA_ID or problem_id == RGGVY_ID,
             "rggvy-research-coordinator is supported only with rggvy-electrification")
+    require(problem_id != RGGVY_ID or persona_id == COORDINATOR_PERSONA_ID,
+            "rggvy-electrification is standalone and supports only rggvy-research-coordinator")
     require(type(interaction_seed) is int and interaction_seed >= 0,
             "interaction seed must be a nonnegative integer")
     variant = None
@@ -178,17 +186,15 @@ def compose_case(problem_id, persona_id="standard", output=None, bank_root=None,
                 "RGGVY stress edition has a fixed maximum of 12 consultant replies")
     if max_consultant_turns is None:
         max_consultant_turns = variant["default_max_consultant_turns"] if variant else 40
-    bank_root = Path(bank_root or ROOT / "problems").resolve()
+    require(problem_id != RGGVY_ID or bank_root is None,
+            "standalone RGGVY uses its fixed scientific source bank")
+    bank_root = Path(bank_root or (RGGVY_ROOT if problem_id == RGGVY_ID else ROOT / "problems")).resolve()
     personas_root = Path(personas_root or ROOT / "personas").resolve()
     directory, problem, world = problem_definition(problem_id, bank_root)
     persona_file, persona = persona_definition(persona_id, personas_root)
     require(type(max_consultant_turns) is int and max_consultant_turns > 0,
             "operational maximum must be a positive integer")
-    require(output is not None, "output is required")
-    output = Path(output).resolve()
-    require(not output.exists(), "output already exists; compose into a fresh directory")
-    require(not any(output.is_relative_to(source) or source.is_relative_to(output)
-                    for source in (bank_root, personas_root)), "output overlaps definition bank")
+    output = fresh_output(output, bank_root, personas_root)
     facts = []
     for entry in problem["actor_facts"]:
         require(entry.get("knowledge_tier") in ("practical", "domain", "statistical"),
@@ -296,30 +302,72 @@ def compose_case(problem_id, persona_id="standard", output=None, bank_root=None,
     return manifest
 
 
+def standalone_case(case_id, output, max_consultant_turns=None):
+    """Freeze a named case without introducing a selectable persona dimension."""
+    require(case_id in STANDALONE_IDS, "unknown standalone selector")
+    if case_id == RGGVY_ID:
+        return compose_case(case_id, output=output, max_consultant_turns=max_consultant_turns)
+    source = member(ROOT / "standalone", case_id)
+    output = fresh_output(output)
+    manifest = validate_case(source)
+    require(max_consultant_turns is None or (type(max_consultant_turns) is int
+            and max_consultant_turns == manifest["run_limits"]["consultant_turns"]),
+            "standalone planning cases retain their frozen operational maximum")
+    shutil.copytree(source, output, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    return validate_case(output)
+
+
+def catalog():
+    standalone = []
+    for key in STANDALONE_IDS:
+        if key == RGGVY_ID:
+            problem = read(RGGVY_ROOT / "problem" / "problem.json")
+            variant = read(CONTINUITY_RESOURCE)
+            standalone.append({"id": key, "label": problem["label"],
+                               "fixed_actor": COORDINATOR_PERSONA_ID,
+                               "target_turns": variant["target_turns"],
+                               "completion_contract": "full_report"})
+        else:
+            manifest = read(ROOT / "standalone" / key / "case.json")
+            standalone.append({"id": key, "fixed_actor": manifest["persona_id"],
+                               "target_turns": manifest["target_turns"],
+                               "completion_contract": manifest["completion_contract"]})
+    return {"problems": [{"id": key, "label": (item := read(ROOT / "problems" / key / "problem.json"))["label"],
+                           "target_turns": item["target_turns"]} for key in PROBLEM_IDS],
+            "personas": [{"id": key, "label": read(ROOT / "personas" / (key + ".json"))["label"],
+                          "supported_problems": list(PROBLEM_IDS)} for key in PERSONA_IDS],
+            "standalone_cases": standalone, "matrix_combinations": len(PROBLEM_IDS) * len(PERSONA_IDS),
+            "standalone_count": len(STANDALONE_IDS),
+            "combinations": len(PROBLEM_IDS) * len(PERSONA_IDS) + len(STANDALONE_IDS)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--list", action="store_true", help="List available problems, personas and pairing restrictions")
-    parser.add_argument("--problem", choices=PROBLEM_IDS)
-    parser.add_argument("--persona", choices=PERSONA_IDS, default="standard",
-                        help="User persona (default: standard)")
+    parser.add_argument("--list", action="store_true", help="List the reusable matrix and five standalone cases")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--problem", choices=(*PROBLEM_IDS, RGGVY_ID),
+                           help="Reusable problem; the legacy RGGVY spelling selects its fixed coordinator")
+    selection.add_argument("--standalone", choices=STANDALONE_IDS)
+    parser.add_argument("--persona", choices=(*PERSONA_IDS, COORDINATOR_PERSONA_ID),
+                        help="Reusable persona (default: standard); RGGVY has a fixed coordinator")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--max-consultant-turns", type=int,
-                        help="Operational maximum: fixed 12 for the RGGVY coordinator stress edition, default 40 otherwise")
+                        help="Operational maximum: fixed 12 for standalone cases, default 40 for reusable pairs")
     parser.add_argument("--interaction-seed", type=int, default=0,
                         help="Freeze a communication challenge for general personas; unused for the RGGVY coordinator")
     args = parser.parse_args()
     if args.list:
-        print(json.dumps({"problems": [{"id": key, "label": (item := read(ROOT / "problems" / key / "problem.json"))["label"],
-                                        "target_turns": item["target_turns"]} for key in PROBLEM_IDS],
-                          "personas": [{"id": key, "label": read(ROOT / "personas" / (key + ".json"))["label"],
-                                        "supported_problems": ["rggvy-electrification"] if key == COORDINATOR_PERSONA_ID else list(PROBLEM_IDS)}
-                                       for key in PERSONA_IDS],
-                          "combinations": len(PROBLEM_IDS) * len(GENERAL_PERSONA_IDS) + 1}, indent=2))
+        print(json.dumps(catalog(), indent=2))
         return
-    parser.error("--problem and --output are required") if not all((args.problem, args.output)) else None
-    manifest = compose_case(args.problem, args.persona, args.output,
-                            max_consultant_turns=args.max_consultant_turns,
-                            interaction_seed=args.interaction_seed)
+    if not (args.output and (args.problem or args.standalone)):
+        parser.error("--problem or --standalone, and --output are required")
+    if args.standalone and args.persona is not None:
+        parser.error("--standalone cases have a fixed actor; do not pass --persona")
+    if args.standalone and args.interaction_seed != 0:
+        parser.error("--standalone cases do not select interaction challenges")
+    manifest = (standalone_case(args.standalone, args.output, args.max_consultant_turns)
+                if args.standalone else compose_case(args.problem, args.persona, args.output,
+                    max_consultant_turns=args.max_consultant_turns, interaction_seed=args.interaction_seed))
     print(json.dumps({"case_id": manifest["case_id"], "output": str(args.output.resolve()),
                       "target_turns": manifest["target_turns"], "completion_contract": manifest["completion_contract"]}, indent=2))
 

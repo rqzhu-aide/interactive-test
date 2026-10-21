@@ -16,8 +16,9 @@ against the actual public transcript and per-reply snapshots. Existing captures
 and older profiles retain their historical meaning.
 Startup binds the actual candidate's version, package inventory and hashes
 separately from the composed case identity.
-Tester 8.3.7 supports the separate consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7 journal
-profile while preserving the 8.2.0 case suite and scenario/persona versions.
+Tester 8.4.7 supports the separate consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 journal
+profile while preserving the matrix/RGGVY suite 8.2.0 and the planning suite
+`prospective-study-design-1.1.0`, preserving scientific worlds and fixed actor profile identities.
 Read full v8 journal entries
 for handling, scope, decisions, work and actual replies; generated project/brief
 views support navigation. A `knowledge` or `decision` entry can handle an incoming
@@ -43,7 +44,7 @@ inherit the answer exception. Preserve full text;
 these observations neither truncate content nor invalidate internal evidence.
 For v11, explicitly requested answers have a 200-word ceiling. Apply the frozen
 [observation profile](observation-profiles.md) to options: consultant 8.0.1,
-8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7 require every option to stay within 50 words. Consultant 8.0.0 and retained
+8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 require every option to stay within 50 words. Consultant 8.0.0 and retained
 historical profiles allow up to 100 only for complete essential scope terms
 that need the additional words; a pointer option keeps the 50-word budget.
 The unnumbered summary also stays within 50. Earlier renderer contracts are
@@ -64,14 +65,15 @@ original text and pending interpretation on interruption. Review the resulting
 interpretation against that same source, including partial answers, corrections
 and withdrawals. A pending user direction must prevent protected starts.
 
-Select a problem and persona from the [active composition catalog](problem-persona-matrix.md).
-Any of the five problems supports the three general personas; RGGVY also supports
-the [research coordinator](rggvy-continuity.md). Compose the pair
-before `preflight`; every new pair requires its appropriate saved report.
-An explicit full matrix is 16 valid independent attempts. An omitted persona selects
-`standard`; clarify an unclear campaign scope before dispatch. The other active
-general profiles are `novice-adversarial` and `expert`. The repository contains five reusable
-problems, three general personas and one RGGVY-only persona; composed cases are private run inputs generated on
+Select a matrix pair or standalone case from the [active catalog](problem-persona-matrix.md).
+The four reusable problems support `standard` (the default), `novice-adversarial`
+and `expert`, for 12 matrix pairs. Five standalone cases add RGGVY with its fixed
+[Research Coordinator](rggvy-continuity.md) and four prospective planning cases,
+for 17 full-catalog configurations. Use `--problem`/`--persona` for a matrix pair
+or `--standalone` without a persona for a fixed case, before `preflight`.
+Matrix pairs and RGGVY require a saved report; the four planning cases require
+a useful collection and conditional analysis plan. Clarify unclear campaign
+scope before dispatch. Composed cases are private run inputs generated on
 request. Previous frozen cases and their plans are available through Git history
 and retained run packages, outside the active catalog. The old four persona
 profiles are archived; frozen historical attempts continue to use their original profiles.
@@ -102,7 +104,7 @@ retained for compatibility with existing run packages. Select
 
 This general-persona example sets independent operational capacity per composed case: at most 40 consultant exchanges,
 four active hours and twelve elapsed hours. It is not a minimum duration or a
-prediction. The ordinary private 5/10/15/8/10 target lengths never instruct the actor or stop
+prediction. The matrix's private 5/10/15/8 target lengths never instruct the actor or stop
 the run. Persona-dependent discussion may exceed them without a defect. Stop
 when the actual objective is met, not to approach the target. Choose and freeze
 host-appropriate capacity before a run; preserve earlier runs' recorded limits
@@ -116,6 +118,13 @@ minimum eight and hard cap twelve and the actor packet. This is not an optional
 flag or overridable descriptive target. Frozen 1.0.0 attempts retain their limits.
 Follow `case.json`'s
 `reviewer` path for reviewer input, including the continuity case's combined file.
+
+The four standalone planning cases retain 50-word, one-item replies and focused
+planning endpoints. Their expected 8 to 10 replies are descriptive, with no
+minimum or required ordered participation. Set actual
+`limits.consultant_turns: 12` to match their frozen ceiling. A useful plan may
+finish sooner; reaching the ceiling without it remains incomplete. They have
+no releasable attachments. See the [standalone guide](../standalone/README.md).
 
 No minimum, mandatory four-round count or guessed number of rounds applies to
 ordinary cases. The named coordinator 1.1.0 exception is defined above.
@@ -136,6 +145,9 @@ require an explicit binding; missing or ambiguous roots stay visible. This
 observer setting does not send a new instruction to the consultant. There is no implicit
 permission bypass or token/cost cap. Raw per-call usage is retained; unverified
 aggregate usage stays null. Tool permissions do not establish file isolation.
+A tool-permission list does not by itself establish that unlisted tools were
+unavailable. Check the retained host and flag semantics before attributing a
+restriction violation.
 
 Fresh `preflight` and `start` require an explicit loading choice, freeze it and
 show its remaining evidence requirements. They do not guess from executable names.
@@ -206,8 +218,10 @@ the actor's persona identity against `case.json`. The example starts one case;
 use fresh attempts and neutral work directories for other selected pairs. The
 composer's suggested `run_limits` do not override the runner configuration;
 the actual limits are those explicitly frozen in that configuration. Current
-compositions bind every spoken user message to 50 words and two semantic items,
-including the initial request. `--interaction-seed` selects one frozen
+matrix and RGGVY compositions bind every spoken user message to 50 words and
+two semantic items, including the initial request. The four planning cases
+retain 50 words and one small semantic item, under their frozen selection rule.
+For matrix pairs, `--interaction-seed` selects one frozen
 case-specific communication challenge; the default seed is 0. Record it before
 a run and reuse it for a matched comparison. An untriggered challenge does not
 require a forced misunderstanding.
@@ -217,6 +231,12 @@ Startup stages only the consultant runtime under
 shims load that staged candidate explicitly. The runner captures the selected
 CLI version/help under legacy `claude-version` and `claude-help` evidence labels,
 without sending a user message.
+The frozen runner is retained under `testing/scripts`. Every `step`, including
+an actor stop, requires matching frozen adapter hashes and valid actor input.
+A planning stop skips the current cap admission check only; use the matching
+retained runner to stop an older attempt. The current runner can inspect and
+finalize historical cap-40 evidence under its existing evidence checks, preserving
+the frozen limits. Do not rewrite frozen hashes or limits to resume it.
 Confirm actual candidate selection in the host smoke, accounting for installed
 skills/settings. Keep scenario names out of public paths.
 For profiles requiring `durable-exchanges-v1`, preflight checks the reported
@@ -403,8 +423,16 @@ including failures. Active time excludes harness observations. Elapsed time begi
 at first dispatch and includes observation and user-wait time through stopping;
 reviewer effort is excluded. Direct finalization without a stop record uses the
 last captured turn as the end. Timeouts fit the remaining whole-run envelope;
-capture/cleanup overruns remain visible. A completed objective on the last allowed turn can be reviewed.
-When done, send a stop record with `message: null`, `stop: true`, no attachments.
+capture/cleanup overruns remain visible. The cap limits consultant dispatches,
+not the actor's final stop record. After the last allowed reply, a truthful actor
+stop may still be submitted through the matching frozen runner and current
+digest-bound actor input, without another consultant reply. Use the existing
+outcome rules to distinguish a useful agreed endpoint from incomplete work;
+reaching the cap establishes neither completion nor failure by itself. Do not
+invent actor acceptance or dispatch an extra turn to obtain it. Delivery of the
+requested endpoint, actor acceptance and stopping at capacity are separate
+observations. When done, send a stop record with `message: null`, `stop: true`,
+no attachments.
 For a full-report objective, continue the adaptive loop after an analysis or
 recap when the saved report is still outstanding. Respond to the consultant's
 next useful proposal or request the promised report according to the actor
@@ -473,6 +501,14 @@ Create the assessment outside the attempt/work so it does not change the evidenc
   `candidate_loading`, `exact_resume`, `private_isolation`, `role_separation`.
   Each has `verified: true`, a substantive reason and evidence_refs including
   captured outputs under `private/host/`. A claim alone is insufficient.
+
+Most review-index keys identify retained files; `state_at_review` is the
+canonical JSON identity of state, not a snapshot-file path or its byte hash.
+Apply the frozen evidence contract and package checker to integrity claims,
+including its permitted finalization transition. State whether the export
+precedes or follows assessment finalization. A successful check establishes
+only its implemented integrity checks; it does not establish scientific
+validity or dismiss contradictory evidence.
 
 ```sh
 python scripts/session_driver.py finish --attempt /private/run001 --assessment /private/inbox/review.json

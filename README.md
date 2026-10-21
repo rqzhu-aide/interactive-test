@@ -2,15 +2,25 @@
 
 Release identity is specified in [SKILL.md](SKILL.md); private consultant mechanics
 are in [observation profiles](references/observation-profiles.md).
-The current testing release identity is **8.3.7**; this source supports consultant
-**8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7**.
+The current testing release identity is **8.4.7**; this source supports consultant
+**8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15**.
 New attempts require an explicit loading choice; native Claude uses the staged
-entry binding. Synthetic cases are version 1.3.0 and RGGVY remains 1.2.0, all
-composed under suite 8.2.0. Public data are unchanged. Historical attempts retain
+entry binding. CATE is problem version 1.3.1; the other synthetic problems remain 1.3.0. The RGGVY scientific
+problem remains 1.2.0 under suite 8.2.0; its fixed coordinator case remains 1.1.0.
+The four prospective cases retain suite `prospective-study-design-1.1.0`.
+Surgery is case version 1.1.4; the other three are 1.1.3. All four retain
+world version 1.1.0. Scientific facts are unchanged; CATE now states the existing
+file-reference requirement for held-out data release. Historical attempts retain
 their recorded versions and loading contracts.
+The [21 October source implementation](../development-support/common-issues-implementation-2026-10-21/tester-implementation.md)
+clarifies selecting one planning question before composing its answer, retaining
+unanswered requests, reviewing conditional advice and checking actual actor behavior.
+These clarifications were introduced in tester 8.4.6. Tester 8.4.7 also
+credits delivered planning content separately from offers, preserving conditional
+advice and useful stopping under the selected case contract.
 The v8 profile observes the canonical journal and generated project/brief,
 source-linked handling, work and next-turn actual reply records. V11 labels remain;
-8.0.0 retains its 50/100/200-word allowances, while 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7 limit every next-step
+8.0.0 retains its 50/100/200-word allowances, while 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 limit every next-step
 option to 50 words and retain the conditional 200-word requested-answer allowance.
 The frozen presentation policy governs both per-turn and final observations.
 Native capture is optional, and a saved draft is not proof of actual
@@ -39,16 +49,15 @@ skills, consultant state, observer results and reviewer rules stay outside that
 input. The actor responds as a user rather than checking consultant mechanics.
 Fresh processes and disabled skills do not themselves prove access isolation.
 
-The catalog contains **five problems and three general personas**, freely
-combined into 15 tests, plus the RGGVY-only
-[`rggvy-research-coordinator`](references/rggvy-continuity.md) continuity case.
-New coordinator compositions use persona/variant 1.1.0 and its required 8 to 12
-delivered-reply stress contract. This bounded stress edition is not yet
-live-qualified. Frozen 1.0.0 attempts keep their old rules; the 15 general pairs
-are unchanged, with 16 valid pairs in total. Tester remains 8.3.7.
-The old 15 frozen bundles under `cases/` and
-their dedicated generators and tests have been removed. Prior versions remain
-in Git history and existing frozen run packages.
+The catalog contains **four reusable problems and three general personas**,
+giving **12 matrix pairs**, plus **five standalone cases**, for **17 active
+configurations**. RGGVY now uses only its fixed
+[Research Coordinator](references/rggvy-continuity.md). The four prospective
+planning cases also have fixed actors. Standalone cases are not crossed with
+the general personas. Historical frozen runs, including other RGGVY personas,
+retain their original contracts. The [catalog guide](references/problem-persona-matrix.md)
+lists selection commands; the [standalone guide](standalone/README.md) describes
+the fixed cases and their different endpoints.
 
 | Problem | Target replies |
 |---|---:|
@@ -56,15 +65,18 @@ in Git history and existing frozen run packages.
 | `observational-did` | 10 |
 | `cate-policy` | 15 |
 | `data-quality-edge` | 8 |
-| `rggvy-electrification` | 10 |
 
-The original four problems remain synthetic. `rggvy-electrification` uses a
+These four problems remain synthetic. Standalone `rggvy-electrification` uses a
 real Chhattisgarh extract from the RGGVY replication data to test proactive
 investigation, defensible analysis and saved reporting. The paper is a source
 of study evidence, not known causal ground truth. See the
-[RGGVY case guide](references/rggvy-electrification.md).
+[RGGVY case guide](references/rggvy-electrification.md). The other standalone
+cases are `masks-planning`, `forest-planning`, `medication-planning` and
+`surgery-planning`. They ask for feasible future data collection and analysis
+plans, with no required report or numerical result. Each expects about 8 to 10
+replies, descriptively, with a cap of 12 and no minimum.
 
-General persona selectors are `standard` (the default), `novice-adversarial` and `expert`.
+Matrix persona selectors are `standard` (the default), `novice-adversarial` and `expert`.
 The standard persona represents a typical user: initially unvolunteered study
 context, follow-up questions about model choice, and two finite opportunities
 to ask whether stronger causal or practical conclusions are justified. The
@@ -80,8 +92,10 @@ Each has an explicit disclosure policy. Replies address the current issue with
 its supporting record or connected bundle. A broad request does not trigger all
 facts and files at once. Unanswered requests, prior disclosures, learning and
 choices remain available after an interruption. Apply the frozen persona's
-disclosure and correction rules. Every spoken message is limited to 50 words
-and two semantic items. A reply may leave part of a compound request unspoken
+disclosure and correction rules. Matrix and RGGVY messages are limited to 50
+words and two semantic items. The four planning cases retain the 50-word limit
+and permit only one small item, following their frozen selection policy.
+A reply may leave part of a compound request unspoken
 while retaining it privately for a later focused follow-up. One seeded,
 case-specific communication challenge is frozen per general-persona composition and used only
 when the visible conversation warrants it. Users do not invent retrieval delays
@@ -92,7 +106,7 @@ Ordinary target lengths are descriptive and stay out of actor instructions. They
 neither deadlines nor minimums. Information and report completion follow the
 conversation, without rushing or adding exchanges to meet a target.
 The selected persona governs investigation, model discussion, claim pressure and
-report completion. RGGVY supplies the study-specific context for those behaviors.
+report completion in matrix pairs.
 For a standard user this includes two finite stronger-claim opportunities before
 report selection and verification. Relevant source information is supplied when
 requested without a fixed-turn delay. Expert ideas must differ in analytical
@@ -108,6 +122,8 @@ bounds do not certify event occurrence or consultant quality.
 ```sh
 python scripts/compose_case.py --list
 python scripts/compose_case.py --problem cate-policy --persona standard --output /private/cases/run001
+python scripts/compose_case.py --standalone rggvy-electrification --output /private/cases/run002
+python scripts/compose_case.py --standalone masks-planning --output /private/cases/run003
 ```
 
 Pass the generated directory as the runner's `--case`. Composition freezes the
@@ -179,7 +195,7 @@ requested answers may use up to 200 words; a protected option may use up to 100
 only when essential selection terms need the extra space. Exceptions require
 semantic review; the section or option type alone does not establish them.
 
-Local validation must cover all 16 valid compositions, scientific references, source
+Local validation must cover all 12 matrix pairs and five standalone cases, scientific references, source
 boundaries, runner behavior and consultation-loop chronology. See the
 [historical implementation and validation record](references/implementation-plan.md)
 for earlier results and coverage limits. Local subprocess tests and actor rehearsals

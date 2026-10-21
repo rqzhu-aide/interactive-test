@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "case_id": "masks-planning",
+  "case_version": "1.1.3",
+  "suite_version": "prospective-study-design-1.1.0",
+  "edition": "prospective-single-question",
+  "author": "Codex with independent subagent review",
+  "completion_contract": "focused",
+  "initial_message": "public/initial-message.txt",
+  "actor": "actor.json",
+  "reviewer": "reviewer.json",
+  "world": "world.json",
+  "world_id": "masks-planning-world",
+  "world_version": "1.1.0",
+  "persona_id": "single-question-planner",
+  "oracle_check": "check_fixture.py",
+  "sources": [],
+  "reply_limits": {
+    "max_words": 50,
+    "max_items": 1
+  },
+  "target_turns": 9,
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "run_limits": {
+    "consultant_turns": 12
+  },
+  "files": {
+    "actor.json": "10d88277e9c66a89a3d69e3c323aacd010c91ce2c8dec06a83d5f9df048d2855",
+    "check_fixture.py": "8eeb2a272239e1efa39ddc0e363ff6066ddfe9fc262d53556bab87fd97e0fdf2",
+    "playbook.md": "3b8121e64db5a2af0185faae237f2e4df39ab0be1f6b6fde62f36c6724987aa2",
+    "public/initial-message.txt": "d60e64283160c6ca25203a5925c509e51153cdcb39ebbb58cbb2ee4f3e42fea0",
+    "reviewer.json": "57609c463e6338942723dd96386cf8653292d60fed5259db0a8642c9fb75281c",
+    "world.json": "1aa344d029160285a377154e18c9122e2bb8d4fcf982c88aefb4757b37ed1504"
+  }
+}

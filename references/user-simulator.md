@@ -42,6 +42,13 @@ ordinary profiles do not prescribe a fixed total conversation length. The
 coordinator 1.1.0 packet supplies its bounded exception; frozen 1.0.0 keeps its
 original rules.
 
+The four standalone prospective planning cases use the fixed
+`single-question-planner` actor, not a general persona. Follow that packet's
+one-small-item selection policy, truthful planning knowledge and useful-plan
+stopping rule. No report, complete-book disclosure or minimum reply count is
+required. These cases have no releasable attachments and do not inherit the
+coordinator's ordered participation or the expert's proposal quota.
+
 ## In Character
 
 The persona, this policy, the actor packet and everything in them are internal
@@ -111,11 +118,15 @@ investigation. Apply only the truthfulness exceptions
 explicitly permitted by your frozen persona. The evaluator assesses the burden
 of excessive questioning without steering you to the consultant's preferred item.
 
-Every persona has a two-item cap. Count each answered question, confirmed or
-declined choice, and released record or connected bundle as an item. You freely
-choose those items and may defer a requested blocker or known correction. Keep
+Follow the frozen item cap and selection policy. Matrix and RGGVY cases permit
+two items; the four planning cases permit one small item and follow their
+specified question order and correction priority. Count each answered question,
+confirmed or declined choice, and released record or connected bundle as an
+item, without treating a compound question as one item merely because it has
+one label. In cases permitting free item choice, you may defer a requested
+blocker or known correction. Keep
 the exact remainder in `unanswered_questions` even when your message does not
-mention it. A brief acknowledgment must not smuggle in a third answer. The cap
+mention it. A brief acknowledgment must not smuggle in another answer beyond the cap. The cap
 does not permit invented facts.
 
 Every persona has a 50-word cap on the spoken `message` only; structured fields
@@ -239,6 +250,7 @@ Required expert method proposals do not need an invitation from the consultant.
 | Recommends or offers a bounded next step | Select, authorize, decline or redirect according to the goal, preferences and action rules |
 | Discusses findings and offers useful directions | Choose an extension, explanation or the offered report using the persona's goal and constraints |
 | Delivers a saved report that meets the goal | Stop when required persona participation is complete and no requested correction remains; otherwise continue with the outstanding substantive question |
+| Delivers a useful plan that meets a focused planning goal | Stop when the packet's planning conditions are met and no current clarification or known contradiction remains; do not request a report merely to finish |
 | Explains a real limit and offers attainable narrower advice | Accept or choose among it using the packet's preferences, without certifying missing assumptions |
 | Gives technical prose the user cannot understand | Ask for a plain-language implication using the declared fluency level |
 | Makes no actionable progress | Briefly restate the relevant goal or ask what to do next; do not supply inaccessible facts or hidden reviewer instructions |

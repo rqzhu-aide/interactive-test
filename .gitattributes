@@ -2,3 +2,5 @@
 * text=auto eol=lf
 # Modular problem definitions also bind their exact source and oracle bytes.
 problems/** -text
+# Standalone cases also bind exact fixture and source bytes.
+standalone/** -text

@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "world_id": "medication-planning-world",
+  "world_version": "1.1.0",
+  "setting": "A fictional collaboration of general practices and outpatient teams in and around Bristol, Exeter and Plymouth, England, preparing a prospective study before recruitment.",
+  "planning_date": "2026-10-15",
+  "facts": [
+    {
+      "fact_id": "f-population",
+      "topic": "Proposed population and indication",
+      "statement": "The initial proposal concerns adults with type 2 diabetes receiving their first prescription for either medicine. A heart-failure team would also like to include starters without diabetes, but the team has not decided whether that population belongs in the same study. Prior use of the other medicine has not yet been excluded.",
+      "certainty": "planned",
+      "source": "Own notes from the study planning meeting.",
+      "trigger": "A question about who would enter, clinical indication, eligibility, prior use or whether the populations are comparable.",
+      "answer": "We initially meant adults with type 2 diabetes getting their first prescription for either medicine. The heart-failure team also wants to include people without diabetes. We have not decided whether to combine them or exclude previous users of the other medicine.",
+      "core": true
+    },
+    {
+      "fact_id": "f-treatment-choice",
+      "topic": "Who controls treatment",
+      "statement": "Patients and their usual clinicians choose treatment in ordinary care. Researchers cannot delay indicated treatment, remove an available option or require continued use after intolerance. The research team can change collection and recruitment arrangements, subject to approvals and resources.",
+      "certainty": "known",
+      "source": "Own discussion with the clinical lead about the research team's remit.",
+      "trigger": "A question about randomization, allocation, treatment control, clinician choice or what researchers can change.",
+      "answer": "Patients and their usual clinicians choose the medicine. We can change our recruitment and measurements, but we cannot delay needed treatment, remove an available option or require someone to keep taking an intolerable medicine.",
+      "core": true
+    },
+    {
+      "fact_id": "f-comparison-eligibility",
+      "topic": "Whether either medicine was a realistic option",
+      "statement": "No systematic audit has established how many potential participants could reasonably receive either medicine at the same decision. Clinicians report that prior intolerance, kidney function, frailty, other medicines, indication and patient preference influence choice. A brief treatment-decision form could document these considerations prospectively.",
+      "certainty": "unknown",
+      "source": "Own planning notes and preliminary discussions with participating clinicians; no eligibility audit has been completed.",
+      "trigger": "A question about why one medicine is chosen, whether both are suitable, overlap, comparable treatment decisions or important baseline confounders.",
+      "answer": "We have not counted who could reasonably receive either drug. Clinicians mention prior intolerance, kidney function, frailty, other medicines, the treatment reason and patient preference. They could record the options considered and reasons on a short form.",
+      "core": true
+    },
+    {
+      "fact_id": "f-existing-records",
+      "topic": "Existing records and access",
+      "statement": "Practices hold routine prescriptions, consultations, diagnoses, laboratory results and referrals. Specialist teams hold clinic letters and hospital prescribing records. Coding and older-record transfer vary. The collaboration has neither a linked research dataset nor permission to extract one at planning time.",
+      "certainty": "known",
+      "source": "Own planning inventory of clinical systems; no research extract or attachment exists.",
+      "trigger": "A question about available files, existing data, routine information, data access or whether records have already been linked.",
+      "answer": "Practices have prescriptions, diagnoses, consultations and laboratory records; specialists have clinic letters. Coding and older records vary. We do not yet have permission to extract them or a linked research dataset.",
+      "core": true
+    },
+    {
+      "fact_id": "f-entry-timing",
+      "topic": "Prescription, initiation and baseline timing",
+      "statement": "Recruitment alerts would fire when a prescription is issued. Research contact may be up to ten days later. Issue, GP entry, dispensing and actual start can differ; some prescriptions are never collected. Pharmacy dispensing access is not secured. A call about actual initiation is affordable only for a subgroup.",
+      "certainty": "planned",
+      "source": "Own notes on proposed recruitment workflow and data access.",
+      "trigger": "A question about treatment start, time zero, prescription versus dispensing, baseline timing or how promptly research contact occurs.",
+      "answer": "The alert would fire when a prescription is issued, but research contact could be ten days later. Dispensing and actual starting can happen later or never. Pharmacy data are not secured; we could ask a subgroup when they actually started.",
+      "core": true
+    },
+    {
+      "fact_id": "f-depression-outcome",
+      "topic": "What depression means",
+      "statement": "The draft says new or recurrent depression without an agreed operational definition. Clinical codes, antidepressant prescriptions and symptom questionnaires are possible but different measures. A first local diagnosis may reflect an old episode, and antidepressants may be prescribed for other indications. No outcome data exist.",
+      "certainty": "planned",
+      "source": "Own draft application wording and discussions with the clinical lead.",
+      "trigger": "A question about depression definition, the primary outcome, diagnoses versus symptoms or outcome validation.",
+      "answer": "The draft says new or recurrent depression, but we have not defined it. We could use clinical records or symptom questionnaires. A first local code might be an old episode, and antidepressants sometimes have another purpose.",
+      "core": true
+    },
+    {
+      "fact_id": "f-prior-mental-health",
+      "topic": "Mental health before treatment",
+      "statement": "The team would like to distinguish no known previous episode, a resolved prior episode and active symptoms at entry. Existing records alone cannot reliably distinguish these; transferred history and care outside the system are incomplete. There is no budget for lifetime diagnostic interviews for everyone.",
+      "certainty": "known",
+      "source": "Own notes from the clinical team's discussion of prior history.",
+      "trigger": "A question about previous depression, active symptoms at entry, recurrence, historical coverage or whether an absent diagnosis means no history.",
+      "answer": "We want to separate no known previous depression, a past episode that resolved and current symptoms. Older and outside records are incomplete, so no code is not a reliable negative history. We cannot fund lifetime diagnostic interviews for everyone.",
+      "core": true
+    },
+    {
+      "fact_id": "f-psychiatric-treatment",
+      "topic": "Current psychiatric treatment and its timing",
+      "statement": "A short baseline reconciliation could ask which mental-health medicines are currently taken, their stated purpose, and the reported dates of recent starts, stops or changes. Approximate dates and unknown timing would remain explicit. Outside prescriptions may need patient confirmation, retaining that source and uncertainty. This information has not been collected or checked for completeness. It would compete for space on the existing short form; no comprehensive outside-record linkage is secured.",
+      "certainty": "planned",
+      "source": "Own draft baseline medication-reconciliation notes",
+      "trigger": "Asks about current psychiatric medicines, their purpose, recent changes, or whether treatment dates are known before prescribing.",
+      "answer": "We could record current mental-health medicines, their purpose and approximate dates of recent changes, retaining unknown timing. Outside prescriptions may need patient confirmation; we have not checked completeness.",
+      "core": false
+    },
+    {
+      "fact_id": "f-resources",
+      "topic": "Recruitment and measurement capacity",
+      "statement": "An unaudited estimate is 1,800 to 2,400 relevant prescribing decisions in a recruitment year across 42 practices and three outpatient teams. These are not unique eligible new users. Proposed funding covers a part-time nurse, an analyst, modest record validation and repeated questionnaires for about 350 participants.",
+      "certainty": "planned",
+      "source": "Own provisional staffing and budget notes; recruitment counts have not been audited.",
+      "trigger": "A question about sample size, staffing, budget, sites, feasibility or how much additional measurement can be funded.",
+      "answer": "The unaudited forecast is 1,800 to 2,400 relevant prescribing decisions in a recruitment year, not unique eligible new users.",
+      "core": true
+    },
+    {
+      "fact_id": "f-baseline-form",
+      "topic": "Prospective collection before prescribing",
+      "statement": "Staff say a short form and questionnaire before or at the prescribing consultation are possible, but extensive research interviews at every visit are not. Content can be revised and could include indication, treatment history, options considered, reasons an option is unsuitable, current symptoms, clinical measurements and patient preferences.",
+      "certainty": "planned",
+      "source": "Own preliminary discussions with clinic staff about the proposed collection form.",
+      "trigger": "A question about which measurements can be added before treatment, staff workflow or feasibility of a baseline form.",
+      "answer": "Staff could use a short form before or at prescribing, and we can still change its contents. They cannot manage a long research interview at every consultation. The draft includes treatment reasons, previous treatment, symptoms and the patient's preference.",
+      "core": false
+    },
+    {
+      "fact_id": "f-diabetes-severity",
+      "topic": "Dated pretreatment diabetes severity",
+      "statement": "The collection list could specify diabetes diagnosis date or approximate duration, the latest pretreatment HbA1c with its measurement date, and weight or BMI with its date. Availability and recency in existing records have not been checked. Extra research testing is not funded. A value measured after prescribing is not automatically a pretreatment value.",
+      "certainty": "planned",
+      "source": "Own draft clinical-measurement specification",
+      "trigger": "Asks which diabetes severity measurements could be collected, how current they are, or whether their dates precede treatment.",
+      "answer": "We could specify diabetes duration and the latest pretreatment HbA1c and weight, keeping their dates. We have not checked how recent those values usually are, and extra testing is not funded.",
+      "core": false
+    },
+    {
+      "fact_id": "f-treatment-regimen",
+      "topic": "Current regimen and simultaneous prescribing changes",
+      "statement": "The draft form records previous treatment but does not distinguish medicines still taken from remote exposure, whether the study drug is added or replaces something, or other treatment changes made at that same consultation. A short current-regimen and same-visit changes section could be proposed within the existing form. No such information has yet been collected or audited.",
+      "certainty": "planned",
+      "source": "Own draft treatment-decision form",
+      "trigger": "Asks about current medicines, addition versus replacement, or whether the study drug is the only treatment change at the prescribing visit.",
+      "answer": "Our draft records previous treatment, but not which medicines are still taken or changed at the same visit. We could add a short section on current medicines and changes at that visit.",
+      "core": false
+    },
+    {
+      "fact_id": "f-richer-baseline",
+      "topic": "Social circumstances and incomplete confounders",
+      "statement": "Social support, bereavement, financial strain and treatment outside the local system are not reliably present in diagnosis codes. Additional questions about these topics are affordable for a smaller consenting subgroup, creating a choice between broad sparse recruitment and richer measurement in fewer participants.",
+      "certainty": "planned",
+      "source": "Own draft questionnaire and budget notes.",
+      "trigger": "A question about social circumstances, unrecorded confounders, information outside routine records or the tradeoff between measurement depth and recruitment breadth.",
+      "answer": "Routine codes do not reliably cover social support, bereavement, financial strain or treatment elsewhere. We could ask about these in a smaller consenting group. Measuring them carefully for everyone is beyond the current budget.",
+      "core": false
+    },
+    {
+      "fact_id": "f-questionnaire-followup",
+      "topic": "Repeated symptoms and observation opportunities",
+      "statement": "The draft questionnaire schedule is entry and three, six and twelve months for about 350 participants. Sampling and invitation across sites and treatments are undecided. Routine diabetes and heart-failure follow-up schedules differ; symptom disclosure and diagnosis can depend on contact. Telephone and paper options are desired.",
+      "certainty": "planned",
+      "source": "Own draft follow-up schedule and patient-representative meeting notes.",
+      "trigger": "A question about follow-up frequency, symptom questionnaires, equal observation, subgroup recruitment or participation access.",
+      "answer": "Questionnaires are proposed at entry and three, six and twelve months. We have not chosen how to invite the 350-person subgroup. Routine contact differs between clinics; patients want paper and telephone options as well as online responses.",
+      "core": false
+    },
+    {
+      "fact_id": "f-post-baseline-treatment",
+      "topic": "Follow-up treatment changes",
+      "statement": "The initial follow-up proposal is twelve months. Patients can stop, restart, switch or add medicines during usual care. The team has not chosen between studying the initial treatment decision and continued treatment, and has no rule for repeat eligible decisions by the same person.",
+      "certainty": "planned",
+      "source": "Own draft study protocol notes.",
+      "trigger": "A question about duration, switching, discontinuation, adherence, repeated eligibility or whether the effect concerns starting versus staying on treatment.",
+      "answer": "We proposed twelve months. People may stop, restart or switch, and care stays with their clinicians. We have not decided whether our question concerns starting treatment or remaining on it, or how to handle a second eligible prescription decision.",
+      "core": false
+    },
+    {
+      "fact_id": "f-linkage-followup-gaps",
+      "topic": "Outcome coverage and missing follow-up",
+      "statement": "Primary-care, hospital and mortality linkage would require approved agreements that are not secured. Patients may move practice, withdraw from questionnaires or obtain care elsewhere. No later consultation does not establish continued observation. Sources stop contributing at different times; dates and known reasons could be retained prospectively.",
+      "certainty": "known",
+      "source": "Own proposed linkage inventory and unresolved access requests.",
+      "trigger": "A question about mortality, loss to follow-up, moving practices, national linkage, missing outcomes or whether no diagnosis means no depression.",
+      "answer": "Hospital and mortality linkage still need agreements. People may move practice, withdraw from questionnaires or get care elsewhere. A quiet record does not tell us what happened. We could keep dates and known reasons when each source stops contributing.",
+      "core": false
+    },
+    {
+      "fact_id": "f-precision-unknown",
+      "topic": "Information needed for sample planning",
+      "statement": "There is no reliable forecast of eligible unique new users, treatment-group balance, depression events, symptom variability or questionnaire retention. The study has no agreed minimum difference of practical importance. The prescribing-decision forecast cannot establish precision or power.",
+      "certainty": "unknown",
+      "source": "Own planning notes; no audit or pilot has produced these quantities.",
+      "trigger": "A question about depression frequency, variance, expected effect, power, precision, group balance or likely retention.",
+      "answer": "We do not yet know the eligible numbers, balance between drugs, depression frequency or questionnaire retention. We also have not agreed what difference would matter to patients. The prescribing forecast is all we have so far.",
+      "core": false
+    },
+    {
+      "fact_id": "f-prescribing-context",
+      "topic": "Site and calendar influences on choice",
+      "statement": "In this fictional collaboration, some practices increasingly favor generic dapagliflozin for cost, while some specialist teams have more experience with empagliflozin. Formularies, supply and appointment capacity may change during recruitment. Patient affordability must be established rather than inferred from drug or indication.",
+      "certainty": "known",
+      "source": "Own preliminary conversations with site staff, describing this fictional collaboration only.",
+      "trigger": "A question about prescribing variation, calendar or site differences, formularies, affordability or potential natural experiments.",
+      "answer": "Some practices favor generic dapagliflozin for cost; some specialists are more familiar with empagliflozin. Formularies, supply and appointment capacity might change. We can document that, but have no rule assigning patients independently of their clinical circumstances.",
+      "core": false
+    },
+    {
+      "fact_id": "f-data-protection",
+      "topic": "Research access and confidential information",
+      "statement": "The sponsor and relevant review bodies have not finalized approvals, confidentiality arrangements or the appropriate participation and data-access basis for each data flow. The plan is for care teams to retain identifiers and analysts to receive minimum permitted information within a controlled environment.",
+      "certainty": "planned",
+      "source": "Own grant-planning notes; no approval or access decision has been granted.",
+      "trigger": "A question about consent, ethics review, confidentiality, identifiers, data sharing or research permissions.",
+      "answer": "The sponsor still needs to settle approvals and the basis for each data flow. The plan is for care teams to keep identifiers and analysts to use limited information in a controlled environment. Those arrangements are not approved yet.",
+      "core": false
+    },
+    {
+      "fact_id": "f-distress-response",
+      "topic": "Participant burden and clinical response",
+      "statement": "Direct questionnaires need a clear participation process and a funded clinical response route for serious distress or immediate safety concerns. That route is not yet arranged. The budget does not support continuous psychiatric monitoring, and participation must not determine access to treatment.",
+      "certainty": "planned",
+      "source": "Own participant-protection planning notes.",
+      "trigger": "A question about responding to distress, questionnaire safety, participant burden, participation affecting care or clinical monitoring capacity.",
+      "answer": "We have not arranged the clinical response for serious distress disclosed in questionnaires. We cannot provide continuous monitoring. Taking part must not affect access to treatment, and existing depression should not automatically exclude someone simply to simplify our analysis.",
+      "core": false
+    },
+    {
+      "fact_id": "f-calendar-and-purpose",
+      "topic": "Planning horizon and study motivation",
+      "statement": "Recruitment could begin in May 2027, subject to funding, permissions and capacity. The proposed grant lasts three years. Patient representatives want emotional wellbeing considered alongside physical health; they have not reported a cluster of adverse events, and the team has no agreed expected direction of effect.",
+      "certainty": "planned",
+      "source": "Own grant timetable and patient-representative meeting notes.",
+      "trigger": "A question about deadlines, whether recruitment has begun, why the question matters, suspected harm or the expected direction of the effect.",
+      "answer": "Recruitment could start in May 2027 if funding and permissions are ready, within a three-year grant. Patient representatives want wellbeing considered alongside physical health. We have no reported cluster of problems or agreed expectation about which medicine would look better.",
+      "core": false
+    }
+  ],
+  "world_only": [
+    {
+      "id": "w-fictional-boundary",
+      "statement": "The places and medicine names are real. The collaboration, access discussions, budgets, prescribing circumstances and dates are fictional. There is no generated dataset, known treatment effect, expected result or privileged evidence unavailable to the actor. The story is not evidence about the safety or efficacy of either medicine."
+    },
+    {
+      "id": "w-information-boundary",
+      "statement": "The complete story and this definition are authoring materials. The consultant receives only the natural opening and facts actually disclosed in conversation. Fact-card labels, core markers, routing triggers and reviewer material remain private. Core identifies likely useful topics for author review, not a disclosure quota or success checklist."
+    },
+    {
+      "id": "w-no-new-truth",
+      "statement": "No external lookup may create missing study-specific facts. General sources can inform conditional scientific or ethical reasoning but cannot establish the fictional collaboration's approvals, prescription allocation, sample balance or outcome rates."
+    }
+  ],
+  "provenance": {
+    "source_story": "development-support/study-design-stories-2026-10-15/cases/03-medication-and-mental-health.md",
+    "source_sha256": "0d0f741f324a47eee87ba691522ccf24087bc884b501aab3dfad264d6f676dc0",
+    "definition_sha256": "d6bb4562725560d0d98218e92962000a972b28dfd53a7d9a64c55db50231716f",
+    "adaptation_notes": [
+      "This case converts the existing fictional medication story into a prospective planning conversation. It retains the original story's location, medicines, populations, timing uncertainty, capacity, access limits and participant-protection concerns.",
+      "No new results or real patient data are introduced. The actor's draft reference to first prescriptions intentionally leaves prior use of the other medicine unresolved, consistent with the story, so the consultant can help define a useful new-user comparison.",
+      "Novel authoring decisions concern interaction and evaluation only: one narrow answer at a time, eight to ten expected replies as private descriptive metadata, a practical planning endpoint, and several acceptable scientific routes. Fact triggers are semantic and have no fixed turn order.",
+      "The actor has no actual attachment, dataset or completed linked extract to release. Its source descriptions are recollections of fictional planning notes, not promises of unavailable documents.",
+      "The original-paper provenance remains in the separate story authoring materials. It is excluded from consultant-facing messages and actor fact answers. The fictional study makes no claim about actual comparative psychiatric effects of these medicines.",
+      "Case/world 1.1.0 adopts only the three prioritized refinements in validation/paper-enrichment-medication.md: dated diabetes severity, current regimen and simultaneous changes, and dated current psychiatric treatment. These are fictional draft-form options within existing resources, not completed collection, new linkage or an automatic adjustment set. The source story remains the preserved foundation."
+    ]
+  },
+  "data_status": "No future outcomes or causal effect are generated. Statements describe fictional planning facts or explicitly unresolved questions."
+}

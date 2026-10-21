@@ -21,9 +21,14 @@ def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def bank(identity):
+    return (compose_case.RGGVY_ROOT / "problem" if identity == compose_case.RGGVY_ID
+            else ROOT / "problems" / identity)
+
+
 def checker(identity):
     spec = importlib.util.spec_from_file_location(identity.replace("-", "_"),
-                                                ROOT / "problems" / identity / "check_oracle.py")
+                                                bank(identity) / "check_oracle.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -33,7 +38,7 @@ class ScientificProbes(unittest.TestCase):
     def test_all_five_frozen_oracles_execute(self):
         for identity in (*generate_problem_bank.PROBLEM_IDS, "rggvy-electrification"):
             with self.subTest(problem=identity):
-                result = subprocess.run([sys.executable, "-B", str(ROOT / "problems" / identity / "check_oracle.py")],
+                result = subprocess.run([sys.executable, "-B", str(bank(identity) / "check_oracle.py")],
                                         capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertTrue(json.loads(result.stdout)["ok"])

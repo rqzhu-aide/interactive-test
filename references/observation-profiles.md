@@ -5,14 +5,14 @@ this reference, candidate instructions or observer results in an actor prompt
 or bundle. The simulated user follows its own protocol, setting and persona,
 using the public conversation and legitimately received materials.
 
-Tester 8.3.7 source supports consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7. Freeze the actual
+Tester 8.4.7 source supports consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15. Freeze the actual
 candidate inventory, capabilities, journal format and presentation policy for
 each attempt. Focused admission, observation and continuity checks accompany
 this release; live host qualification remains pending.
 Historical attempts keep their frozen contracts;
 do not reinterpret them using a newer record schema or renderer.
 
-## Consultants 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7
+## Consultants 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15
 
 The primary journal format is `consultation-journal-v8`. Its top-level
 capabilities include `canonical-memory-v8`, `content-authoring-v8`,
@@ -21,7 +21,7 @@ capabilities include `canonical-memory-v8`, `content-authoring-v8`,
 profile, not a cumulative requirement to advertise every historical v7 capability.
 The package also retains a legacy codec for existing v7 journals.
 
-All eight supported releases activate v8 loop observation and the existing before/after
+All listed supported releases activate v8 loop observation and the existing before/after
 work-inventory receipt used by full-report completion. The capability response must
 name the exact selected candidate version. This does not admit other 8.x releases.
 
@@ -99,14 +99,14 @@ up to 200 words, subject to review of the actual request.
 
 Consultant 8.0.0 retains the allowance of up to 100 words for essential selectable
 scope terms when needed; review necessity before applying it. Consultants 8.0.1,
-8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7 require every next-step option to stay within 50 words, including scope options.
+8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 require every next-step option to stay within 50 words, including scope options.
 The frozen profile's `public_presentation_option_max_words` selects this policy
 for both per-turn and final observation. Historical profiles without that field
 retain the earlier 100-word scope ceiling; journal format and renderer alone do
-not select the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7 rule.
+not select the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15 rule.
 
 A requested answer may show complete same-reply scope terms once, with its option
-pointing to that visible answer; the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7 option still stays within 50 words.
+pointing to that visible answer; the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15 option still stays within 50 words.
 A heading or saved link alone proves neither disclosure nor consent. Internal
 records and report artifacts retain their needed detail.
 

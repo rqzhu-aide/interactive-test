@@ -20,7 +20,7 @@ from session_driver import digest, inventory, read, validate_case
 from source_release import source_release_observations, validate_release_receipts
 
 PROBLEM = "rggvy-electrification"
-PERSONAS = ("standard", "novice-adversarial", "expert")
+PERSONAS = (composer.COORDINATOR_PERSONA_ID,)
 DATA_MEMBERS = {"villages.dta", "households.tsv", "village_variables.csv",
                 "household_variables.csv"}
 
@@ -44,7 +44,7 @@ class RggvyCase(unittest.TestCase):
         for persona in PERSONAS:
             directory = cls.root / persona
             cls.cases[persona] = (directory, composer.compose_case(PROBLEM, persona, directory))
-        cls.case, cls.manifest = cls.cases["standard"]
+        cls.case, cls.manifest = cls.cases[composer.COORDINATOR_PERSONA_ID]
         cls.definition = read(cls.case / "problem.json")
         cls.sources = {source["id"]: source for source in cls.manifest["sources"]}
         cls.archive = cls.case / cls.sources["s-data"]["file"]
@@ -53,8 +53,8 @@ class RggvyCase(unittest.TestCase):
             cls.village_dictionary = csv_rows(archive.read("village_variables.csv"))
             cls.household_dictionary = csv_rows(archive.read("household_variables.csv"))
 
-    def test_all_three_profiles_validate_and_preserve_the_same_evidence(self):
-        self.assertEqual(len(self.cases), 3)
+    def test_fixed_coordinator_validates_and_preserves_scientific_evidence(self):
+        self.assertEqual(len(self.cases), 1)
         baseline = self.manifest
         scientific = {name: sha for name, sha in baseline["files"].items()
                       if name in {"world.json", "oracle.json", "check_oracle.py", "problem.json", "reviewer.json"}
@@ -69,7 +69,7 @@ class RggvyCase(unittest.TestCase):
                 self.assertEqual({name: manifest["files"][name] for name in scientific}, scientific)
                 self.assertEqual(manifest["world_id"], baseline["world_id"])
                 actor = read(directory / manifest["actor"])
-                self.assertEqual(actor["persona_profile"], read(ROOT / "personas" / (persona + ".json")))
+                self.assertEqual(actor["persona_profile"], read(composer.RGGVY_ROOT / "persona.json"))
                 self.assertEqual(actor["reply_limits"], {"max_words": 50, "max_items": 2})
                 self.assertEqual(actor["goal"], self.definition["goal"])
                 self.assertNotIn("target_turns", actor)
@@ -131,7 +131,8 @@ class RggvyCase(unittest.TestCase):
         for persona, (directory, manifest) in self.cases.items():
             with self.subTest(persona=persona):
                 actor = read(directory / manifest["actor"])
-                self.assertEqual({fact["fact_id"] for fact in actor["facts"]}, expected)
+                actor_expected = expected | {"f-coordinator-briefing", "f-coordinator-audience"}
+                self.assertEqual({fact["fact_id"] for fact in actor["facts"]}, actor_expected)
                 # Private data-handling findings must be learned from released
                 # records. Every persona gets the same accessible original sources.
                 facts = json.dumps(actor["facts"])
@@ -146,7 +147,7 @@ class RggvyCase(unittest.TestCase):
                                   "r-rggvy-truth", "r-rggvy-report-selection", "r-rggvy-finish"}
                                  & set(rules))
                 for rule in rules.values():
-                    self.assertTrue(set(rule["fact_ids"]) <= expected)
+                    self.assertTrue(set(rule["fact_ids"]) <= actor_expected)
                     self.assertTrue(set(rule["source_ids"]) <= set(self.sources))
                 for update in ("knowledge_updates", "belief_updates", "decision_updates"):
                     self.assertIn(update, actor["reply_record"]["optional"])

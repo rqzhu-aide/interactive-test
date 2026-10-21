@@ -16,7 +16,7 @@
       "fact_id": "f-evaluation-access",
       "knowledge_tier": "practical",
       "source": "evaluation-access.md",
-      "statement": "There is a separate evaluation file. The records office releases it after the analyst states in the conversation that the proposed rule and evaluation plan have been fixed and saved. I can share the access note now."
+      "statement": "There is a separate evaluation file. The records office releases it after the analyst states in the conversation that the proposed rule and evaluation plan have been fixed and saved, identifying each commitment file with a file link or unambiguous filename/path. A document title alone is insufficient; no prescribed filename is required. I can share the access note now."
     },
     {
       "available_when": "A relevant question about this subject",
@@ -66,7 +66,7 @@
   ],
   "actor_rules": [
     {
-      "action": "If the visible exchange identifies a saved fixed candidate rule and evaluation plan with utility and comparators, release evaluation.csv. Otherwise share evaluation-access.md and briefly ask whether those choices have been fixed and saved. Do not read the consultant journal, demand exact wording or release outcomes to accelerate completion. Other relevant records are not delayed.",
+      "action": "If the visible exchange identifies a saved fixed candidate rule and evaluation plan with utility and comparators, with a file link or unambiguous filename/path for each commitment file, release evaluation.csv. A document title alone is insufficient; no prescribed filename is required. Otherwise share evaluation-access.md and briefly ask for the missing commitment or file reference. Do not read the consultant journal, demand exact wording or release outcomes to accelerate completion. Other relevant records are not delayed.",
       "condition": "The consultant asks for the independent evaluation file or all remaining data.",
       "fact_ids": [
         "f-evaluation-access",
@@ -135,14 +135,14 @@
     "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
     "oracle.json": "63a5b5f57a0078173f8ac3fe8378d0eae828e62b554e49831cfe7b55bc646225",
     "public/assignment-and-sampling.md": "ae715efad3f353a046eeff3002d2395ee69f29049b5c2befbd39abea3fd14e82",
-    "public/available-records.md": "b4d7fb9f36ddc90b64fb5f43a6339241423071230b42adab1bc19a67d1dd3f44",
+    "public/available-records.md": "04121204018e8384d2054461d9a36bec2e254a043c1e52782bb458312063ff7c",
     "public/decision-constraints.md": "159afcf11d1a46f4c7805bad539b9b891e3e8dc789c399d5290f32dbf6b1adfc",
     "public/development.csv": "8d0c26baf88d2ab3b23cafb83803c957f77636cbe319d159c338c92632fdee2b",
     "public/dictionary.md": "2942c46e36840eeb7b5ab7dbdb810d52971df05a7d3dad219acfc1466c0308e0",
-    "public/evaluation-access.md": "cfb23ddc86c0c176e2190d71f484bad2f17b21e19b494e45e2c263637e3ace70",
+    "public/evaluation-access.md": "c7af7a104c653dc9e03608741f50eb43044526c5fb2340a8bb94f6f1137d6b1c",
     "public/evaluation.csv": "300906f90cbbfbe80bbb6114f6c8723638e89c5887afd0fbad2366f31e132ae3",
-    "reviewer.json": "af4b72412439ae6d90ec8611d858f21dc194b8cf6753ea60479d08081b1ec6c0",
-    "world.json": "2ec537c0ff2ad14a2dfa6b8b96b41eeb847909d073bc748c53f040010408d70e"
+    "reviewer.json": "d05600ee17b6cf686ed55738e3ca8bab03a29805c99f76156e98c079382f3a64",
+    "world.json": "c23d652e52074ba46e3e842488b973804e5f8f3572b5f5f2d4ce7b9854b6cfaf"
   },
   "goal": "Investigate who benefits from a tutoring offer, develop a feasible individualized offer rule using information available before assignment, and save a complete local report with honest policy-value evaluation, uncertainty, limitations and reproducible work. Evaluate against useful feasible baseline policies. HTML is suitable; no publication.",
   "initial_request": "Please use the causal-consultant skill for this consultation. We have study data and limited tutoring places. Please help us decide which learners to offer tutoring to, discuss how to choose the analysis, and save a report showing how well the decision might work.",
@@ -154,7 +154,7 @@
   "label": "Treatment heterogeneity and feasible policy",
   "oracle_check": "check_oracle.py",
   "problem_id": "cate-policy",
-  "problem_version": "1.3.0",
+  "problem_version": "1.3.1",
   "reviewer": "reviewer.json",
   "schema_version": 1,
   "sources": [
@@ -207,7 +207,7 @@
           "evaluation_procedure"
         ]
       },
-      "release_when": "Only after a visible statement identifying the saved fixed candidate rule and evaluation plan, including utility and comparators. Never release solely because of a broad request or elapsed dialogue. The user may ask a brief practical clarification if the commitment is missing; no private-journal inspection or exact wording is required."
+      "release_when": "Only after a visible statement identifies the saved fixed candidate rule and evaluation plan, including utility and comparators, with a file link or unambiguous filename/path for each commitment file. A document title alone is insufficient; no prescribed filename is required. Never release solely because of a broad request or elapsed dialogue. The user may ask a brief practical clarification if the commitment or file reference is missing; no private-journal inspection or exact wording is required."
     },
     {
       "availability": "on_request",

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "case_id": "medication-planning",
+  "case_version": "1.1.3",
+  "suite_version": "prospective-study-design-1.1.0",
+  "edition": "prospective-single-question",
+  "author": "Codex with independent subagent review",
+  "completion_contract": "focused",
+  "initial_message": "public/initial-message.txt",
+  "actor": "actor.json",
+  "reviewer": "reviewer.json",
+  "world": "world.json",
+  "world_id": "medication-planning-world",
+  "world_version": "1.1.0",
+  "persona_id": "single-question-planner",
+  "oracle_check": "check_fixture.py",
+  "sources": [],
+  "reply_limits": {
+    "max_words": 50,
+    "max_items": 1
+  },
+  "target_turns": 9,
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "run_limits": {
+    "consultant_turns": 12
+  },
+  "files": {
+    "actor.json": "bedcf52574f191a9afe46b7f3244302852883a171d165bdbfea1f98f11345fc6",
+    "check_fixture.py": "8eeb2a272239e1efa39ddc0e363ff6066ddfe9fc262d53556bab87fd97e0fdf2",
+    "playbook.md": "7428f282c91fe70576b055cb5424ddee84d10c9ee966f0ec091bdf1b9754efe4",
+    "public/initial-message.txt": "cc1a376d625d3efbae8684bde5e57615343bb1dac6bdde28f1e5f0b658f83e8a",
+    "reviewer.json": "c9623ec4054478398997d66ddd2f6b22f1a699dbfaaa733f8c0e16305145c709",
+    "world.json": "5040b2c188fffc48655f7dbba41b90830923a5ec969206e02935ad2a5da726ac"
+  }
+}

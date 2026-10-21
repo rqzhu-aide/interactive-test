@@ -1,24 +1,26 @@
 # RGGVY coordinator bounded continuity stress case
 
-For fixture authors, operators and reviewers, not the user actor. This persona
-is available only with `rggvy-electrification`; it is not a fourth general persona.
+For fixture authors, operators and reviewers, not the user actor. This is the
+only active RGGVY case, with a fixed Research Coordinator. It is standalone and
+is not crossed with the three general personas.
 Use the ordinary [runner](runner.md) with a fresh composed case:
 
 ```sh
-python scripts/compose_case.py --problem rggvy-electrification --persona rggvy-research-coordinator --output /private/cases/coordinator001
+python scripts/compose_case.py --standalone rggvy-electrification --output /private/cases/coordinator001
 ```
 
 New compositions select coordinator persona and variant **1.1.0** automatically.
-Tester **8.3.5** releases this case while retaining suite **8.2.0**, the 15
-general problem/persona pairs and frozen coordinator **1.0.0** attempts unchanged.
+Tester **8.4.7** retains suite **8.2.0** and the case's existing behavior while
+moving it into the standalone catalog. Earlier frozen RGGVY personas and
+coordinator **1.0.0** attempts retain their original contracts.
 The coordinator prepares a research briefing on household welfare in historical
 Chhattisgarh. They understand logistics and basic summaries and need explanation
 of identification and uncertainty. This edition requires eight ordered client
 participation events and **8 to 12 delivered consultant replies**. It is a
 controlled stress contract, not a descriptive duration target.
 
-The [persona](../personas/rggvy-research-coordinator.json) contains only user
-behavior. The [private variant](rggvy-continuity.json) supplies initial wording,
+The [persona](../standalone/rggvy-electrification/persona.json) contains only user
+behavior. The [private variant](../standalone/rggvy-electrification/continuity-variant.json) supplies initial wording,
 the client-priority fact, required participation and extra review criteria.
 The composer copies only the actor portions into `actor.json`. The actor uses
 the usual reply policy, public conversation, permitted materials and own history;

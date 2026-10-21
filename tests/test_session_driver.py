@@ -330,13 +330,13 @@ process.stdout.write(JSON.stringify(store.status(root)));
         candidate = self.root / "version-probe"
         candidate.mkdir()
         (candidate / "SKILL.md").write_text("Test-only runtime file.", encoding="utf-8")
-        for version in ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7"):
+        for version in ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15"):
             with self.subTest(version=version):
                 driver.write(candidate / "package.json", {"version": version, "files": ["SKILL.md"]})
                 self.assertEqual(driver.candidate_inventory(candidate), {
                     "SKILL.md": driver.digest(candidate / "SKILL.md"),
                     "package.json": driver.digest(candidate / "package.json")})
-        for version in ("6.9.9", "7.0.3", "7.0.14", "7.1.0", "7.0.2-preview", "7.0.4-preview", "7.0.5-preview", "7.0.6-preview", "7.0.7-preview", "7.0.8-preview", "7.0.9-preview", "7.0.10-preview", "7.0.11-preview", "7.0.12-preview", "7.0.13-preview", "7.5.4-preview", "7.5.3-preview", "7.5.2-preview", "8.0.8"):
+        for version in ("6.9.9", "7.0.3", "7.0.14", "7.1.0", "7.0.2-preview", "7.0.4-preview", "7.0.5-preview", "7.0.6-preview", "7.0.7-preview", "7.0.8-preview", "7.0.9-preview", "7.0.10-preview", "7.0.11-preview", "7.0.12-preview", "7.0.13-preview", "7.5.4-preview", "7.5.3-preview", "7.5.2-preview", "8.0.11-preview", "8.0.12-preview", "8.0.13-preview", "8.0.14-preview", "8.0.15-preview", "8.0.16"):
             with self.subTest(version=version):
                 driver.write(candidate / "package.json", {"version": version, "files": ["SKILL.md"]})
                 with self.assertRaisesRegex(ValueError, "observation profile"):
@@ -345,7 +345,7 @@ process.stdout.write(JSON.stringify(store.status(root)));
     def test_v8_profiles_preserve_journal_and_option_word_limits(self):
         candidate = self.root / "v8-profile-probe"
         candidate.mkdir()
-        for version, option_limit in (("8.0.0", 100), ("8.0.1", 50), ("8.0.2", 50), ("8.0.3", 50), ("8.0.4", 50), ("8.0.5", 50), ("8.0.6", 50), ("8.0.7", 50)):
+        for version, option_limit in (("8.0.0", 100), ("8.0.1", 50), ("8.0.2", 50), ("8.0.3", 50), ("8.0.4", 50), ("8.0.5", 50), ("8.0.6", 50), ("8.0.7", 50), ("8.0.8", 50), ("8.0.9", 50), ("8.0.10", 50), ("8.0.11", 50), ("8.0.12", 50), ("8.0.13", 50), ("8.0.14", 50), ("8.0.15", 50)):
             driver.write(candidate / "package.json", {"version": version})
             capability = {"ok": True, "version": version, "journal_schema": 8,
                           "default_journal_format": driver.V8_FORMAT,

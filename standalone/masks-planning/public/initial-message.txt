@@ -1,0 +1,1 @@
+Use $causal-consultant. It's 1 September 2027. I want to prepare a study of a winter mask campaign in French cities. We will collect illness records and possibly some background information. What should we collect, and how could we design the analysis to reach a causal conclusion?

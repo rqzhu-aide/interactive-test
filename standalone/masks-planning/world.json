@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "world_id": "masks-planning-world",
+  "world_version": "1.1.0",
+  "setting": "A fictional municipal research collaboration in Rennes, Brest, Quimper, Lorient, Vannes and Saint-Brieuc, France. Places are real; the program, records, resources and future events are invented.",
+  "planning_date": "2027-09-01",
+  "facts": [
+    {
+      "fact_id": "f-intervention",
+      "topic": "What the campaign does",
+      "certainty": "planned",
+      "statement": "The campaign would offer free medical masks at participating transport interchanges and municipal indoor venues, with messages encouraging use. Wearing is voluntary and no one is denied services.",
+      "source": "Coordinator's campaign planning notes",
+      "trigger": "Asks what the intervention, policy, mask program or exposure actually consists of",
+      "answer": "We would offer free masks at transport interchanges and municipal indoor venues, with messages encouraging people to wear them. Wearing would be voluntary; nobody would lose access to a service.",
+      "core": true
+    },
+    {
+      "fact_id": "f-units",
+      "topic": "Places and rollout units",
+      "certainty": "known",
+      "statement": "Six city teams participate: Rennes, Brest, Quimper, Lorient, Vannes and Saint-Brieuc. They organize campaigns by city, with coverage varying by venue. Residents and visitors use the venues.",
+      "source": "Coordinator's partner list",
+      "trigger": "Asks which places participate or at what level the campaign operates",
+      "answer": "Six city teams are involved: Rennes, Brest, Quimper, Lorient, Vannes and Saint-Brieuc. Each organizes its own participating venues. People using those venues include visitors as well as residents.",
+      "core": false
+    },
+    {
+      "fact_id": "f-starts",
+      "topic": "Planned timing",
+      "certainty": "planned",
+      "statement": "Rennes plans announcement on 30 September 2027 and distribution from 14 October. Brest and Lorient provisionally plan November; others late November or December. Actual dates remain changeable.",
+      "source": "Coordinator's provisional calendar",
+      "trigger": "Asks when the campaign starts, whether dates differ, or whether announcement and delivery coincide",
+      "answer": "Rennes plans to announce it on 30 September 2027 and start distribution on 14 October. Brest and Lorient expect November; the others are considering late November or December. These dates could still change.",
+      "core": true
+    },
+    {
+      "fact_id": "f-order",
+      "topic": "Why timing differs",
+      "certainty": "known",
+      "statement": "Rennes is ready first because procurement and volunteer arrangements are advanced and officials are concerned about last winter's service pressure. Other teams' readiness and concern differ. There is no random assignment.",
+      "source": "Coordinator's account of planning meetings",
+      "trigger": "Asks who chooses launch dates, why some cities start earlier, or whether rollout is random",
+      "answer": "Rennes has procurement and volunteers ready, and its officials are worried about last winter's service pressure. The other teams have different readiness and concerns. The order was not chosen randomly.",
+      "core": true
+    },
+    {
+      "fact_id": "f-authority",
+      "topic": "What the researcher can change",
+      "certainty": "known",
+      "statement": "The researcher can revise measurement and invite data partners but cannot set launch order, stop another city's campaign or postpone a measure officials consider necessary.",
+      "source": "Coordinator's mandate",
+      "trigger": "Asks about randomizing, delaying or controlling rollout, or what design choices remain negotiable",
+      "answer": "We can change the measurement plan and invite data partners. We cannot set the launch order or ask a city to postpone action it considers necessary.",
+      "core": false
+    },
+    {
+      "fact_id": "f-goal",
+      "topic": "Decision and outcome preference",
+      "certainty": "preference",
+      "statement": "The funding committee wants to know whether the campaign reduces illness among residents, especially older adults, before a summer 2028 renewal decision. A primary outcome is not selected.",
+      "source": "Funding committee's request as understood by the coordinator",
+      "trigger": "Asks what decision the study supports, whose outcome matters, or which outcome is primary",
+      "answer": "The committee wants to decide next summer whether to fund the campaign again. It cares about illness among residents, especially older adults. We have not settled on the main illness measure.",
+      "core": true
+    },
+    {
+      "fact_id": "f-lab",
+      "topic": "Laboratory records",
+      "certainty": "known",
+      "statement": "Four providers hold respiratory specimen records with collection and result dates, tested pathogens, results, age and residential commune when entered. Records are specimens, not necessarily unique people or infection episodes.",
+      "source": "Sample dictionaries and aggregate extracts reviewed by the coordinator",
+      "trigger": "Asks what illness data are available or what the laboratory records contain",
+      "answer": "Four laboratory providers hold specimen records with test dates, pathogens tested, results, age and sometimes residential commune. Someone can have several specimens, so a row is not necessarily a new person or illness episode.",
+      "core": true
+    },
+    {
+      "fact_id": "f-care-home",
+      "topic": "Care-home residence within older-adult outcomes",
+      "statement": "The dictionaries reviewed so far contain age and residential commune but no care-home residence indicator. Whether custodians can produce an appropriate aggregate split has not been established. No new person-level linkage or release permission is secured.",
+      "certainty": "known",
+      "source": "Coordinator's review of sample dictionaries",
+      "trigger": "Asks whether older-adult counts distinguish care-home residents from other residents, or whether residence type can be identified.",
+      "answer": "The dictionaries have age and commune but no care-home residence field. We have not established whether custodians could produce that split.",
+      "core": false
+    },
+    {
+      "fact_id": "f-baseline",
+      "topic": "Historical and future coverage",
+      "certainty": "known",
+      "statement": "Sample dictionaries and aggregate extracts cover the two winters ending in spring 2027. The proposed new collection runs September 2027 through April 2028. Individual research extracts remain subject to approval.",
+      "source": "Coordinator's data inventory and draft calendar",
+      "trigger": "Asks whether baseline records exist, which periods can be compared, or how long collection could run",
+      "answer": "We have sample dictionaries and aggregate extracts for the previous two winters. We could request records from September through April this winter, but individual research extracts are not approved yet.",
+      "core": true
+    },
+    {
+      "fact_id": "f-testing",
+      "topic": "How people enter illness records",
+      "certainty": "known",
+      "statement": "Tests are ordered in ordinary care rather than by population sampling. Provider coverage, test panels and reasons for testing differ; counts tested and test types can be requested. Campaign-related changes in testing are unknown.",
+      "source": "Coordinator's laboratory discussions",
+      "trigger": "Asks who gets tested, whether counts measure all infections, or whether recording practices are stable",
+      "answer": "These are tests ordered during ordinary care, not tests of all residents. Providers use different panels and cover different patients. We can request numbers tested, but we do not know whether testing will change during the campaign.",
+      "core": false
+    },
+    {
+      "fact_id": "f-linkage",
+      "topic": "Deduplication and geography",
+      "certainty": "unknown",
+      "statement": "Within-provider pseudonymous keys exist. Cross-provider deduplication is unresolved. Some addresses are missing or ambiguous, and research linkage permission has not been granted.",
+      "source": "Coordinator's unresolved data-access notes",
+      "trigger": "Asks whether people can be linked or deduplicated across providers, or whether residence is reliable",
+      "answer": "Each provider can recognize repeat patients within its own records.",
+      "core": false
+    },
+    {
+      "fact_id": "f-hospital",
+      "topic": "Other outcome source",
+      "certainty": "known",
+      "statement": "Participating hospitals retain respiratory emergency visits and admissions. Hospital attendance is not the same as city residence, and care outside participating hospitals is incomplete.",
+      "source": "Coordinator's hospital data inventory",
+      "trigger": "Asks about hospital outcomes, severe illness or an alternative to laboratory counts",
+      "answer": "Participating hospitals have respiratory emergency visits and admissions. Their patients do not all live in the same city, and we would miss some residents treated elsewhere.",
+      "core": false
+    },
+    {
+      "fact_id": "f-implementation",
+      "topic": "Measuring delivery and uptake",
+      "certainty": "planned",
+      "statement": "Coordinators can log venue opening dates, distribution, stockouts and publicity weekly. The budget includes 120 observer-hours for anonymous mask-wearing and footfall counts. Individual receipt or wearing cannot be linked to illness. The draft observation sheet has only a mask/no-mask tick box, with no rule for nose-and-mouth coverage or visible covering style. Observers cannot identify where a person's mask came from or verify its performance. Additional coding would use the same observer-hours.",
+      "source": "Draft implementation measurement plan",
+      "trigger": "Asks how actual delivery, adherence or wearing can be measured Also asks what observers count as wearing a mask or whether supplied masks can be recognized.",
+      "answer": "The draft sheet only records mask or no mask. It does not define nose-and-mouth coverage or distinguish visible covering styles; observers cannot tell where someone's mask came from.",
+      "core": false
+    },
+    {
+      "fact_id": "f-concurrent",
+      "topic": "Other changes during rollout",
+      "certainty": "planned",
+      "statement": "Cities also plan winter vaccination publicity and some indoor-air improvements. Their timing and overlap with the campaign are not fully documented, and some messages may be combined.",
+      "source": "Coordinator's cross-team planning notes",
+      "trigger": "Asks about other policies, simultaneous activities or alternative explanations for illness changes",
+      "answer": "There are also vaccination messages and some indoor-air improvements planned. Their dates are not fully documented yet, and some publicity might be combined with the mask campaign.",
+      "core": true
+    },
+    {
+      "fact_id": "f-spillover",
+      "topic": "Movement and publicity",
+      "certainty": "known",
+      "statement": "Residents commute and can use venues in other cities; publicity is not geographically contained. Neither individual travel histories nor infection locations are available.",
+      "source": "Coordinator's practical knowledge of the campaign",
+      "trigger": "Asks about cross-city exposure, commuting, contamination or where infections occur",
+      "answer": "People can encounter the campaign in another city, and publicity travels beyond city boundaries. We will not have individual travel histories or know where an infection happened.",
+      "core": false
+    },
+    {
+      "fact_id": "f-resources",
+      "topic": "Staff and extra collection budget",
+      "certainty": "known",
+      "statement": "The plan funds a half-time coordinator, six months of analyst time and an additional EUR 18,000 for either a limited standardized-testing module or better historical and additional-city extracts, not both.",
+      "source": "Coordinator's draft budget",
+      "trigger": "Asks what resources are available, what extra data can be afforded or whether the study can expand",
+      "answer": "We have a half-time coordinator, six months of analyst time and EUR 18,000 extra. That could fund a small standardized-testing module or better historical and additional-city extracts, but not both.",
+      "core": true
+    },
+    {
+      "fact_id": "f-sampling",
+      "topic": "Optional standardized testing",
+      "certainty": "planned",
+      "statement": "A quote covers up to two consenting patients with new respiratory illness per practice per week at four practices for 24 weeks, at most 192 tests. Practices and eligibility rules are not agreed. The provisional form records current symptoms but has no symptom-onset-date field. Whether onset dates can be added consistently within the quote has not been checked.",
+      "source": "Coordinator's provisional supplier quote",
+      "trigger": "Asks how the optional testing module would sample patients or its size and duration Also asks whether the optional testing form records when symptoms began.",
+      "answer": "The quote covers up to two patients with new respiratory illness per practice each week, at four practices for 24 weeks. That is at most 192 tests. Practices and eligibility rules are not agreed yet.",
+      "core": false
+    },
+    {
+      "fact_id": "f-access",
+      "topic": "Permissions and privacy",
+      "certainty": "unknown",
+      "statement": "Research data access and linkage need custodian and governance agreements. Observation would be anonymous, without filming. New patient testing would need an appropriate participation process; masks and services remain available regardless.",
+      "source": "Coordinator's draft governance plan",
+      "trigger": "Asks about consent, permissions, research burden or privacy",
+      "answer": "Data access and linkage agreements are still pending. Observation would use anonymous counts without filming. People joining any new testing would need an appropriate participation process, and declining would not affect access to masks or services.",
+      "core": false
+    },
+    {
+      "fact_id": "f-assumptions",
+      "topic": "Unknown causal comparability",
+      "certainty": "unknown",
+      "statement": "The coordinator cannot establish that cities would have comparable illness trends without the campaign or that all causes of timing and illness are recorded. No campaign effect or event-rate forecast is known.",
+      "source": "Explicit limit of the coordinator's knowledge",
+      "trigger": "Asks the user to certify comparable untreated trends, absence of unmeasured confounding, an expected effect or a precise event forecast",
+      "answer": "I do not know that. We have not established how the cities would compare without the campaign, and I do not have a reliable effect estimate or event forecast.",
+      "core": false
+    }
+  ],
+  "world_only": [
+    {
+      "id": "w-fiction",
+      "statement": "All study operations, counts and records are hypothetical. No post-campaign outcomes exist and no favorable causal effect is encoded."
+    },
+    {
+      "id": "w-boundary",
+      "statement": "The full author dossier, source-paper mapping, review criteria and private expected duration are never consultant-facing. Core labels describe author planning priorities, not disclosure or pass quotas."
+    }
+  ],
+  "provenance": {
+    "source_story": "development-support/study-design-stories-2026-10-15/cases/01-masks-and-winter-illness.md",
+    "source_sha256": "82282311d5fe122299e0f2292d93f1b772fa370ebfbf64f503ab769ba34f60f5",
+    "definition_sha256": "aff18f9f7fd7c5467d286e37f528b8e31ab728e975c9cefbb7eb3fefd5ee0a8f",
+    "adaptation_notes": [
+      "Uses the prior fictional story as a planning world. No source-paper identity or empirical result is included in the actor packet.",
+      "The researcher can report selected planning knowledge orally; no releasable dossier or dataset is supplied in this focused case.",
+      "Core labels are planning aids only. The case does not require disclosure of all core cards, all optional details, or a particular method.",
+      "Case/world 1.1.0 adopts only the three prioritized refinements in validation/paper-enrichment-masks.md: care-home residence availability, the observable wearing definition, and symptom-onset recording in the optional module. The original source story remains a foundation, not a complete description of these added fictional planning facts. No extra budget, permission or disclosure quota is implied."
+    ]
+  },
+  "data_status": "No future outcomes or causal effect are generated. Statements describe fictional planning facts or explicitly unresolved questions."
+}

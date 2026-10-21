@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "case_id": "masks-planning",
+  "criteria": [
+    {
+      "id": "planning-usefulness",
+      "owner": "consultant",
+      "description": "The selected question, collection plan, feasible analysis direction and remaining conditions form a useful prospective plan. No outcome estimate, report artifact or named estimator is mandatory."
+    },
+    {
+      "id": "evidence-and-elicitation",
+      "owner": "consultant",
+      "description": "Credit only disclosed or otherwise legitimately established facts. Evaluate whether omitted consequential questions materially weaken the advice; do not require the entire book or every core card. A pending unanswered question is not evidence that its answer is unavailable."
+    },
+    {
+      "id": "scientific-initiative",
+      "owner": "consultant",
+      "description": "Consider a beneficial alternative or changed target when the evidence motivates it, explain its requirements, and preserve user choice. No count of alternatives or fixed method sequence is required."
+    },
+    {
+      "id": "actor-one-item",
+      "owner": "simulator",
+      "description": "Each spoken reply is at most 50 words and answers one small question or subquestion, or makes one choice/clarification. Semantic breadth requires reading the actual reply; a single sentence, card ID or question label does not certify one item."
+    },
+    {
+      "id": "actor-selective-disclosure",
+      "owner": "simulator",
+      "description": "When several requests occur, the actor follows the frozen selection rule, intentionally omits the others publicly and retains them privately. No full-book attachment, source identity or evaluator reasoning is disclosed. If a compound request never occurs, record that stress coverage as unobserved, not a failure."
+    },
+    {
+      "id": "actor-faithfulness",
+      "owner": "simulator",
+      "description": "Replies remain within allowed facts, stable unknowns and decision preferences. Do not invent recruitment, approvals, datasets, results or communication. Actor failures are separate from consultant quality."
+    },
+    {
+      "id": "useful-stopping",
+      "owner": "consultant_and_simulator",
+      "description": "Stop at an accepted actionable plan or useful narrower planning conclusion. The private expected duration is descriptive; finishing outside it is not itself a defect. A capacity stop before that useful endpoint is incomplete, and a blanket refusal is not useful completion."
+    },
+    {
+      "id": "m-target",
+      "description": "Clarifies the policy decision and distinguishes a campaign effect from the protective effect of individual mask wearing.",
+      "evidence_needed": "Actual opening, disclosed intervention/goal and the target used in the final advice; no credit for private facts as if disclosed.",
+      "scope": "always",
+      "fact_ids": [
+        "f-intervention",
+        "f-goal"
+      ]
+    },
+    {
+      "id": "m-rollout",
+      "description": "Investigates actual rollout choice and timing before treating geography or time as a credible causal comparison.",
+      "evidence_needed": "Visible questions and use of answers, or an explicit conditional plan to establish assignment facts before estimation.",
+      "scope": "always",
+      "fact_ids": [
+        "f-starts",
+        "f-order",
+        "f-authority"
+      ]
+    },
+    {
+      "id": "m-outcome",
+      "description": "Aligns outcome collection, unit and timing; does not equate specimens or encounters with all incident infections. Where the selected interpretation depends on care setting or symptom timing, use the disclosed limits or state what would need to be established; these are not mandatory extra questions.",
+      "evidence_needed": "Chosen data source, collection improvements and acknowledged ascertainment limits based on disclosed data facts.",
+      "scope": "always",
+      "fact_ids": [
+        "f-lab",
+        "f-testing",
+        "f-baseline",
+        "f-hospital",
+        "f-care-home",
+        "f-sampling"
+      ]
+    },
+    {
+      "id": "m-comparison",
+      "description": "Makes the proposed comparison conditional on appropriate historical support, concurrent events and exposure boundaries; treats diagnostic checks as evidence rather than proof.",
+      "evidence_needed": "Reasoned analysis plan and assumptions for the route actually selected, with consequences for the claim if requirements fail.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-baseline",
+        "f-concurrent",
+        "f-spillover",
+        "f-assumptions"
+      ]
+    },
+    {
+      "id": "m-collection",
+      "description": "Prioritizes feasible additional collection that addresses an important weakness rather than supplying a generic confounder list. For an observed-uptake route, distinguish the observation definition from verified receipt or protective performance.",
+      "evidence_needed": "Specific information to collect, when and from whom, with a reason linked to the proposed question and available resources.",
+      "scope": "always",
+      "fact_ids": [
+        "f-resources",
+        "f-implementation",
+        "f-sampling"
+      ]
+    },
+    {
+      "id": "m-governance",
+      "description": "Respects researcher authority and proportionate participant/data protections without claiming approval has been granted.",
+      "evidence_needed": "Advice remains conditional on unresolved permissions and does not require withholding masks or identifiable tracking.",
+      "scope": "always",
+      "fact_ids": [
+        "f-authority",
+        "f-access"
+      ]
+    }
+  ],
+  "acceptable_routes": [
+    {
+      "route": "A prospective comparative evaluation across city campaigns",
+      "requires_fact_ids": [
+        "f-intervention",
+        "f-starts",
+        "f-order",
+        "f-lab",
+        "f-baseline"
+      ],
+      "benefit": "Can inform the campaign renewal decision if comparison, timing and measurement requirements are attainable.",
+      "claim_limit": "Requires a defensible counterfactual and treatment definition; source measurement, concurrent activity and spillovers can limit attribution. No named estimator is required."
+    },
+    {
+      "route": "A narrower evaluation of implementation and measured uptake, with illness evaluation conditional on improved information",
+      "requires_fact_ids": [
+        "f-goal",
+        "f-implementation",
+        "f-resources"
+      ],
+      "benefit": "Provides useful preparation and operational evidence when population illness attribution remains weak.",
+      "claim_limit": "Requires explicit user acceptance of the narrower goal; cannot silently label wearing observations as infection effects."
+    },
+    {
+      "route": "A staged feasibility study prioritizing standardized ascertainment or a broader comparison pool",
+      "requires_fact_ids": [
+        "f-testing",
+        "f-resources",
+        "f-sampling"
+      ],
+      "benefit": "Uses the collection window to resolve a consequential uncertainty before committing to estimation.",
+      "claim_limit": "The quoted small sample is not an established adequately powered causal study; extra cities are not automatically comparable."
+    }
+  ],
+  "route_scoring": "Routes are examples, not an exhaustive answer key. Fact references identify relevant evidence, not a mandatory question checklist. Review only the chosen route's material needs. Conditional plans can identify facts to establish later.",
+  "failure_examples": [
+    "Promises causal identification from a city before/after chart or from a named estimator without its requirements.",
+    "Treats every positive specimen as a unique infection or assumes the laboratory network is a population census.",
+    "Invents an observed mask effect, claims access approval, or recommends delaying protection despite the stated authority limit.",
+    "Keeps requesting all hidden facts or insists on all possible alternatives after a useful scoped plan is possible."
+  ],
+  "completion_signs": [
+    "The user can understand the proposed study question and the reason for its scope.",
+    "The consultant has prioritized concrete data collection and explained a feasible analysis direction with the conditions it would need.",
+    "Known resource, authority and access constraints are respected, and remaining uncertainties have a practical next step.",
+    "The user's current clarification or choice has been addressed; no analysis execution or saved report is needed."
+  ],
+  "useful_stop": "An accepted actionable collection and conditional analysis plan, or a user-chosen narrower planning endpoint with concrete next steps. Blanket refusal or reaching a cap is not useful completion.",
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "target_turns": 9,
+  "duration_rule": "Count delivered consultant replies from the first answer to the useful endpoint. The range is descriptive, not a pass threshold or actor instruction. Record the actual count. At the configured ceiling, stop and retain incomplete status if the goal is unmet.",
+  "validation_scope": "Structural fixture checks and independent review do not prove actor adherence, causal validity or live host qualification."
+}

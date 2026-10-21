@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "world_id": "surgery-planning-world",
+  "world_version": "1.1.0",
+  "setting": "A fictional collaboration of six public-sector hospitals around Durban and Pietermaritzburg, South Africa, preparing prospective collection for adult inpatient general surgery and orthopaedics. Locations are real; institutions, operations, counts and arrangements are fictional.",
+  "planning_date": "2027-02-18",
+  "facts": [
+    {
+      "fact_id": "f-purpose",
+      "topic": "What the hospitals want to change",
+      "statement": "Managers want evidence useful for scheduling, communication or support after discharge. The coordinator would accept a narrower or revised question connected to differences in surgical care, rather than an inherent-quality comparison between genders.",
+      "certainty": "preference",
+      "source": "Coordinator's notes from the planning discussion",
+      "trigger": "Ask what decision the findings should support, what the team means by a causal conclusion, or whether an actionable narrower question would be useful.",
+      "answer": "We want something hospitals can use to improve scheduling, communication or support after discharge. I could accept a narrower question if you explain how it helps with the original concern about differences in care.",
+      "core": false
+    },
+    {
+      "fact_id": "f-setting-scale",
+      "topic": "Provisional study population and planning counts",
+      "statement": "Six participating public-sector hospitals include four regional and two tertiary sites. The initial scope is adult inpatient general surgery and orthopaedics. Preliminary theatre totals suggest about 12,000 operations during 16 recruitment months and around 80 consultants and senior trainees. These counts are unaudited and do not establish statistical power.",
+      "certainty": "planned",
+      "source": "Aggregate theatre totals and the coordinator's draft scope",
+      "trigger": "Ask about intended patient population, hospitals, specialties or approximate study size. Answer only the part asked if the question is narrower than this card.",
+      "answer": "We initially proposed adult inpatient general surgery and orthopaedics across six public hospitals. Rough theatre totals suggest about 12,000 operations over 16 months and around 80 consultants and senior trainees, but those are planning figures.",
+      "core": false
+    },
+    {
+      "fact_id": "f-allocation",
+      "topic": "How patients reach a surgical team",
+      "statement": "Elective patients reach teams through referral clinics and waiting lists; some consultants retain patients they assessed, and other services allocate operating lists after a shared clinic. Emergencies usually go to the on-duty service, but senior staff can exchange duties, take over difficult cases or transfer patients. No allocation mechanism has been audited as random.",
+      "certainty": "known",
+      "source": "Coordinator's workflow notes from clinical staff",
+      "trigger": "Ask how surgeons or teams are selected, whether assignment is random, or whether emergency rosters supply a credible comparison. Use the elective or emergency portion alone if that is what was asked.",
+      "answer": "Elective patients go through clinics and waiting lists, sometimes staying with the consultant they first saw. Emergencies usually go to the on-duty team, but difficult cases can be reassigned or transferred. I have not checked how often that happens.",
+      "core": true
+    },
+    {
+      "fact_id": "f-authority",
+      "topic": "What research can change about treatment allocation",
+      "statement": "The coordinator cannot assign a surgeon, postpone an operation or alter access to care. The project can propose measurements, follow-up procedures and a narrower recruitment scope, subject to approvals and staffing.",
+      "certainty": "known",
+      "source": "Coordinator's agreed operational remit",
+      "trigger": "Ask whether the study can randomize, rotate, delay or otherwise change who treats a patient, or what aspects of the study are controllable.",
+      "answer": "I cannot change who treats a patient, delay surgery or alter access to care. We can propose new measurements and follow-up, and narrow which services we study if the hospitals agree.",
+      "core": false
+    },
+    {
+      "fact_id": "f-gender-definition",
+      "topic": "How surgeon gender would be recorded",
+      "statement": "The opening's male/female wording is informal. The proposed research field is voluntary self-described gender, collected by an independent research administrator with self-description and a decline option. Neither sex assigned at birth nor gender can be inferred from names, appearance or existing administrative labels. Category representation has not yet been agreed.",
+      "certainty": "planned",
+      "source": "Draft staff questionnaire discussed with staff representatives",
+      "trigger": "Ask how gender is defined or measured, whether male/female is mandatory, or whether existing staff fields are usable.",
+      "answer": "I used male and female loosely. We proposed asking surgeons how they describe their gender, with self-description and a decline option. We have not agreed on analysis categories, and we would not infer gender from names or appearance.",
+      "core": true
+    },
+    {
+      "fact_id": "f-team-attribution",
+      "topic": "Which clinician is attached to an operation",
+      "statement": "The roster names a scheduled consultant, while the operation note can name a trainee as primary operator and a different supervisor. Existing registers do not reliably distinguish initially assigned, operating and supervising clinicians. The project can add those separate identifiers and team-change timestamps, but their current disagreement rate is unknown.",
+      "certainty": "known",
+      "source": "Coordinator's comparison of blank register and operation-note fields",
+      "trigger": "Ask which surgeon's gender constitutes the exposure, who actually operates or supervises, or how team changes are recorded.",
+      "answer": "The roster names a scheduled consultant.",
+      "core": true
+    },
+    {
+      "fact_id": "f-baseline",
+      "topic": "Available information before care allocation",
+      "statement": "Records include age, diagnoses, local prior admissions and referral source. Completeness of presenting severity, functional status, prior treatment and referral delay is unknown. A short prospective entry form could improve these fields. Discharge diagnoses may describe postoperative complications and cannot automatically be treated as baseline conditions.",
+      "certainty": "known",
+      "source": "Draft data dictionary and coordinator's records-mapping notes",
+      "trigger": "Ask which pre-treatment confounders exist, what baseline data can be collected, or whether diagnoses and severity are recorded before allocation.",
+      "answer": "We have age, diagnoses, referral source and some prior admissions. Completeness of severity, function, earlier treatment and referral delays is unknown. A short entry form could help; discharge diagnoses may describe postoperative complications rather than baseline conditions.",
+      "core": true
+    },
+    {
+      "fact_id": "f-procedure-detail",
+      "topic": "Indication and detail within broad procedure labels",
+      "statement": "The blank planning form uses broad labels such as bowel or joint surgery. A short indication and planned-extent field could be piloted in selected services within the existing collection scope; joint surgery could distinguish first operations from revisions. Actual procedure and intraoperative changes would be separate entries. The time each detail became known would need recording. Feasibility and completeness remain untested, and no pilot access or permission is established.",
+      "certainty": "planned",
+      "source": "Blank planning form and proposed entry-field revisions",
+      "trigger": "Asks what detail distinguishes operations within a broad label, whether revisions can be identified, or what procedure information could be added before care.",
+      "answer": "A short field for indication and planned extent could be piloted in selected services, including whether joint surgery is a first operation or revision. Feasibility and completeness remain untested.",
+      "core": false
+    },
+    {
+      "fact_id": "f-entry-time",
+      "topic": "When prospective collection begins",
+      "statement": "The draft entry point is acceptance onto an operating list for elective patients or admission to the surgical service for emergencies. Some elective patients have already seen a consultant before that point, and urgent treatment may precede research contact. Referral and allocation timestamps can be sought, but not every proposed baseline field will precede first clinical allocation.",
+      "certainty": "planned",
+      "source": "Draft entry form and proposed recruitment workflow",
+      "trigger": "Ask when recruitment or baseline measurement occurs relative to allocation and surgery, or whether collection can precede the relevant care decision.",
+      "answer": "We planned to start when patients enter an operating list or the emergency surgical service. Some will already have seen a consultant, and emergency treatment may begin first. We could collect referral and team-allocation dates, but those need checking.",
+      "core": false
+    },
+    {
+      "fact_id": "f-overlap",
+      "topic": "Comparable patients within services",
+      "statement": "A provisional staffing list suggests very few surgeons of some genders in some hospital-specialty combinations. Staffing, clinician experience, procedure, language, time of day and team composition may travel together. The team has not established whether comparable patients are treated by surgeons of different genders within the same services.",
+      "certainty": "unknown",
+      "source": "Preliminary staffing list and unresolved planning question",
+      "trigger": "Ask whether genders treat comparable patients, whether comparisons are possible within hospitals or specialties, or whether there is adequate overlap.",
+      "answer": "Some hospital-specialty combinations appear to have very few surgeons of one gender. We have not checked whether they treat comparable patients within the same service. The total number of operations does not tell us that.",
+      "core": true
+    },
+    {
+      "fact_id": "f-procedure-experience",
+      "topic": "Recent experience with the selected procedure",
+      "statement": "A short clinician form could ask training grade, years practising independently and recent activity for the selected procedure family over a dated period. The team has not fixed whether that period ends at referral, allocation or operation. Local theatre totals miss work outside participating hospitals and do not establish complete personal volume. External activity would need clinician confirmation. No clinician-level inventory has been assembled; collection remains subject to the existing workload and privacy arrangements.",
+      "certainty": "planned",
+      "source": "Coordinator's proposed clinician-background form",
+      "trigger": "Asks how recent procedure-specific experience could be measured, whether total seniority is enough, or whether local records capture a clinician's activity elsewhere.",
+      "answer": "We could ask clinicians about recent experience with the selected operation. Local theatre totals would miss work elsewhere, so we would need confirmation; we have no clinician-level inventory yet.",
+      "core": false
+    },
+    {
+      "fact_id": "f-outcomes",
+      "topic": "Proposed outcomes and follow-up horizon",
+      "statement": "The draft proposes death, unplanned readmission, major postoperative complications and a brief recovery measure during six weeks after surgery. No primary outcome or composite has been agreed. No outcomes have been collected from the future cohort. The draft form has only a yes/no major-complication box, without an agreed event list, severity threshold or rule for suspected versus confirmed events. A limited authorized pilot could test a shared definition and recording of event date, source and confirmation status using the existing nurse abstractors. Its access, scope and feasibility remain unresolved.",
+      "certainty": "planned",
+      "source": "Clinicians' draft outcome list",
+      "trigger": "Ask what the primary outcome should be, what outcomes matter, how long recovery will be followed, or whether outcome data already exist. Also asks what qualifies as a major complication or how events would be recorded consistently.",
+      "answer": "The clinicians suggested deaths, unplanned readmissions, major complications and a brief recovery measure over six weeks after surgery. We have not chosen a primary outcome or agreed that these belong in one combined measure. No cohort outcomes exist yet.",
+      "core": false
+    },
+    {
+      "fact_id": "f-followup",
+      "topic": "Finding outcomes after discharge",
+      "statement": "The draft includes telephone contacts around two and six weeks after surgery, with permission to corroborate care elsewhere. Some patients share phones, change numbers or return to distant homes; language support and safe contact preferences matter. Incomplete contact cannot be equated with no outcome event.",
+      "certainty": "planned",
+      "source": "Draft follow-up workflow and coordinator's local experience",
+      "trigger": "Ask how postoperative outcomes will be found, whether follow-up will be complete, or what happens when patients cannot be contacted.",
+      "answer": "We could telephone patients at two and six weeks and ask about care elsewhere. Some share phones, change numbers or return far away. Language support and safe contact arrangements matter, so I cannot promise we will reach everyone.",
+      "core": true
+    },
+    {
+      "fact_id": "f-linkage",
+      "topic": "Coverage of hospital records and linkage",
+      "statement": "Hospital numbers identify patients within each institution. National identifiers are incomplete. Cross-hospital linkage is proposed but untested and unapproved. The project has no existing national death-register access or comprehensive private-sector admission coverage.",
+      "certainty": "known",
+      "source": "Information officer's preliminary assessment recorded by the coordinator",
+      "trigger": "Ask whether hospital records capture all deaths or readmissions, whether linkage is available, or whether absent records establish no event.",
+      "answer": "Our numbers work within each hospital. Cross-hospital linkage has not been tested or approved, and national identifiers are incomplete. We have no current access to a national death register or complete private-hospital admissions.",
+      "core": false
+    },
+    {
+      "fact_id": "f-resources",
+      "topic": "Affordable collection scope",
+      "statement": "The working ceiling is R2.6 million, with contributed hospital staff time, two nurse abstractors and a half-time coordinator. Ward staff can flag patients but cannot complete long assessments. The team must trade broad coverage against detailed collection in fewer services; universal home visits are unaffordable.",
+      "certainty": "planned",
+      "source": "Draft budget and staffing plan",
+      "trigger": "Ask about staffing, budget, feasible measurement burden or the choice between broad and intensive collection.",
+      "answer": "The working budget is R2.6 million, with two nurse abstractors and a half-time coordinator. Ward staff can flag patients but cannot do long assessments. We must choose between broad coverage and more detail in fewer services; universal home visits are unaffordable.",
+      "core": true
+    },
+    {
+      "fact_id": "f-ethics",
+      "topic": "Participation and permissions",
+      "statement": "The project has no research ethics approval yet. Institutional and provincial permissions for records, linkage, recruitment and contact are to be sought. The permitted consent arrangements are unresolved. Emergency treatment cannot await research discussions, and declining research must not affect care.",
+      "certainty": "known",
+      "source": "Coordinator's approvals status notes",
+      "trigger": "Ask about approval, consent, participation, emergency recruitment, or authority to access records and contact patients.",
+      "answer": "We have no research ethics approval yet. We still need the appropriate permissions for records, linkage and follow-up, and the consent arrangements are unresolved. Emergency treatment cannot wait for research, and declining participation must not affect care.",
+      "core": true
+    },
+    {
+      "fact_id": "f-privacy",
+      "topic": "Staff confidentiality and reporting",
+      "statement": "Staff representatives want identifiable gender data held outside line management and no individual performance league table. Small hospital-specialty-gender combinations may identify clinicians. Publication groupings, retention and access arrangements have not been settled; suppressing names alone may not protect confidentiality.",
+      "certainty": "known",
+      "source": "Coordinator's notes from staff representatives",
+      "trigger": "Ask about privacy, staff concerns, small identity groups, who can access gender information or acceptable reporting.",
+      "answer": "Staff representatives want identifiable gender information kept outside line management and no individual performance rankings. In a small specialty, people might identify a surgeon without a name. We have not settled reporting groups, retention or access arrangements.",
+      "core": false
+    },
+    {
+      "fact_id": "f-nonoperated",
+      "topic": "Patients accepted for surgery who never undergo it",
+      "statement": "The proposed recruitment log retains patients accepted for surgery who later improve, deteriorate, transfer, cancel or withdraw. Whether the main study addresses operated patients or the earlier allocation pathway is undecided. Restricting to completed operations changes the population and may condition on events after initial allocation.",
+      "certainty": "planned",
+      "source": "Draft recruitment-log fields",
+      "trigger": "Ask what happens to cancelled, transferred or nonoperated patients, or which care pathway population should be followed.",
+      "answer": "We planned to keep a log of accepted patients who never undergo surgery, including cancellations, deterioration and transfers. We have not decided whether the main study follows only operated patients or also that earlier care pathway.",
+      "core": false
+    },
+    {
+      "fact_id": "f-repeated-episodes",
+      "topic": "Repeat operations and patient identifiers",
+      "statement": "Theatre totals count operations, not necessarily unique patients. A repeat procedure could be planned staged care, a new episode or a complication-related return. Current registers do not consistently distinguish them; the proposed collection could add an episode identifier and a repeat-procedure reason.",
+      "certainty": "known",
+      "source": "Coordinator's planning notes about register structure",
+      "trigger": "Ask whether operations correspond to unique patients, how repeat procedures are handled or how units of analysis will be defined.",
+      "answer": "The theatre totals count operations. Repeat procedures may be staged care, a new problem or a return because of a complication. Our registers do not consistently distinguish those, but we could add an episode identifier and the reason for another operation.",
+      "core": false
+    },
+    {
+      "fact_id": "f-patient-preferences",
+      "topic": "Preferences, language and communication",
+      "statement": "Patients sometimes request a particular clinician or a familiar language, but these requests are poorly documented. A short question about allocation preferences and preferred language may be feasible. Communication experiences or patient gender would require separate appropriate measurement and participation arrangements; no concordance information already exists.",
+      "certainty": "known",
+      "source": "Coordinator's workflow notes and preliminary collection discussion",
+      "trigger": "Ask whether patient preferences or language affect assignment, or whether communication and patient-clinician concordance can be studied.",
+      "answer": "Patients sometimes request a clinician or someone who speaks a familiar language, but those requests are poorly recorded. A short question about preferences and language might be feasible. We have not collected communication experiences or patient-clinician concordance information.",
+      "core": false
+    },
+    {
+      "fact_id": "f-audit",
+      "topic": "What can be checked before the main study",
+      "statement": "Only aggregate theatre counts and blank forms are available for planning. A small authorized records audit could investigate allocation, team-role disagreement, missingness and abstraction workload. Its sample, access and permissions remain unresolved, so no completed audit or quantitative result can be claimed.",
+      "certainty": "planned",
+      "source": "Coordinator's proposed preparatory work",
+      "trigger": "Ask what evidence can be obtained before committing to the full protocol, whether records can be inspected or how unknown feasibility questions could be resolved.",
+      "answer": "For planning I only have aggregate counts and blank forms. We could seek permission for a small records audit to check allocation, missing fields and workload. The sample and permissions are not settled, so I have no audit findings yet.",
+      "core": false
+    },
+    {
+      "fact_id": "f-timeline",
+      "topic": "Study calendar and planning decision",
+      "statement": "The planning discussion is dated 18 February 2027. Funding in principle covers an 18-month project from July 2027. Recruitment would run through October 2028, leaving November and December for six-week follow-up and closeout. No recruitment or analysis has begun.",
+      "certainty": "planned",
+      "source": "Draft project calendar",
+      "trigger": "Ask when the study starts, how long it can run, what stage the project is at or whether the data already exist.",
+      "answer": "We are still planning. Recruitment is proposed for July 2027 through October 2028, with November and December for final follow-up and closeout. Funding is in principle for those 18 months, and no recruitment has started.",
+      "core": false
+    }
+  ],
+  "world_only": [
+    {
+      "id": "fiction-status",
+      "statement": "This is a synthetic evaluation scenario. Real place names provide context but no claims are made about real hospitals, staff or patients. The actor must not turn fictional facts into real-world assertions."
+    },
+    {
+      "id": "design-stage",
+      "statement": "The case has no generated patient-level outcomes, completed audit or true treatment-effect parameter. Success concerns planning and conditional reasoning, not estimating a concealed effect."
+    },
+    {
+      "id": "disclosure-boundary",
+      "statement": "The entire fact book is evaluator-side context. Every actor reply supplies at most one narrowly scoped answer to an actual consultant question. Core labels help evaluate opportunities; they are not a disclosure queue or a requirement to reveal every marked fact."
+    }
+  ],
+  "provenance": {
+    "source_story": "development-support/study-design-stories-2026-10-15/cases/04-surgical-care-and-equity.md",
+    "source_sha256": "4776f8f67e89bf828fef70ee91c7c64ee7537f6018e11af762a1133282eef348",
+    "definition_sha256": "1a0fad4c8c3c95ef6ccf6a862023e57008b020703f06e4d169e39c89cebba910",
+    "adaptation_notes": [
+      "This intentional variant follows the user's latest male/female-surgeon opening. Surgeon self-described gender replaces the earlier story's identity exposure; the prior story is preserved unchanged.",
+      "The setting remains prospective and observational. The coordinator can improve measurement and recruitment scope but cannot manipulate treatment access or clinician assignment.",
+      "The identity measurement is explicitly voluntary and is not a proxy for sex assigned at birth. Analysis categories and handling of small groups remain planning questions.",
+      "Hidden facts support adaptive replies to the consultant's actual questions. They do not prescribe a disclosure order, a method winner or a requirement to complete all topics.",
+      "The target length is approximately 8 to 10 consultant replies, not a requirement to prolong a completed consultation or disclose the entire hidden book.",
+      "Case/world 1.1.0 adopts only the three prioritized refinements in validation/paper-enrichment-surgery.md: recent procedure-specific experience, indication and planned procedure detail, and a shared complication definition. Collection and any pilot remain conditional on existing resources and unresolved permissions. The earlier race-based story is preserved; this gender-based variant remains authoritative for the tester. No variable is automatically an adjustment requirement."
+    ]
+  },
+  "data_status": "No future outcomes or causal effect are generated. Statements describe fictional planning facts or explicitly unresolved questions."
+}

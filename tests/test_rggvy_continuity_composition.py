@@ -22,10 +22,10 @@ class RggvyContinuityComposition(unittest.TestCase):
         cls.temporary = tempfile.TemporaryDirectory(prefix="rggvy-continuity-")
         cls.addClassCleanup(cls.temporary.cleanup)
         cls.root = Path(cls.temporary.name)
-        cls.bank = ROOT / "problems" / PROBLEM
+        cls.bank = composer.RGGVY_ROOT / "problem"
         cls.original_bank = inventory(cls.bank)
-        cls.standard = cls.root / "standard"
-        cls.standard_manifest = composer.compose_case(PROBLEM, output=cls.standard)
+        cls.default = cls.root / "default"
+        cls.default_manifest = composer.compose_case(PROBLEM, output=cls.default)
         cls.case = cls.root / "coordinator"
         cls.manifest = composer.compose_case(PROBLEM, PERSONA, cls.case)
 
@@ -35,10 +35,10 @@ class RggvyContinuityComposition(unittest.TestCase):
         for name, sha in self.original_bank.items():
             with self.subTest(file=name):
                 self.assertEqual(digest(self.case / name), sha)
-        self.assertEqual(self.manifest["sources"], self.standard_manifest["sources"])
+        self.assertEqual(self.manifest["sources"], self.default_manifest["sources"])
         self.assertEqual(self.manifest["completion_contract"], "full_report")
-        self.assertEqual(self.manifest["world_id"], self.standard_manifest["world_id"])
-        self.assertEqual(self.manifest["world_version"], self.standard_manifest["world_version"])
+        self.assertEqual(self.manifest["world_id"], self.default_manifest["world_id"])
+        self.assertEqual(self.manifest["world_version"], self.default_manifest["world_version"])
 
     def test_manifest_selects_added_review_without_replacing_original(self):
         self.assertEqual(self.manifest["reviewer"], "continuity-reviewer.json")
@@ -65,14 +65,14 @@ class RggvyContinuityComposition(unittest.TestCase):
             self.assertEqual(composition[identity], self.manifest[identity])
         self.assertEqual(composition["variant_sha256"], digest(composer.CONTINUITY_RESOURCE))
         self.assertEqual(composition["variant_sha256"], self.manifest["files"]["continuity-variant.json"])
-        self.assertEqual(composition["persona_sha256"], digest(ROOT / "personas" / (PERSONA + ".json")))
+        self.assertEqual(composition["persona_sha256"], digest(composer.RGGVY_ROOT / "persona.json"))
         self.assertEqual(composition["composer_sha256"], digest(ROOT / "scripts/compose_case.py"))
         self.assertEqual(composition["problem_sha256"], digest(self.bank / "problem.json"))
         actor = read(self.case / "actor.json")
         actor_text = json.dumps(actor)
         self.assertEqual(actor["persona_profile"], read(self.case / "persona.json"))
         self.assertEqual(actor["interaction_challenges"], [])
-        self.assertEqual(actor["sources"], read(self.standard / "actor.json")["sources"])
+        self.assertEqual(actor["sources"], read(self.default / "actor.json")["sources"])
         self.assertEqual(actor["reply_limits"], {"max_words": 50, "max_items": 2})
         self.assertEqual(actor["consultant_reply_bounds"], {"minimum": 8, "maximum": 12})
         for private in ("target_turns", "default_max_consultant_turns", "continuity_coverage",
@@ -160,31 +160,29 @@ class RggvyContinuityComposition(unittest.TestCase):
         self.assertIn("supported only with rggvy-electrification", result.stderr)
         self.assertFalse(output.exists())
 
-    def test_catalog_restriction_and_general_defaults_remain_explicit(self):
-        result = subprocess.run([sys.executable, "-B", str(ROOT / "scripts/compose_case.py"), "--list"],
-                                capture_output=True, text=True, timeout=30)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        catalog = json.loads(result.stdout)
+    def test_catalog_separates_fixed_cases_from_reusable_personas(self):
+        catalog = composer.catalog()
+        self.assertEqual(catalog["combinations"], 17)
+        self.assertEqual(catalog["matrix_combinations"], 12)
+        self.assertEqual(catalog["standalone_count"], 5)
         personas = {item["id"]: item for item in catalog["personas"]}
-        self.assertEqual(catalog["combinations"], 16)
-        self.assertEqual(len(personas), 4)
-        self.assertEqual(sum(len(item["supported_problems"]) for item in personas.values()), 16)
-        self.assertEqual(personas[PERSONA]["supported_problems"], [PROBLEM])
+        self.assertEqual(set(personas), set(composer.GENERAL_PERSONA_IDS))
+        self.assertEqual(sum(len(item["supported_problems"]) for item in personas.values()), 12)
+        self.assertNotIn(PROBLEM, {item["id"] for item in catalog["problems"]})
+        standalone = {item["id"]: item for item in catalog["standalone_cases"]}
+        self.assertEqual(standalone[PROBLEM]["fixed_actor"], PERSONA)
+        self.assertEqual(self.default_manifest["persona_id"], PERSONA)
+        self.assertEqual(self.default_manifest["run_limits"]["consultant_turns"], 12)
+        self.assertEqual(self.default_manifest["reviewer"], "continuity-reviewer.json")
+        for name in ("actor.json", "composition.json", "public/initial-message.txt"):
+            self.assertEqual((self.default / name).read_bytes(), (self.case / name).read_bytes())
+
+    def test_general_personas_rejected_for_rggvy_before_output_creation(self):
         for persona in composer.GENERAL_PERSONA_IDS:
-            self.assertEqual(set(personas[persona]["supported_problems"]), set(composer.PROBLEM_IDS))
-        self.assertEqual(self.standard_manifest["persona_id"], "standard")
-        self.assertEqual(self.standard_manifest["run_limits"]["consultant_turns"], 40)
-        self.assertEqual(self.standard_manifest["reviewer"], "reviewer.json")
-        self.assertNotIn("variant", self.standard_manifest)
-        self.assertNotIn("minimum_consultant_replies", self.standard_manifest)
-        standard_actor = read(self.standard / "actor.json")
-        coordinator_actor = read(self.case / "actor.json")
-        self.assertEqual(len(standard_actor["interaction_challenges"]), 1)
-        standard_rules = {rule["rule_id"]: rule for rule in standard_actor["rules"]}
-        coordinator_rules = {rule["rule_id"]: rule for rule in coordinator_actor["rules"]}
-        self.assertNotIn("r-coordinator-participation", standard_rules)
-        self.assertIn("or repeat an attachment", standard_rules["r-records"]["action"])
-        self.assertIn("reuse its existing source ID", coordinator_rules["r-records"]["action"])
+            output = self.root / ("rejected-" + persona)
+            with self.subTest(persona=persona), self.assertRaisesRegex(ValueError, "standalone and supports only"):
+                composer.compose_case(PROBLEM, persona, output)
+            self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":

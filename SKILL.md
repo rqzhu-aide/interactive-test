@@ -2,7 +2,7 @@
 name: interactive-test
 description: Define, run and evaluate adaptive multi-turn tests of causal-consultant across supported agent hosts and model providers. Use for end-to-end investigation and saved reporting, or focused tests of elicitation, preparation, useful stopping and continuity.
 metadata:
-  version: "8.3.7"
+  version: "8.4.7"
 ---
 
 # Adaptive Causal Consultation Testing
@@ -12,13 +12,13 @@ cooperation achieve a useful, scientifically defensible outcome. Do not supply
 a sequence of expert analysis
 instructions and call compliance proactive consulting.
 
-The active problems and personas are listed in the
-[problem/persona guide](references/problem-persona-matrix.md). Select the requested pair,
-using `standard` when no persona is specified. The other active profiles are
-`novice-adversarial` and `expert`. The RGGVY-only
-[`rggvy-research-coordinator`](references/rggvy-continuity.md) adds a continuity
-case. Explicit full-matrix coverage means the 16 valid pairs, not a Cartesian
-product with this restricted persona.
+The [catalog guide](references/problem-persona-matrix.md) separates four reusable
+problems crossed with `standard`, `novice-adversarial` and `expert` from
+[five standalone cases](standalone/README.md). The matrix has 12 pairs; the full
+catalog has 17 configurations. Use `standard` when a matrix persona is omitted.
+RGGVY has only its fixed [Research Coordinator](references/rggvy-continuity.md).
+The four prospective planning cases also have fixed actors; standalone cases
+do not accept persona selection.
 Fixture validation, actor rehearsal and live qualification are separate stages.
 Use the [runner guide](references/runner.md) for startup, adaptive steps and review.
 Local subprocess tests do not establish compatibility with a live agent host.
@@ -26,7 +26,7 @@ Host smoke and live qualification of selected compositions remain pending.
 
 ## Compatibility
 
-Tester **8.3.7** source supports `causal-consultant` **8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6 and 8.0.7**, pinned
+Tester **8.4.7** source supports `causal-consultant` **8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15**, pinned
 to each attempt's candidate inventory and presentation policy, and retains the
 supported v7 profiles. Operators and reviewers use the private
 [observation profiles](references/observation-profiles.md)
@@ -34,8 +34,9 @@ for version-specific records, presentation and evidence rules. Unlisted versions
 need an explicitly checked profile. Focused admission, observation and continuity
 checks accompany this release; they do not establish live host qualification.
 
-The case suite remains **8.2.0**; scientific problem and general persona versions are unchanged.
-Tester 8.3.7 retains the RGGVY coordinator persona/variant 1.1.0,
+The reusable matrix and RGGVY retain suite **8.2.0** and their scientific versions.
+The four planning cases retain suite **prospective-study-design-1.1.0**.
+Tester 8.4.7 retains the RGGVY coordinator persona/variant 1.1.0,
 automatically composed with its bounded 8 to 12 participation contract. It is
 not yet live-qualified; frozen 1.0.0 attempts retain their old contract.
 Frozen attempts retain their own versions, source identities, loading choices
@@ -74,14 +75,14 @@ replace an installed consultant or launch a campaign merely by loading this skil
 
 ## Consultation Loop
 
-Compose the selected problem and persona with `scripts/compose_case.py`; pass
-its output as the runner's `--case`. Each problem specifies its required saved
-report in the case materials. Match causal claims to the available evidence.
-A recap or testing assessment is a different
-deliverable. Use `standard` if the persona is omitted; resolve any unclear
-campaign scope before dispatch.
+Use `scripts/compose_case.py --problem ... --persona ...` for a matrix pair or
+`--standalone ...` for a fixed case; pass the output as the runner's `--case`.
+The matrix and RGGVY require their specified saved reports. The four prospective
+cases instead end at a useful collection and conditional analysis plan, without
+a required report or numerical effect. Follow the frozen completion contract
+and match causal claims to the evidence. Resolve unclear campaign scope before dispatch.
 
-The consultant repeatedly presents understanding and directions, the user
+For full-report cases, the consultant repeatedly presents understanding and directions, the user
 steers, and bounded work or a direct answer returns to discussion. Initial report
 desire is not standing permission. Choose a concrete analysis scope after it is
 presented, then choose useful extensions or the offered report after findings
@@ -100,9 +101,11 @@ information to meet a target. Keep operational limits separate and prospective.
 The named [coordinator 1.1.0 stress case](references/rggvy-continuity.md) is a
 narrow exception: its actor packet requires ordered participation and at least
 eight delivered replies, with actual configuration cap 12. An early report does
-not waive participation; frozen 1.0.0 and the 15 general pairs keep their rules.
+not waive participation. The 12 matrix pairs and four planning cases have no
+minimum turn count. Planning cases expect about 8 to 10 replies descriptively,
+with an operational cap of 12. Historical frozen attempts retain their rules.
 
-The reusable persona governs the interaction. `standard` represents a typical
+For matrix pairs, the reusable persona governs the interaction. `standard` represents a typical
 user who initially leaves collection context unvolunteered, follows model-choice
 discussion and may ask twice about distinct stronger claims before accepting a
 supported report. `novice-adversarial` combines limited statistical fluency with
@@ -133,7 +136,9 @@ issue. These requirements do not set a fixed total turn count.
    frozen persona's disclosure policy, distinguishing actual information requests
    from an answer that quotes the user's own question. Use
    currently known facts and the persona's reasoning and cooperation. Every
-   spoken message has at most 50 words and two semantic items. A compound request
+   spoken message has at most 50 words. Matrix and RGGVY cases allow at most two
+   semantic items; the four planning cases allow one small item under their
+   frozen selection policy. A compound request
    may receive a partial or nearby answer without a public checklist; retain
    omitted parts privately for a focused follow-up. Apply a frozen interaction
    challenge only when the visible wording and persona make it plausible.
@@ -195,7 +200,7 @@ them; a valid manifest is not proof of a valid analysis.
 
 Evaluate actor fidelity separately from consultant quality. Keep outcome,
 findings, test validity, coverage and resources separate. Missing
-evidence is not a pass; a cap-limited run is not a successful useful stop. Save
+evidence is not a pass; reaching a cap before the frozen endpoint is incomplete. Save
 failed attempts as well as successes. Report current cost descriptively under
 prospectively frozen limits; do not retrospectively relabel earlier cap failures.
 For full-report cases, the adapter checks retained evidence of a completed,

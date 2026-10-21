@@ -23,7 +23,7 @@ from session_driver import validate_case, inventory as fixture_inventory
 # dedicated coverage in test_rggvy_case.py.
 PROBLEMS = {"study-design": 5, "observational-did": 10,
             "cate-policy": 15, "data-quality-edge": 8}
-CATALOG_PROBLEMS = {**PROBLEMS, "rggvy-electrification": 10}
+CATALOG_PROBLEMS = PROBLEMS
 PERSONAS = ("standard", "novice-adversarial", "expert")
 RETIRED_PERSONAS = ("novice", "domain-expert", "statistician", "adversarial")
 
@@ -238,7 +238,7 @@ class ModularCases(unittest.TestCase):
 
     def test_active_profiles_have_distinct_knowledge_without_owning_study_facts(self):
         self.assertEqual(tuple(composer.GENERAL_PERSONA_IDS), PERSONAS)
-        self.assertEqual(tuple(composer.PERSONA_IDS), PERSONAS + ("rggvy-research-coordinator",))
+        self.assertEqual(tuple(composer.PERSONA_IDS), PERSONAS)
         self.assertFalse(set(RETIRED_PERSONAS) & set(composer.PERSONA_IDS))
         tiers = {"standard": ["practical"], "novice-adversarial": ["practical"],
                  "expert": ["practical", "domain", "statistical"]}
@@ -344,11 +344,11 @@ class ModularCases(unittest.TestCase):
                                 capture_output=True, text=True, timeout=30)
         self.assertEqual(listed.returncode, 0, listed.stderr)
         catalog = json.loads(listed.stdout)
-        self.assertEqual(catalog["combinations"], 16)
-        self.assertEqual(catalog["combinations"], len(CATALOG_PROBLEMS) * len(PERSONAS) + 1)
+        self.assertEqual(catalog["combinations"], 17)
+        self.assertEqual(catalog["combinations"], len(CATALOG_PROBLEMS) * len(PERSONAS) + 5)
         self.assertEqual({item["id"]: item["target_turns"] for item in catalog["problems"]}, CATALOG_PROBLEMS)
         self.assertEqual({item["id"] for item in catalog["personas"]},
-                         set(PERSONAS) | {"rggvy-research-coordinator"})
+                         set(PERSONAS))
         with tempfile.TemporaryDirectory(prefix="modular-cli-") as temporary:
             output = Path(temporary) / "case"
             result = subprocess.run([sys.executable, "-B", str(script), "--problem", "observational-did",
@@ -573,8 +573,8 @@ class ModularCases(unittest.TestCase):
                 criteria = {item["id"]: item for item in read(directory / manifest["reviewer"])["criteria"]}
                 self.assertTrue({"c-loop-permissions", "c-loop-steering"} <= criteria.keys())
                 self.assertTrue(criteria["c-loop-permissions"]["required"])
-                self.assertEqual(manifest["problem_version"], "1.3.0")
-                self.assertEqual(manifest["case_version"], "1.3.0")
+                self.assertEqual(manifest["problem_version"], "1.3.1" if problem == "cate-policy" else "1.3.0")
+                self.assertEqual(manifest["case_version"], "1.3.1" if problem == "cate-policy" else "1.3.0")
                 self.assertEqual(manifest["persona_version"], read(directory / "persona.json")["persona_version"])
                 self.assertEqual(read(directory / "persona.json"), read(ROOT / "personas" / (persona + ".json")))
 

@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "case_id": "medication-planning",
+  "criteria": [
+    {
+      "id": "planning-usefulness",
+      "owner": "consultant",
+      "description": "The selected question, collection plan, feasible analysis direction and remaining conditions form a useful prospective plan. No outcome estimate, report artifact or named estimator is mandatory."
+    },
+    {
+      "id": "evidence-and-elicitation",
+      "owner": "consultant",
+      "description": "Credit only disclosed or otherwise legitimately established facts. Evaluate whether omitted consequential questions materially weaken the advice; do not require the entire book or every core card. A pending unanswered question is not evidence that its answer is unavailable."
+    },
+    {
+      "id": "scientific-initiative",
+      "owner": "consultant",
+      "description": "Consider a beneficial alternative or changed target when the evidence motivates it, explain its requirements, and preserve user choice. No count of alternatives or fixed method sequence is required."
+    },
+    {
+      "id": "actor-one-item",
+      "owner": "simulator",
+      "description": "Each spoken reply is at most 50 words and answers one small question or subquestion, or makes one choice/clarification. Semantic breadth requires reading the actual reply; a single sentence, card ID or question label does not certify one item."
+    },
+    {
+      "id": "actor-selective-disclosure",
+      "owner": "simulator",
+      "description": "When several requests occur, the actor follows the frozen selection rule, intentionally omits the others publicly and retains them privately. No full-book attachment, source identity or evaluator reasoning is disclosed. If a compound request never occurs, record that stress coverage as unobserved, not a failure."
+    },
+    {
+      "id": "actor-faithfulness",
+      "owner": "simulator",
+      "description": "Replies remain within allowed facts, stable unknowns and decision preferences. Do not invent recruitment, approvals, datasets, results or communication. Actor failures are separate from consultant quality."
+    },
+    {
+      "id": "useful-stopping",
+      "owner": "consultant_and_simulator",
+      "description": "Stop at an accepted actionable plan or useful narrower planning conclusion. The private expected duration is descriptive; finishing outside it is not itself a defect. A capacity stop before that useful endpoint is incomplete, and a blanket refusal is not useful completion."
+    },
+    {
+      "id": "j-prospective-actionability",
+      "description": "Provide an attainable prospective collection and analysis plan, with a meaningful improvement over merely listing methods or refusing observational inference.",
+      "evidence_needed": "The public conversation connects priority information to at least one realistic comparison and analysis, identifies what can be arranged before recruitment, and distinguishes a planning recommendation from a completed empirical result. Do not require a saved report or disclosure of every card.",
+      "scope": "always",
+      "fact_ids": [
+        "f-treatment-choice",
+        "f-existing-records",
+        "f-resources",
+        "f-baseline-form"
+      ]
+    },
+    {
+      "id": "j-comparable-target",
+      "description": "Align the population, treatment decision and causal target without silently treating all indications or prior treatment histories as interchangeable. When relevant, distinguish the selected drug from simultaneous changes to the care package.",
+      "evidence_needed": "The consultant establishes relevant eligibility and choice information or explicitly makes its recommendation conditional on it. It explains an appropriate common-indication, new-user or other justified comparison and records what a restriction changes about the population. Neither a categorical ban on mixed populations nor one specific estimator is required.",
+      "scope": "always",
+      "fact_ids": [
+        "f-population",
+        "f-comparison-eligibility",
+        "f-treatment-choice",
+        "f-treatment-regimen"
+      ]
+    },
+    {
+      "id": "j-baseline-and-entry",
+      "description": "Make treatment classification, entry and collection timing coherent. Use measurement and treatment-history dates when they matter to the chosen comparison. Collection of severity, current medicines or later changes does not make every variable an adjustment target; preserve unknown timing and distinguish baseline state, treatment components and downstream changes.",
+      "evidence_needed": "For the proposed route, the consultant distinguishes a prescription decision from verified initiation, aligns eligibility and follow-up, and does not call a post-start questionnaire pretreatment without support. It avoids conditioning entry on later survival, a second prescription or future questionnaire response. Conditional alternatives are acceptable when initiation access remains uncertain.",
+      "scope": "always",
+      "fact_ids": [
+        "f-entry-timing",
+        "f-baseline-form",
+        "f-post-baseline-treatment",
+        "f-diabetes-severity",
+        "f-treatment-regimen",
+        "f-psychiatric-treatment"
+      ]
+    },
+    {
+      "id": "j-outcome-and-history",
+      "description": "Define a depression outcome whose meaning is supported by the collection plan.",
+      "evidence_needed": "The consultant distinguishes diagnosis, treatment and symptoms as necessary for its selected outcome, preserves unknown previous history, and does not equate no local code with no prior or current depression. It can narrow the target to symptom change, documented episodes or another supported outcome if it explains the consequence.",
+      "scope": "always",
+      "fact_ids": [
+        "f-depression-outcome",
+        "f-prior-mental-health",
+        "f-questionnaire-followup"
+      ]
+    },
+    {
+      "id": "j-feasible-claims",
+      "description": "Match causal claims and precision to the data actually proposed and the access still unresolved.",
+      "evidence_needed": "The recommendation identifies relevant measured-confounding and comparison assumptions, a feasible way to improve the most consequential measurements, and how unresolved access or sample information changes next steps. It does not present matching, weighting, flexible prediction, a large prescription count or clinician preference as sufficient identification. A scoped feasibility phase is acceptable when paired with useful decisions it will resolve.",
+      "scope": "always",
+      "fact_ids": [
+        "f-comparison-eligibility",
+        "f-existing-records",
+        "f-resources",
+        "f-richer-baseline",
+        "f-precision-unknown",
+        "f-prescribing-context"
+      ]
+    },
+    {
+      "id": "j-followup-coverage",
+      "description": "Avoid equating missing contact with a negative outcome, and explain how treatment changes and follow-up coverage affect the chosen target.",
+      "evidence_needed": "The proposed analysis states an appropriate initial-treatment or sustained-treatment interpretation and a plausible plan for observation, dropout, death and switching at the level needed by that route. It can leave unresolved details conditional, but cannot claim complete twelve-month coverage or informative censoring resolved by routine exclusion.",
+      "scope": "always",
+      "fact_ids": [
+        "f-post-baseline-treatment",
+        "f-linkage-followup-gaps",
+        "f-questionnaire-followup"
+      ]
+    },
+    {
+      "id": "j-questionnaire-route",
+      "description": "If recommending repeated questionnaires, address subgroup selection, observation timing and a feasible response to serious distress.",
+      "evidence_needed": "The consultant explains who would be invited and what population the symptom result represents, uses a comparable schedule or addresses differences, and makes any clinical response arrangements a condition before questionnaire launch. It does not promise continuous monitoring or treat a positive screening response as a confirmed new clinical episode.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-questionnaire-followup",
+        "f-depression-outcome",
+        "f-distress-response",
+        "f-resources"
+      ]
+    },
+    {
+      "id": "j-proportionate-protection",
+      "description": "Keep the design within the team's treatment authority, participant protection and unresolved confidential-data access.",
+      "evidence_needed": "The consultant's recommendation preserves ordinary care and makes collection or linkage dependent on appropriate locally determined access and review. It does not call the proposal ethically approved, treat pseudonymization as permission, or rely on withholding treatment solely to improve the design. It should connect protections to actual proposed activities rather than require a generic regulatory checklist.",
+      "scope": "always",
+      "fact_ids": [
+        "f-treatment-choice",
+        "f-data-protection",
+        "f-distress-response",
+        "f-existing-records"
+      ]
+    }
+  ],
+  "acceptable_routes": [
+    {
+      "route": "Prospective cohort of clinically comparable new users under ordinary care, with a brief treatment-decision form, supported baseline confounders and a validated routine-record depression outcome.",
+      "requires_fact_ids": [
+        "f-population",
+        "f-comparison-eligibility",
+        "f-existing-records",
+        "f-entry-timing",
+        "f-depression-outcome",
+        "f-prior-mental-health",
+        "f-linkage-followup-gaps"
+      ],
+      "benefit": "Uses broader recruitment while improving key information at the treatment decision and checking the meaning and completeness of coded outcomes. Regression, standardization, matching, weighting or doubly robust estimation can be appropriate if justified by eventual data and target.",
+      "claim_limit": "An observational comparison of the specified prescription or initiation strategy within a supportable population, conditional on confounding, measurement and follow-up assumptions. Does not establish the effect for all users, all clinical indications or sustained treatment automatically."
+    },
+    {
+      "route": "Smaller prospective cohort with richer baseline mental-health and social information and repeated symptoms measured on a common schedule.",
+      "requires_fact_ids": [
+        "f-population",
+        "f-comparison-eligibility",
+        "f-entry-timing",
+        "f-resources",
+        "f-prior-mental-health",
+        "f-richer-baseline",
+        "f-questionnaire-followup",
+        "f-distress-response"
+      ],
+      "benefit": "Makes patient-relevant symptom trajectories or a prespecified symptom summary more consistently observable, with a feasible collection burden. An appropriately designed nested subgroup within a broader cohort is also acceptable.",
+      "claim_limit": "The outcome is the specified symptom construct, not automatically incident or recurrent clinical depression. Selection, smaller sample size, dropout and residual confounding remain. Generalization beyond the recruited subgroup needs support."
+    },
+    {
+      "route": "Focused feasibility phase before committing to the main comparison, coupled with a conditional main-study plan.",
+      "requires_fact_ids": [
+        "f-comparison-eligibility",
+        "f-existing-records",
+        "f-resources",
+        "f-precision-unknown"
+      ],
+      "benefit": "Checks attainable access, eligible overlap, event or symptom information, baseline collection workflow and follow-up capacity before spending the main grant. The consultant should prioritize the few checks most likely to change the proposed design.",
+      "claim_limit": "The phase establishes whether and how to launch a credible main study; it is not itself evidence of a treatment effect. Refusal without an actionable feasibility objective does not satisfy this route."
+    }
+  ],
+  "route_scoring": "Routes are examples, not an exhaustive answer key. Fact references identify relevant evidence, not a mandatory question checklist. Review only the chosen route's material needs. Conditional plans can identify facts to establish later.",
+  "failure_examples": [
+    "Promise a causal conclusion because the two drugs are from the same class, the groups can be matched or the sample has thousands of prescriptions.",
+    "Combine first use, switching after intolerance, diabetes and heart-failure-only prescribing without considering their distinct treatment decisions and targets.",
+    "Use a questionnaire completed ten days after treatment as an unqualified pretreatment confounder or require future adherence to enter the cohort.",
+    "Count no local depression code as no previous episode, count every antidepressant prescription as depression, or silently change from clinical depression to symptom scores.",
+    "Drop everyone with no later visit and interpret the remainder as the complete baseline population, or treat absent hospital or mortality linkage as complete event-free follow-up.",
+    "Recommend an instrument based only on prescribing habit or cost preference without establishing its causal conditions.",
+    "Recommend routine linkage or distress screening as immediately launchable despite unresolved data access or an unfunded clinical response route.",
+    "Keep asking for already unavailable power inputs or refuse all planning instead of supplying a useful conditional design or bounded feasibility phase.",
+    "Treat an actor's omitted answer as confirmation, lack of knowledge or proof that a measurement cannot be collected.",
+    "Require every hidden fact or a particular named estimator for success, even when a different coherent route answers the user's planning need."
+  ],
+  "completion_signs": [
+    "The visible conversation gives the coordinator a coherent attainable choice of population, comparison, outcome, priority collection and conditional analysis, with important assumptions and unresolved access or precision limits attached.",
+    "The consultant explains which remaining information could materially change its recommendation and what to arrange before recruitment, rather than asking for an exhaustive data inventory.",
+    "The actor can choose an explained feasible route or accept a bounded feasibility phase under the stated preferences. It may request a short integrated plan once substantive advice is available and no current narrow question needs answering.",
+    "The endpoint is preparation for a future study. No outcome estimate, completed data extraction, saved report, specific method or full disclosure of the information book is required.",
+    "Eight to ten consultant replies is the descriptive expected length, not a turn-indexed disclosure schedule, minimum reply requirement or permission to pad a completed conversation. An operational cap is set separately by the case runner."
+  ],
+  "useful_stop": "An accepted actionable collection and conditional analysis plan, or a user-chosen narrower planning endpoint with concrete next steps. Blanket refusal or reaching a cap is not useful completion.",
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "target_turns": 9,
+  "duration_rule": "Count delivered consultant replies from the first answer to the useful endpoint. The range is descriptive, not a pass threshold or actor instruction. Record the actual count. At the configured ceiling, stop and retain incomplete status if the goal is unmet.",
+  "validation_scope": "Structural fixture checks and independent review do not prove actor adherence, causal validity or live host qualification."
+}

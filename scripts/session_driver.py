@@ -20,8 +20,8 @@ from source_release import validate_source_prerequisite, validate_release_receip
 from package_evidence import export_package, check_package, candidate_loading_check
 
 ACTOR_UPDATES = ("knowledge_updates", "belief_updates", "decision_updates")
-TESTER_VERSION = "8.3.7"
-CONSULTANT_VERSIONS = ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7")
+TESTER_VERSION = "8.4.7"
+CONSULTANT_VERSIONS = ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15")
 EXCHANGE_CAPABILITY = "durable-exchanges-v1"
 USER_QUESTION_CAPABILITY = "user-question-routing-v1"
 V8_CAPABILITIES = {"canonical-memory-v8", "content-authoring-v8", "six-section-brief-v8", "exact-record-read-v8",
@@ -84,7 +84,20 @@ def inventory(root):
     return result
 
 
-def validate_reply_bounds(case, actor=None, config=None):
+def validate_reply_bounds(case, actor=None, config=None, *, enforce_planning_cap=False):
+    # Historical planning attempts must remain stoppable and reviewable.
+    if enforce_planning_cap and case.get("edition") == "prospective-single-question":
+        limits = case.get("run_limits")
+        require(isinstance(limits, dict)
+                and type(limits.get("consultant_turns")) is int
+                and limits["consultant_turns"] == 12,
+                "planning case requires the frozen 12-reply cap")
+        if config is not None:
+            limits = config.get("limits")
+            require(isinstance(limits, dict)
+                    and type(limits.get("consultant_turns")) is int
+                    and limits["consultant_turns"] == 12,
+                    "actual planning run configuration must use the frozen 12-reply cap")
     if "minimum_consultant_replies" not in case:
         require(case.get("edition") != "case-specific-continuity-stress-v1",
                 "bounded stress case requires minimum_consultant_replies: 8")
@@ -256,7 +269,7 @@ def candidate_observation_profile(candidate, config):
                "enforcement": "observational_only", "capabilities": [], "user_question_routing": False,
                "consultation_loop": False, "intact_reply_recovery": False, "source_attributed_memory": False,
                "deferred_release": False, "assisted_authoring": False, "claude_transcript_capture": False, "agent_recorded_reply": False}
-    if profile["consultant_version"] in ("8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7"):
+    if profile["consultant_version"] in ("8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15"):
         version = profile["consultant_version"]
         probe = subprocess.run(config["node_command"] + [str(candidate / "scripts/project.cjs"), "capabilities"],
                                cwd=candidate, capture_output=True, timeout=30)
@@ -276,7 +289,7 @@ def candidate_observation_profile(candidate, config):
                 "consultation_loop": True, "agent_recorded_reply": True,
                 "public_presentation": "four-section-responses-v1",
                 "public_presentation_renderer": "lead-markdown-v11",
-                "public_presentation_option_max_words": 50 if version in ("8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7") else 100}
+                "public_presentation_option_max_words": 50 if version in ("8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15") else 100}
     if profile["consultant_version"] in ("7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6"):
         probe = subprocess.run(config["node_command"] + [str(candidate / "scripts/project.cjs"), "capabilities"],
                                cwd=candidate, capture_output=True, timeout=30)
@@ -374,7 +387,7 @@ def preflight(case, candidate, config):
     node_version = node_probe.stdout.decode().strip()
     require(tuple(int(part) for part in node_version.split(".")[:3]) >= (18, 18, 0), "shared Node 18.18+ required")
     manifest = validate_case(case)
-    validate_reply_bounds(manifest, config=config)
+    validate_reply_bounds(manifest, config=config, enforce_planning_cap=True)
     files = candidate_inventory(candidate)
     checked = subprocess.run(config["node_command"] + [str(candidate / "scripts/validate.cjs")],
                              cwd=candidate, capture_output=True, timeout=60)
@@ -766,7 +779,6 @@ def step(attempt, reply):
         integrity(attempt, state, frozen)
         config, case = frozen["configuration"], frozen["case_manifest"]
         actor = read(attempt / "case" / case["actor"])
-        validate_reply_bounds(case, actor, config)
         required = {"message", "fact_ids", "rule_ids", "attachments", "unanswered_questions", "fixture_gaps", "stop"}
         optional = set(ACTOR_UPDATES) | {"actor_context", "action_intents", "source_release_receipts"}
         require(required <= reply.keys() and not reply.keys() - required - optional,
@@ -780,6 +792,7 @@ def step(attempt, reply):
                         and all(isinstance(value, str) and value.strip() for value in change.values()),
                         "actor update needs subject, before, after and visible evidence")
         require(type(reply["stop"]) is bool, "stop must be boolean")
+        validate_reply_bounds(case, actor, config, enforce_planning_cap=not reply["stop"])
         for field, key, packet in (("fact_ids", "fact_id", "facts"), ("rule_ids", "rule_id", "rules")):
             require(set(reply[field]) <= {item[key] for item in actor[packet]}, "unknown " + field)
         if reply["stop"]:

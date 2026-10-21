@@ -27,24 +27,29 @@ from session_driver import digest, member, read, require
 CONTRACT = """You are the independent reviewer of a completed interactive test of a \
 causal-consulting assistant. You are a fresh context: judge only from the files listed here.
 
-Inputs (read them as needed):
+Read the actual public exchanges in event order before drawing conclusions from private ground truth or machine observations. Then inspect the frozen criteria and supporting evidence under the evaluation rules. Inputs:
 - Reviewer packet (frozen criteria and rules): {reviewer_packet}
-- Ground truth (private to the grading side): {case}/world.json and {case}/oracle.json
-- Independent fixture self-check you may run: python {case}/check_oracle.py
+- Case manifest and private ground truth: {case}/case.json and the world/reference
+  files it declares.
+- Independent fixture self-check you may run: use the manifest's oracle_check
+  path, resolved relative to {case}, with the shared Python runtime.
 - Evaluation rules: {evaluation_md}, including its linked private observation
-  profiles for the frozen candidate. These rules must not be passed to the actor.
+  profiles for the frozen candidate and runner guide for evidence semantics.
+  These rules must not be passed to the actor.
 - Attempt evidence: everything under {attempt} (state.json, freeze.json,
   review-index.json, review-observations.json, events/, work snapshot trees).
 - Bind your review to the digests in {attempt}/review-index.json:
   evidence_sha256 and observations_sha256 must be quoted from that file.
 
 Duties:
-1. Disposition every machine finding listed in {attempt}/review-observations.json
+1. Apply the evaluation rules' Independent Checks to consequential scientific
+   claims and reported quantities. Inspect source support, target, identifying
+   assumptions and uncertainty interpretation as well as arithmetic. Recompute
+   material quantities, apply the frozen case's reference checks, and verify
+   artifact identities using the runner's evidence semantics.
+2. Disposition every machine finding listed in {attempt}/review-observations.json
    (status confirmed / false_positive / unresolved, with reason and bound evidence).
-2. Judge every frozen criterion from the selected reviewer packet (status observed / unobserved /
-   not_applicable, with reason and evidence_refs bound to review-index files).
-3. Independently verify what is verifiable: recompute headline numbers from the
-   retained data with python, run check_oracle.py, re-hash load-bearing artifacts.
+3. Judge every frozen criterion from the actual cited passage and its context, preserving qualifications and what was available by that turn. For consequential credit or criticism, identify the passage supporting that meaning, not merely a file containing related material. Distinguish an offered action, its selection, delivered content, acceptance and formal actor stop. Use observed, unobserved or not_applicable under the existing frozen conditions and cite bound evidence_refs.
 4. Record findings (owner: consultant / simulator / harness / fixture / environment /
    undetermined; severity: minor / material / fundamental) with description,
    consequence and bound evidence_refs. Never pad, never hide.
