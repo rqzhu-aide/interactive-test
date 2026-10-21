@@ -10,3 +10,6 @@ Thumbs.db
 .vscode/
 .idea/
 .pytest_cache/
+
+# Local historical materials, excluded from the published package.
+/archive/

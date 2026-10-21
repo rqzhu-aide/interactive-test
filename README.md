@@ -1,12 +1,14 @@
 # Interactive Test
 
+[![Version 8.4.7](https://img.shields.io/badge/version-8.4.7-blue)](SKILL.md)
+
 A companion skill for testing [Causal Consultant](https://github.com/rqzhu-aide/causal-consultant)
 through adaptive, multi-turn conversations. A simulated user discloses study
 information gradually and responds to the consultant's questions and choices.
 A separate reviewer checks the actual conversation, analysis and deliverables,
 distinguishing consultant issues from actor or test-design issues.
 
-Current version: **8.4.7**, supporting consultant **8.0.0 through 8.0.15** and
+Supports consultant **8.0.0 through 8.0.15** and
 selected historical v7 releases. See [observation profiles](references/observation-profiles.md)
 for exact compatibility; unlisted versions need a checked profile.
 
@@ -37,8 +39,12 @@ inventing trial outcomes. Detailed disclosure and completion rules are in the
 
 ### Standalone cases
 
-**`rggvy-electrification`** uses real Chhattisgarh replication data for a
-household-welfare briefing, with a fixed Research Coordinator. It requires a
+**`rggvy-electrification`:** Burlig and Preonas (2024),
+[Out of the Darkness and into the Light? Development Effects of Rural Electrification](https://doi.org/10.1086/730204).
+*Journal of Political Economy*, 132(9), 2937-2971. Includes actual Chhattisgarh
+village and household [data to analyze](standalone/rggvy-electrification/problem/public/data.zip)
+from the [replication archive](https://doi.org/10.7910/DVN/APWICK), for a
+household-welfare briefing with a fixed Research Coordinator. It requires a
 saved report and [continuity participation](references/rggvy-continuity.md).
 
 The four planning cases are fictional prospective adaptations of published studies:

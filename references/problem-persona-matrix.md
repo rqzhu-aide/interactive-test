@@ -76,9 +76,8 @@ from the answer key. Learning and unfinished requests persist on resume.
 The three general profiles own reusable interaction behavior. The problem supplies
 study facts and concrete opportunities, without imposing the standard user's
 claim requests on the expert. The previous `novice`, `domain-expert`,
-`statistician` and `adversarial` profiles are preserved under
-`archive/personas-v7.3.2/`, outside the active catalog. Existing frozen runs keep
-their original profiles unchanged.
+`statistician` and `adversarial` profiles are historical and excluded from the
+published package. Existing frozen runs keep their original profiles unchanged.
 
 Before selecting the final report, the expert must propose two ideas separated
 by at least one substantive user reply without a new proposal. The ideas must
