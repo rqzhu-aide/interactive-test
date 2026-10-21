@@ -114,9 +114,9 @@ Ordinary target lengths are not deadlines or success criteria.
 
 The [configuration guide](references/runner.md#configuration-and-startup) covers
 model selection, tool permissions, Kimi/Pi adapters and `verified_host` setup.
-Diagnostic mode cannot establish a valid blinded comparison. Each host/model
-configuration needs its own loading, session-resume and isolation checks before
-qualification; passing preflight alone does not establish them.
+Diagnostic runs are marked invalid and cannot receive a passing rating. For a
+valid blinded comparison, each host/model configuration needs its own loading,
+session-resume and isolation checks; passing preflight alone does not establish them.
 
 ```sh
 python scripts/session_driver.py preflight --case /private/cases/run001 --candidate /skills/causal-consultant --config /private/config.json

@@ -492,7 +492,8 @@ Create the assessment outside the attempt/work so it does not change the evidenc
   claiming early use or leakage. Missing counterpart captures are evidence gaps,
   not proof that messages differ.
   Read the cited content; a boilerplate disposition is not independent review.
-- `test_validity` and `outcome` from [evaluation.md](evaluation.md).
+- `test_validity` and `outcome` from [evaluation.md](evaluation.md), plus a
+  nonempty `test_validity_reason` explaining the validity judgment.
 - `coverage`: object keyed by every frozen criterion ID, with `status`, `reason`
   and `evidence_refs`. References are exact keys in review-index.json, such as
   `private/events/001/public.json`. Observed claims need bound references.
