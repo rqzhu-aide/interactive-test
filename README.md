@@ -11,9 +11,7 @@ A coordinator runs the exchange and records observable issues, uncertainty and
 supporting evidence so another programmer can investigate the problems. The
 simulated user and consultant each run as a separate agent.
 
-Supports consultant **8.0.0 through 8.0.17 and 8.1.0 through 8.1.4** and
-selected historical v7 releases. See `references/observation-profiles.md`
-for exact compatibility; unlisted versions need a checked profile.
+Supports the latest version of Causal Consultant, currently **8.1.4**.
 
 ## Available cases
 
@@ -115,7 +113,7 @@ Paths are examples; choose one case. Composition does not call a model. Then:
 - `SKILL.md`: operator, actor and issue-recording responsibilities.
 - `references/runner.md`: configuration, reply formats, execution, issue records and evidence packaging.
 - `references/problem-persona-matrix.md`: selection, personas and completion rules.
-- `references/observation-profiles.md`: current and historical compatibility.
+- `references/observation-profiles.md`: consultant compatibility and recorded response formats.
 
 Historical attempts retain their original cases, versions and rules. Local
 fixture checks do not establish live host or model performance.
