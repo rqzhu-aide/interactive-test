@@ -121,8 +121,8 @@
     "public/extract.csv": "b2c2bfe1aae32c2f6bbf055254a69982f6dac940a2a0e00a3442b7d8fe16a27f",
     "public/participant-roster.csv": "9f1fa36f8e599d265e60cf4a501aed29c97035040a3557757ecb1247acbe69a4",
     "public/report-decision.md": "d3798d86dea0d08273295f10f9275ebb876546d3b82b5b16b52467c8d236b388",
-    "reviewer.json": "1a78713349e071910c564f3e3f47825dad1e0f12c32ccd090181331bdfe7d958",
-    "world.json": "eb0324ac595da98b0b76856eb2fc8413a3c2a9e633f2bec2e1170422c8c42e15"
+    "reviewer.json": "bc17fdbb441c26627680a9c176f497a9ef4090c9a7abc52504011184c6652de8",
+    "world.json": "84e585a1c78ed74a4eae8e45e2a8e3f38a991214e4c07a02290343d5eaef6ab1"
   },
   "goal": "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication.",
   "initial_request": "Please use the causal-consultant skill for this consultation. Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude.",

@@ -1,8 +1,7 @@
 """Unit tests for the CLI actor driver (scripts/room_actor.py).
 
-Covers JSON extraction from raw model output, the actor contract text, and
-required-field validation. No live CLI is invoked; run_runtime subprocess
-behavior is not covered here.
+Covers extraction, validation and private capture with bounded fake subprocesses.
+No live CLI is invoked.
 """
 import json
 from pathlib import Path
@@ -13,7 +12,6 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import room_actor
-import room_reviewer
 
 
 class ExtractJsonTests(unittest.TestCase):
@@ -125,126 +123,100 @@ class ActorArgvTests(unittest.TestCase):
             room_actor.actor_argv("gemini", None, self.cwd)
 
 
-class ReviewerArgvTests(unittest.TestCase):
-    """CLI reviewers are fresh processes with read+code tools and no skills."""
-
+class NativeCaptureTests(unittest.TestCase):
     def setUp(self):
-        self.resolve = patch.object(room_reviewer, "resolve", lambda binary: ["X-" + binary])
-        self.resolve.start()
-        self.addCleanup(self.resolve.stop)
-        self.cwd = Path("reviewer-cwd")
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.cwd = self.root / "actor-cwd"
+        self.cwd.mkdir()
+        self.out = self.root / "private/proposal.json"
+        self.sidecar = self.out.with_name(self.out.name + ".capture")
+        self.bundle = self.root / "bundle.json"
+        self.bundle.write_text(json.dumps({"actor_packet": {"reply_limits": {"max_words": 50}}}), encoding="utf-8")
 
-    def test_pi_reviewer_argv(self):
-        argv = room_reviewer.reviewer_argv("pi", "zai/glm-5.3-flash", self.cwd)
-        self.assertEqual(argv[0], "X-pi")
-        self.assertIn("--no-skills", argv)
-        self.assertEqual(argv[argv.index("--tools") + 1], "read,bash")
-        self.assertEqual(argv[argv.index("--model") + 1], "zai/glm-5.3-flash")
-        self.assertEqual(argv[-1], room_reviewer.INSTRUCTION)
+    def fake(self, stdout, stderr=b"", code=0):
+        script = self.root / "fake_actor.py"
+        script.write_text("import os\nos.write(1, " + repr(stdout) + ")\nos.write(2, " + repr(stderr)
+                          + ")\nraise SystemExit(" + str(code) + ")\n", encoding="utf-8")
+        return [sys.executable, "-B", str(script)]
 
-    def test_claude_reviewer_argv(self):
-        argv = room_reviewer.reviewer_argv("claude", "claude-opus-4-8", self.cwd)
-        self.assertEqual(argv[0], "X-claude")
-        self.assertIn("--disable-slash-commands", argv)
-        self.assertEqual(argv[argv.index("--allowedTools") + 1], "Read,Bash")
-        self.assertEqual(argv[argv.index("--model") + 1], "claude-opus-4-8")
+    def run_main(self, argv):
+        options = ["room_actor.py", "--bundle", str(self.bundle), "--out", str(self.out),
+                   "--runtime", "pi", "--model", "fake", "--context-id", "current-context",
+                   "--input-sha256", "allowed-input-digest", "--actor-cwd", str(self.cwd)]
+        with patch.object(sys, "argv", options), patch.object(room_actor, "actor_argv", return_value=argv):
+            room_actor.main()
 
-    def test_unknown_runtime_rejected(self):
-        with self.assertRaisesRegex(ValueError, "unknown runtime"):
-            room_reviewer.reviewer_argv("gemini", None, self.cwd)
+    def test_success_keeps_native_bytes_and_process_identity_outside_child_input(self):
+        reply = {"message": "Café", "fact_ids": [], "rule_ids": [], "attachments": [],
+                 "unanswered_questions": [], "fixture_gaps": [], "stop": False}
+        native = (json.dumps(reply, ensure_ascii=False) + "\r\n").encode("utf-8")
+        stderr = b"native warning\xff\r\n"
+        argv = self.fake(native, stderr)
+        self.run_main(argv)
+        self.assertEqual((self.sidecar / "stdout.txt").read_bytes(), native)
+        self.assertEqual((self.sidecar / "stderr.txt").read_bytes(), stderr)
+        process = json.loads((self.sidecar / "process.json").read_text())
+        self.assertEqual(process["argv"], argv)
+        self.assertGreater(process["pid"], 0)
+        self.assertEqual(process["exit_code"], 0)
+        self.assertIsNone(process["error"])
+        self.assertNotIn(str(self.sidecar), json.dumps(process["argv"]))
+        self.assertNotIn(str(self.sidecar), (self.cwd / "prompt.txt").read_text(encoding="utf-8"))
+        stored = json.loads(self.out.read_text(encoding="utf-8"))
+        self.assertEqual(stored, {**reply, "actor_context": {"context_id": "current-context", "input_sha256": "allowed-input-digest"}})
+        self.assertEqual(json.loads((self.sidecar / "status.json").read_text())["status"], "ok")
 
-    def test_contract_binds_ground_truth_and_digests(self):
-        for fragment in ("{reviewer_packet}", "world.json", "oracle.json", "check_oracle.py",
-                         "review-index.json", "evidence_sha256", "test_validity_reason",
-                         "machine_finding_dispositions"):
-            self.assertIn(fragment, room_reviewer.CONTRACT)
-        self.assertEqual(room_reviewer.REQUIRED[0], "evidence_sha256")
+    def test_nonzero_native_retains_full_bytes_before_error(self):
+        stdout, stderr = b"partial\xff\n", b"error " + b"x" * 100000
+        self.sidecar.mkdir(parents=True)
+        with patch.object(room_actor, "actor_argv", return_value=self.fake(stdout, stderr, 7)):
+            with self.assertRaisesRegex(RuntimeError, "pi actor failed"):
+                room_actor.run_runtime("pi", "fake", self.cwd, self.sidecar)
+        self.assertEqual((self.sidecar / "stdout.txt").read_bytes(), stdout)
+        self.assertEqual((self.sidecar / "stderr.txt").read_bytes(), stderr)
+        self.assertEqual(json.loads((self.sidecar / "process.json").read_text())["exit_code"], 7)
 
-    def test_reviewer_schema_accepts_evidenced_host_checks_without_inventing_them(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            case = root / "case"
-            case.mkdir()
-            packet = case / "reviewer.json"
-            packet.write_text('{"criteria": [{"id": "c-original"}]}', encoding="utf-8")
-            (case / "case.json").write_text(json.dumps({"reviewer": packet.name,
-                "files": {packet.name: room_reviewer.digest(packet)}}), encoding="utf-8")
-            review = {key: None for key in room_reviewer.REQUIRED}
-            review.update(test_validity="valid", findings=[], host_checks={"candidate_loading": {
-                "verified": True, "reason": "Actual helper path is bound to the staged candidate.",
-                "evidence_refs": ["private/host/smoke.txt", "private/events/001/transport/stdout.txt"]}})
-            argv = ["room_reviewer.py", "--attempt", str(root / "attempt"), "--case", str(root / "case"),
-                    "--evaluation-md", str(root / "evaluation.md"), "--runtime", "claude",
-                    "--reviewer", "test-reviewer", "--context-id", "test-context", "--out", str(root / "review.json"),
-                    "--cwd", str(root / "scratch")]
-            for has_checks in (True, False):
-                if not has_checks:
-                    del review["host_checks"]
-                    review["test_validity"] = "unverified"
-                with patch.object(sys, "argv", argv), patch.object(room_reviewer, "run_runtime", return_value=json.dumps(review)), patch("builtins.print"):
-                    room_reviewer.main()
-                saved = json.loads((root / "review.json").read_text(encoding="utf-8"))
-                self.assertEqual(saved.get("host_checks"), review.get("host_checks"))
-            prompt = (root / "scratch/prompt.txt").read_text(encoding="utf-8")
-            self.assertIn("Also include host_checks", prompt)
-            self.assertIn("when claiming valid for verified_host", prompt)
-            self.assertIn("never a boilerplate", prompt)
-            self.assertIn("Inspect actual native tool", prompt)
+    def test_malformed_claude_envelope_retains_bytes_before_parsing(self):
+        self.sidecar.mkdir(parents=True)
+        with patch.object(room_actor, "actor_argv", return_value=self.fake(b"\xffnot JSON")):
+            with self.assertRaises(json.JSONDecodeError):
+                room_actor.run_runtime("claude", "fake", self.cwd, self.sidecar)
+        self.assertEqual((self.sidecar / "stdout.txt").read_bytes(), b"\xffnot JSON")
+        self.assertEqual(json.loads((self.sidecar / "process.json").read_text())["exit_code"], 0)
 
-    def test_reviewer_prompt_uses_manifest_selected_packet(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            case = root / "case"
-            case.mkdir()
-            original = case / "reviewer.json"
-            continuity = case / "continuity-reviewer.json"
-            original.write_text('{"criteria": [{"id": "c-original"}]}', encoding="utf-8")
-            continuity.write_text('{"criteria": [{"id": "c-original"}, {"id": "c-continuity"}]}',
-                                  encoding="utf-8")
-            review = {key: None for key in room_reviewer.REQUIRED}
-            review.update(findings=[])
-            argv = ["room_reviewer.py", "--attempt", str(root / "attempt"), "--case", str(case),
-                    "--evaluation-md", str(root / "evaluation.md"), "--runtime", "claude",
-                    "--reviewer", "test-reviewer", "--context-id", "test-context",
-                    "--out", str(root / "review.json"), "--cwd", str(root / "scratch")]
-            files = {packet.name: room_reviewer.digest(packet) for packet in (original, continuity)}
-            for selected in (original, continuity):
-                with self.subTest(packet=selected.name):
-                    (case / "case.json").write_text(json.dumps({"reviewer": selected.name, "files": files}),
-                                                   encoding="utf-8")
-                    with patch.object(sys, "argv", argv), patch.object(room_reviewer, "run_runtime", return_value=json.dumps(review)), patch("builtins.print"):
-                        room_reviewer.main()
-                    prompt = (root / "scratch/prompt.txt").read_text(encoding="utf-8")
-                    self.assertIn("Reviewer packet (frozen criteria and rules): " + str(selected.resolve()), prompt)
-                    other = continuity if selected == original else original
-                    self.assertNotIn(str(other.resolve()), prompt)
+    def test_word_limit_rejection_keeps_native_success_and_current_response(self):
+        reply = {"message": "word " * 51, "fact_ids": [], "rule_ids": [], "attachments": [],
+                 "unanswered_questions": [], "fixture_gaps": [], "stop": False}
+        raw = json.dumps(reply)
+        with self.assertRaisesRegex(ValueError, "word limit"):
+            self.run_main(self.fake(raw.encode("utf-8")))
+        self.assertFalse(self.out.exists())
+        self.assertEqual((self.sidecar / "response.txt").read_text(), raw)
+        status = json.loads((self.sidecar / "status.json").read_text())
+        self.assertEqual((status["phase"], status["status"]), ("validation", "error"))
+        self.assertEqual(json.loads((self.sidecar / "process.json").read_text())["exit_code"], 0)
 
-    def test_reviewer_rejects_missing_changed_or_escaping_packet_before_launch(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            case = root / "case"
-            case.mkdir()
-            packet = case / "continuity-reviewer.json"
-            packet.write_text('{"criteria": [{"id": "c-continuity"}]}', encoding="utf-8")
-            argv = ["room_reviewer.py", "--attempt", str(root / "attempt"), "--case", str(case),
-                    "--evaluation-md", str(root / "evaluation.md"), "--runtime", "claude",
-                    "--reviewer", "test-reviewer", "--context-id", "test-context",
-                    "--out", str(root / "review.json"), "--cwd", str(root / "scratch")]
-            invalid = [("missing.json", {}, FileNotFoundError, None),
-                       (packet.name, {packet.name: "0" * 64}, ValueError, "identity mismatch"),
-                       ("../outside.json", {}, ValueError, "invalid relative path")]
-            for selected, files, error, message in invalid:
-                with self.subTest(packet=selected):
-                    (case / "case.json").write_text(json.dumps({"reviewer": selected, "files": files}),
-                                                   encoding="utf-8")
-                    with patch.object(sys, "argv", argv), patch.object(room_reviewer, "run_runtime") as runtime:
-                        with self.assertRaisesRegex(error, message or ".*"):
-                            room_reviewer.main()
-                        runtime.assert_not_called()
-                    self.assertFalse((root / "scratch").exists())
+    def test_launch_failure_never_reuses_previous_response(self):
+        (self.cwd / "last-raw-output.txt").write_text('{"message":"stale"}', encoding="utf-8")
+        with self.assertRaises(OSError):
+            self.run_main([str(self.root / "nonexistent-executable")])
+        self.assertFalse(self.out.exists())
+        self.assertFalse((self.sidecar / "response.txt").exists())
+        self.assertEqual((self.sidecar / "stdout.txt").read_bytes(), b"")
+        process = json.loads((self.sidecar / "process.json").read_text())
+        self.assertIsNone(process["pid"])
+        self.assertIsNone(process["exit_code"])
+        self.assertTrue(process["error"])
+        status = json.loads((self.sidecar / "status.json").read_text())
+        self.assertEqual((status["phase"], status["status"]), ("runtime", "error"))
 
-    def test_shared_extraction(self):
-        self.assertEqual(room_reviewer.extract_json('{"outcome": "x"} '), {"outcome": "x"})
+    def test_capture_cannot_be_placed_in_actor_working_directory(self):
+        self.out = self.cwd / "proposal.json"
+        with self.assertRaisesRegex(ValueError, "outside actor working directory"):
+            self.run_main(["unused"])
+        self.assertFalse((self.cwd / "prompt.txt").exists())
 
 
 if __name__ == "__main__":

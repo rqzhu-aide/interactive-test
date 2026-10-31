@@ -45,29 +45,29 @@
     {
       "id": "c-coordinator-target-continuity",
       "required": true,
-      "rule": "Require actual public anchors for the early historical Chhattisgarh household-welfare target, event-2 access constraint, event-3 scope or justified limit and framing deferral, event-7 return, and final report disposition. Compare their use in the return and report, preserving population, outcome, exposure and time qualifications. Village electrification does not automatically establish welfare; a justified unresolved effect is acceptable and no particular computation is required. Event occurrence is assessable evidence, not a quality pass."
+      "rule": "Continuity context includes the historical Chhattisgarh household-welfare target, event-2 access constraint, event-3 scope or limit and framing deferral, event-7 return and final report disposition. Population, outcome, exposure and time qualifications connect those events. Village electrification and welfare are different outcomes; event occurrence alone does not establish preserved meaning."
     },
     {
       "id": "c-coordinator-direction",
       "required": true,
-      "rule": "Locate eight ordered distinct public client messages and their distinct consultant replies. Inspect actual event-4 interpretation without computation selection, event-5 audience revision, event-6 practical use, and event-8 offered report selection or early-report assessment. Compare them with subsequent work and saved handling/current direction; a question is not acceptance. Count at least two substantive responses to events 4 through 6 strictly between the event-3 deferral and event-7 return; the deferral response alone is insufficient. Missing participation or gap makes stress completion incomplete, not automatically a consultant mistake."
+      "rule": "The 1.1.0 participation contract has eight ordered distinct public client messages and replies: event-4 interpretation without computation selection, event-5 audience revision, event-6 practical use and event-8 report selection or early-report disposition. At least two substantive responses to events 4 through 6 lie strictly between the event-3 deferral and event-7 return; the deferral response alone is outside that gap. Participation completeness and consultant behavior are distinct."
     },
     {
       "id": "c-coordinator-retention",
       "required": true,
-      "rule": "Trace the original target, established access limit, deferral, learned qualifications and changed audience from first public establishment through later return and report. Inspect actual public text plus journal, project and case-brief privately. The return should use a natural backward reference rather than recite stored facts; a necessary correction or real clarification is allowed. Require preserved meaning, not extra entity growth. Legitimate corrections are optional and require evidence."
+      "rule": "Retention context connects the original target, access limit, deferral, learned qualifications and changed audience to the return and report. Public wording and retained journal, project and brief provide different views. A natural backward reference differs from a recital of stored facts; actual corrections and clarifications are optional events with source context."
     },
     {
       "id": "c-coordinator-fidelity",
       "required": true,
-      "rule": "Assess this truthful coordinator and frozen 1.1.0 participation contract separately from consultant quality. Require 8 to 12 replies, all eight public events and the actual gap for stress completion; an early report does not waive them. Missing participation, gap or report is incomplete. At twelve stop dispatching. Verify prompt source supply, adaptive wording and learning, no invented facts/corrections, padding, required computation or renewed exhausted pressure. Observed coverage permits assessment but does not certify continuity or a scientific pass. Frozen 1.0.0 attempts retain earlier semantics."
+      "rule": "Coordinator 1.1.0 has eight public events, the substantive gap and a report endpoint within 8 to 12 replies. An early report leaves participation obligations intact, and reply 12 is the dispatch ceiling. Prompt source supply, adaptive wording, retained learning, unsupported facts, padding and renewed exhausted pressure are observable actor topics. Frozen 1.0.0 keeps its own contract."
     }
   ],
   "reviewer_required_observations": [
     "eight ordered public client event anchors and corresponding distinct consultant replies",
     "actual event-3 deferral, event-7 return and at least two substantive intervening replies to events 4 through 6",
     "early access constraint, changed audience, final welfare-framing and report dispositions",
-    "separate report endpoint, stress completion, actor fidelity, consultant quality and coverage assessments"
+    "separate retained report endpoint, participation events, actor deviations, consultant issues and missing evidence"
   ],
   "continuity_coverage": {
     "participation_contract": "Eight ordered distinct public client events and replies, actual gap, saved report endpoint, and 8 to 12 delivered replies. Missing participation remains incomplete even with a report.",
@@ -89,13 +89,13 @@
       "unexercised",
       "unobservable"
     ],
-    "interpretation": "Observed events supply evidence for assessment, not a pass. Missing required events or the two-substantive-reply gap leaves stress completion incomplete; do not invent consultant failure. A cap-limited unfinished run is incomplete. Corrections and village computation are optional. One run does not establish reliability; same-session continuity is not fresh-context recovery."
+    "interpretation": "Event occurrence, retained meaning and scientific validity are distinct observations. Missing required events or the substantive gap leaves the participation endpoint unfinished. Corrections and village computation are optional events. One run is not a reliability estimate, and same-session continuity differs from fresh-context recovery."
   },
   "actor_pacing": "Complete eight ordered public client events, each in its own message with a distinct consultant reply, across 8 to 12 delivered replies. Do not merge or waive events after a proactive answer or early report; apply learned answers to each new decision. Use the shared disclosure, source, learning, word and item policies. Prioritize requested accessible records without delay; extra replies serve real sources, work, clarification, selection or correction. The public deferral and return require at least two substantive intervening responses to events 4 through 6; the deferral response alone is insufficient. Use existing decision_updates, knowledge_updates and unanswered_questions to preserve learning and visible evidence, with no new mutable tracker. At twelve stop dispatching; technical failure or explicit human cancellation can end sooner with unfinished participation incomplete. Never mention the protocol publicly.",
   "completion_rule_overrides": {
     "r-stop": {
       "condition": "All eight ordered public events and distinct replies, the actual two-substantive-reply gap and visible saved report endpoint are complete, with 8 to 12 delivered replies and no pending accepted correction or user question; or twelve replies were delivered, technical failure occurred, or a human explicitly cancelled.",
-      "action": "Stop. At the cap or earlier failure/cancellation, mark unfinished report or participation honestly as incomplete. A report alone does not complete participation. Use visible evidence; independent review assesses artifact integrity and scientific quality."
+      "action": "Stop. At the cap or earlier failure/cancellation, mark unfinished report or participation honestly as incomplete. A report alone does not complete participation. Use visible evidence."
     },
     "r-report": {
       "condition": "An actual report correction is needed, or event 7 has received its reply and the substantive work is settled.",

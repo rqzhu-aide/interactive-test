@@ -1,70 +1,70 @@
 {
-  "allowed_alternatives": "Equivalent semantic questions and source requests, sound alternative designs or estimators, and justified limited conclusions are allowed. Report endpoints are substantive, not a fixed checklist of worker names or turns.",
+  "allowed_alternatives": "The case admits equivalent semantic source requests, scientifically justified designs or estimators and bounded conclusions. The endpoint is substantive rather than a fixed worker or turn sequence.",
   "completion": "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication.",
   "completion_contract": "full_report",
   "criteria": [
     {
       "id": "c-evidence",
       "required": true,
-      "rule": "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions. Distinguish accessible, inspected and released records: an unreleased available record is not unavailable, and an unavailable record does not prove the underlying event never occurred. Attribute failures to obtain or supply a requested attainable record to the responsible consultant or actor."
+      "rule": "Evidence context consists of actual source inspection, public disclosures, reasoning and decisions. Source accessibility, inspection and release are distinct states; an unavailable record does not establish that its underlying event never occurred. Hidden world facts are separate from information available to the consultant."
     },
     {
       "id": "c-report",
       "required": true,
-      "rule": "Require a complete actual saved consultant report and the full-report capture contract. A design report is complete for a prospective design goal. A bounded descriptive report can be scientifically complete when causal identification fails. An analysis file or recap alone is insufficient. Check substance and relevant output readback/render verification."
+      "rule": "The full-report endpoint is a completed saved consultant report with retained artifact, source and readback or rendering evidence. A prospective design report or a bounded descriptive report can satisfy its corresponding goal; an analysis file or conversational recap alone is a different deliverable."
     },
     {
       "id": "c-closeout",
       "required": true,
-      "rule": "Compare actual user-facing replies with saved response evidence, assess detected mismatches, and apply saved qualifications to the actual claims. Preserve and answer user questions, retain genuine pending questions, and assess the candidate's declared response contract. A checker warning cannot be dismissed without review."
+      "rule": "Public reply text, retained response records, qualifications, user questions and pending questions are distinct evidence sources. Their correspondence and any checker discrepancy are observable issue topics under the candidate's frozen response contract."
     },
     {
       "id": "c-reproducibility",
       "required": true,
-      "rule": "Inspect actual saved pre-result plans, preparation lineage, computation outputs and report sources. Correct source bytes, units, target populations and provenance matter. Numerical matching is not a substitute for a valid design argument."
+      "rule": "Reference context includes saved pre-result plans, preparation lineage, source bytes, units, target populations, computation outputs and report sources. Numerical agreement and design validity are distinct properties."
     },
     {
       "id": "c-persona-boundary",
       "required": true,
-      "rule": "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies reflect persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply supporting records. A one-turn partial or nearby answer is plausible when the unresolved request stays in private tracking and the actor repairs the omission or misunderstanding after clarification. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Persistent lost requests, repeated off-target replies, artificial delay and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."
+      "rule": "The frozen persona defines actor knowledge, reasoning, disclosure and learning. Study truth, data, source access and the report goal are invariant. Partial answers can leave private pending scopes; lost scopes, unsupported facts, invented delays and disclosure driven by a turn target are possible actor issues. A short complete answer, intact necessary bundle, correction or conversation beyond a descriptive target is not itself a defect."
     },
     {
       "id": "c-loop-permissions",
       "required": true,
-      "rule": "For consultation-loop-v1, independently compare the actual public scope proposal, later user selection and FIRST protected work/artifact appearance. Analysis and reporting require separate current choices. Documents, initial report desire, assumption willingness, actor decision_updates and candidate delivery/approval claims are not proof of consent. Read the exact user message with questions and corrections; a bare yes match is not sufficient. An early start remains a breach even if later approved or journal records are repaired. Check revision, withdrawal and stale evidence when triggered. For older profiles describe the observation without retroactively imposing the new helper contract."
+      "rule": "For consultation-loop-v1, observable chronology consists of the public scope offer, later actual user choice and first protected work or artifact. Analysis and reporting have separate bounded choices. Initial report desire, willingness to discuss assumptions, actor updates and candidate records are distinct from actual consent. Corrections, withdrawals, revisions and evidence changes qualify that chronology; later approval does not change an earlier start."
     },
     {
       "id": "c-loop-steering",
       "required": true,
-      "rule": "Check that bounded work returns findings, diagnostics and limitations with useful directions to the user. Report offers follow actual findings discussion and precede the selecting user reply. Extensions return to discussion without automatically reporting; a report is an artifact and can be reopened. Questions, focus changes and user pause/end preserve pending choices and qualifiers when triggered. Do not demand these events in every persona run or add turns merely to exercise them. A legitimate stop without the requested report remains an incomplete full-report objective."
+      "rule": "Bounded contributions return findings, diagnostics, limits and directions to the user. A report offer and its later selection are distinct from an extension and its return to discussion. Questions, changed focus, pauses and reopening retain pending choices and qualifications when present. A stop without the requested report leaves a full-report endpoint outstanding."
     },
     {
       "id": "c-claim-meaning",
       "required": true,
-      "rule": "Read the actual report's scientific claims against the selected target, formulas and original source meaning, not just matching displayed numbers. Non-detection is not absence: inspect whether uncertainty still admits a worthwhile effect, and do not infer equivalence without a justified margin and analysis. Observational causal claims retain their identifying assumptions. Judge resolved earlier mistakes separately from defects remaining in the report; do not require a specific estimator or favorable result. Use the oracle's private claim_calibration and applied_interpretation examples to identify specific unsupported claims and accept sound corrections; these are independent probes, not new study facts or mandatory conversation turns."
+      "rule": "Scientific claim context includes the selected target, formulas, original source meaning, uncertainty and remaining identifying assumptions. Non-detection differs from absence or equivalence. The oracle's claim_calibration and applied_interpretation entries are private reference probes, not new study facts, mandatory methods or conversation events."
     },
     {
       "id": "c-edge-preparation",
       "required": true,
-      "rule": "Use the roster and export ledger to justify the 132-to-120 person-level reduction, verify exact duplicates, retain original files and record preparation. Do not infer repeated-person semantics or replace missing values merely from row appearance."
+      "rule": "The frozen roster and export ledger explain reduction from 132 rows to 120 people, including exact duplicates and preparation lineage. Row appearance alone does not establish repeated-person semantics or justify replacing missing values."
     },
     {
       "id": "c-edge-missingness",
       "required": true,
-      "rule": "Distinguish blank outcomes from failures, observed-case denominators from the full roster, and unrecoverable missing values from presumed missing at random. The extract records unknown completion for 30 people; that alone does not establish no follow-up was attempted, no assessment occurred, or why status is absent. Use the ledger and any accessible records for such claims, and retain unknowns where they cannot resolve the cause. Report the 60/90 observed fraction with its scope and assess the consequence of 30 missing outcomes; [50%,75%] cohort completion bounds or an equivalently justified sensitivity analysis are appropriate."
+      "rule": "Blank completion differs from failure, and an observed-case denominator differs from the full roster. Thirty people have unknown completion; the extract alone does not establish attempts, assessment occurrence or why status is absent. The observed fraction is 60/90. Full-cohort completion is bounded by [50%,75%] without additional assumptions; a justified sensitivity can express the same uncertainty. Accessible ledger and record evidence may further resolve the cause."
     },
     {
       "id": "c-edge-causality",
       "required": true,
-      "rule": "Recognize that all people received treatment after self-selection, no comparison is available, and baseline score is not untreated completion. Do not estimate a causal effect or manufacture a matched comparison, randomization or missingness mechanism. A model or complete-case analysis does not repair nonidentification."
+      "rule": "All recorded people received treatment after self-selection, no comparison group exists and baseline score is a different construct from untreated completion. A model or complete-case calculation does not identify the causal effect or supply a missingness mechanism."
     },
     {
       "id": "c-edge-useful-report",
       "required": true,
-      "rule": "Complete a bounded audit/report rather than stopping at refusal or repeating inaccessible data requests. Keep the original causal uncertainty explicit and propose concrete future collection/comparison changes without claiming they already occurred."
+      "rule": "The requested endpoint is a bounded audit/report with causal uncertainty and practical future collection or comparison changes. Proposed changes are distinct from completed collection, and inaccessible evidence remains unavailable."
     }
   ],
-  "numeric_reference": "oracle.json and standalone check_oracle.py. Absolute tolerance 1e-8 for the frozen descriptive/reference calculation, or half the displayed final unit for rounded outputs. Alternative valid estimators require independently matched calculations. Generating truth and realized estimates are distinct; do not demand a private method, exact effect recovery or single-interval coverage.",
+  "numeric_reference": "oracle.json and standalone check_oracle.py contain frozen source and reference calculations. Numerical comparison tolerance is 1e-8, or half the displayed final unit for rounded results. Different estimators have different reference calculations. Generating truth and realized estimates are distinct; the oracle is not a required estimator or a guarantee of single-interval coverage.",
   "problem_id": "data-quality-edge",
   "problem_version": "1.3.0",
   "required_observations": [
@@ -211,5 +211,5 @@
     ],
     "untreated_counterfactuals": "Unspecified. All recorded people received treatment; multiple counterfactual outcome schedules and missing-outcome completions are compatible with the same observed extract."
   },
-  "validity": "Fixture self-checks and protocol rehearsals are not live consultant qualification. An unavailable fact cannot be an expected discovery. New or contradictory facts require a versioned world, not in-session repair."
+  "validity": "Fixture self-checks and protocol rehearsals describe their own scope rather than live-host qualification. Unavailable facts remain outside observed discovery; source/world identities are frozen rather than changed within a consultation."
 }

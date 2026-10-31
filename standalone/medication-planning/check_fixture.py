@@ -5,8 +5,8 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parent
-CASE_VERSIONS = {"masks-planning": "1.1.3", "forest-planning": "1.1.3",
-                 "medication-planning": "1.1.3", "surgery-planning": "1.1.4"}
+CASE_VERSIONS = {"masks-planning": "1.1.7", "forest-planning": "1.1.7",
+                 "medication-planning": "1.2.4", "surgery-planning": "1.1.8"}
 
 
 def read(name):
@@ -27,7 +27,8 @@ def main():
     assert manifest["sources"] == actor["sources"] == []
     assert manifest["world_id"] == world["world_id"] and manifest["world_version"] == world["world_version"]
     assert manifest["case_version"] == CASE_VERSIONS[manifest["case_id"]]
-    assert manifest["world_version"] == "1.1.0"
+    expected_world_version = "1.2.0" if manifest["case_id"] == "medication-planning" else "1.1.0"
+    assert manifest["world_version"] == expected_world_version
     assert manifest["suite_version"] == "prospective-study-design-1.1.0"
     public = (ROOT / manifest["initial_message"]).read_text(encoding="utf-8")
     assert "causal-consultant" in public and len(public.split()) <= 50

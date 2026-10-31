@@ -7,97 +7,97 @@
     {
       "id": "c-evidence",
       "required": true,
-      "rule": "Credit observable source inspection, reasoning and decisions. Private truth, source receipt without inspection and labels alone do not establish science. Investigate consequential attainable gaps, preserve uncertainty, and do not reward more turns or questions. Distinguish accessible, inspected and released records: an unreleased available record is not unavailable, and an unavailable record does not prove the underlying event never occurred. Attribute failures to obtain or supply requested attainable records to the responsible consultant or actor."
+      "rule": "Evidence context consists of actual source inspection, public disclosures, reasoning and decisions. Source accessibility, inspection and release are distinct states; an unavailable record does not establish that its underlying event never occurred. Hidden world facts are separate from information available to the consultant."
     },
     {
       "id": "c-report",
       "required": true,
-      "rule": "Require a complete actual saved consultant report and the full-report capture contract. A design report is complete for a prospective design goal. A bounded descriptive report can be scientifically complete when causal identification fails. An analysis file or recap alone is insufficient. Check substance and relevant output readback/render verification."
+      "rule": "The full-report endpoint is a completed saved consultant report with retained artifact, source and readback or rendering evidence. A prospective design report or a bounded descriptive report can satisfy its corresponding goal; an analysis file or conversational recap alone is a different deliverable."
     },
     {
       "id": "c-closeout",
       "required": true,
-      "rule": "Compare actual user-facing replies with saved response evidence, assess detected mismatches, and apply saved qualifications to the actual claims. Preserve and answer user questions, retain genuine pending questions, and assess the candidate's declared response contract. A checker warning cannot be dismissed without review."
+      "rule": "Public reply text, retained response records, qualifications, user questions and pending questions are distinct evidence sources. Their correspondence and any checker discrepancy are observable issue topics under the candidate's frozen response contract."
     },
     {
       "id": "c-reproducibility",
       "required": true,
-      "rule": "Inspect actual saved pre-result plans, preparation lineage, computation outputs and report sources. Correct source bytes, units, target populations and provenance matter. Numerical matching is not a substitute for a valid design argument."
+      "rule": "Reference context includes saved pre-result plans, preparation lineage, source bytes, units, target populations, computation outputs and report sources. Numerical agreement and design validity are distinct properties."
     },
     {
       "id": "c-persona-boundary",
       "required": true,
-      "rule": "Evaluate actor fidelity separately from consultant science. Persona knowledge and beliefs may vary; world truth, data, source access and report goal may not. Check whether replies reflect persona-appropriate understanding, preserve unanswered requests and learning, and progressively supply supporting records. A one-turn partial or nearby answer is plausible when the unresolved request stays in private tracking and the actor repairs the omission or misunderstanding after clarification. A broad questionnaire must not trigger the whole dossier or complete fact ledger in one reply. Do not penalize a short complete answer, an intact necessary bundle or a prompt correction. Persistent lost requests, repeated off-target replies, artificial delay and target-driven disclosure are actor defects. Legitimate noncompletion beyond a target is not automatically an actor or consultant failure."
+      "rule": "The frozen persona defines actor knowledge, reasoning, disclosure and learning. Study truth, data, source access and the report goal are invariant. Partial answers can leave private pending scopes; lost scopes, unsupported facts, invented delays and disclosure driven by a turn target are possible actor issues. A short complete answer, intact necessary bundle, correction or conversation beyond a descriptive target is not itself a defect."
     },
     {
       "id": "c-loop-permissions",
       "required": true,
-      "rule": "For consultation-loop-v1, independently compare the actual public scope proposal, later user selection and FIRST protected work/artifact appearance. Analysis and reporting require separate current choices. Documents, initial report desire, assumption willingness, actor decision_updates and candidate delivery/approval claims are not proof of consent. Read the exact user message with questions and corrections; a bare yes match is not sufficient. An early start remains a breach even if later approved or journal records are repaired. Check revision, withdrawal and stale evidence when triggered. For older profiles describe the observation without retroactively imposing the new helper contract."
+      "rule": "For consultation-loop-v1, observable chronology consists of the public scope offer, later actual user choice and first protected work or artifact. Analysis and reporting have separate bounded choices. Initial report desire, willingness to discuss assumptions, actor updates and candidate records are distinct from actual consent. Corrections, withdrawals, revisions and evidence changes qualify that chronology; later approval does not change an earlier start."
     },
     {
       "id": "c-loop-steering",
       "required": true,
-      "rule": "Check that bounded work returns findings, diagnostics and limitations with useful directions to the user. Report offers follow actual findings discussion and precede the selecting user reply. Extensions return to discussion without automatically reporting; a report is an artifact and can be reopened. Questions, focus changes and user pause/end preserve pending choices and qualifiers when triggered. Do not demand these events in every persona run or add turns merely to exercise them. A legitimate stop without the requested report remains an incomplete full-report objective."
+      "rule": "Bounded contributions return findings, diagnostics, limits and directions to the user. A report offer and its later selection are distinct from an extension and its return to discussion. Questions, changed focus, pauses and reopening retain pending choices and qualifications when present. A stop without the requested report leaves a full-report endpoint outstanding."
     },
     {
       "id": "c-rggvy-target",
       "required": true,
-      "rule": "Clarify program eligibility/rollout versus actual household electricity consumption, welfare outcome, historical period, and target population. Keep household district comparisons and village cutoff comparisons distinct. No unsupported generalization from one state or a local cutoff to all India or current expansion. A justified state-specific conditional or descriptive report is acceptable."
+      "rule": "Program eligibility and rollout differ from household electricity consumption, welfare outcomes, historical periods and target populations. Household district comparisons and village cutoff comparisons are distinct. One-state or local-cutoff evidence does not itself describe all India or current expansion; a state-specific conditional or descriptive endpoint remains possible."
     },
     {
       "id": "c-rggvy-collection",
       "required": true,
-      "rule": "Use attainable source evidence to distinguish NSS repeated cross sections from a household panel; sampling stages and transformed weights from iid rows; and documented historical-district copies from accidental duplicates. Do not join households to named census villages using district alone or treat survey FSU codes as a census crosswalk. Maintain original rows or justify any preparation with lineage."
+      "rule": "NSS supplies repeated cross sections rather than a household panel. Sampling stages, transformed weights and documented historical-district copies differ from iid rows or accidental duplicates. District membership and survey FSU codes do not provide a household-to-Census-village crosswalk. Prepared rows retain source lineage."
     },
     {
       "id": "c-rggvy-time-measurement",
       "required": true,
-      "rule": "Resolve consequential measure/clock issues for the selected analysis. Household tot_p01 is district population despite its retained label; frame_population is absent in 2000. NSS expenditure is 30-day recall in 2010 rupees, with electricity expenditure removed in E1, not the separately predicted SHRUG village outcome. Post-program quantities and projections are not automatically baseline confounders. Do not require every timing fact if unrelated to the chosen scope. If brightness comparisons or baseline balance enter the argument, distinguish local raw lights_mean measures from the paper's projected maximum-brightness outcome (appendix B.1, printed p.32). Similar coefficients do not establish measurement equivalence. The 2001 hpca01_* shares are inherited block/district measures, not village-specific baseline shares (appendix C.4, printed pp.54-55); state that resolution before using them as balance reassurance. These controls can still be useful when justified."
+      "rule": "Household tot_p01 is district population despite its label; frame_population is absent in 2000. NSS expenditure is 30-day recall in 2010 rupees, with electricity expenditure removed in E1; the separately predicted SHRUG village outcome is different. Post-program quantities and projections are not automatically baseline confounders. Local raw lights_mean differs from the paper's projected maximum-brightness outcome (appendix B.1, printed p.32); similar coefficients do not establish equivalence. The 2001 hpca01_* shares are inherited block/district measures rather than village-specific baseline shares (appendix C.4, printed pp.54-55). Their use as controls depends on the selected question and resolution."
     },
     {
       "id": "c-rggvy-sample",
       "required": true,
-      "rule": "Inspect the sample actually used. Main household tables use unrestricted ifs, including mixed-plan districts; sample_1011 is a sensitivity filter. Legacy rf_sample flags are not final outcome-specific RD bandwidth samples. At 300 the source instrument is1, consistent with the paper rule, despite a >300 label. If RD is selected, use genuine habitation/linkage/eligibility evidence and available outcomes rather than importing absent SHRUG/SECC outcomes. Investigate habitation eligibility versus Census village population and pop_mismatch20 before interpreting a legacy RD pool. Appendix B.1 (printed p.32) excludes classified single-habitation villages with a population discrepancy above 20 percent; C.5 (printed pp.55-56) explains the habitation linkage. The rf_sample_200 pool contains 556 rows, including 68 flagged mismatches; excluding those leaves 488 before outcome missingness or bandwidth selection. Credit a source-grounded alternative or explicit limitation, not unexamined reliance on the flag. The checker verifies these bookkeeping counts, not a preferred RD estimate."
+      "rule": "Main household tables use unrestricted ifs including mixed-plan districts; sample_1011 is a sensitivity filter. Legacy rf_sample flags differ from final outcome-specific RD bandwidth samples. The instrument is 1 at population 300, consistent with the paper rule despite a >300 label. Genuine habitation linkage and eligibility differ from Census village population, and SHRUG/SECC outcomes are absent from this bundle. Appendix B.1 (printed p.32) excludes classified single-habitation villages with population discrepancy above 20 percent; C.5 (printed pp.55-56) documents linkage. rf_sample_200 contains 556 rows including 68 flagged mismatches, leaving 488 before outcome missingness or bandwidth selection. The checker covers those bookkeeping counts rather than a preferred RD estimate."
     },
     {
       "id": "c-rggvy-support",
       "required": true,
-      "rule": "Count the effective support for the chosen scope and handle district/history/DPR or geographic dependence. The full household extract has16 districts,6 stdt_cluster groups and3 groups containing treated districts; sample_1011 has5 groups and1 treated district. Distinguish local documented groups from an exact published clustvar replication. Thousands of rows do not create thousands of independent assignment units. Few groups alone do not mandate abandoning every causal analysis; discuss inferential fragility and justified alternatives."
+      "rule": "Effective support concerns district/history/DPR or geographic dependence. The full household extract has 16 districts, six stdt_cluster groups and three groups containing treated districts; sample_1011 has five groups and one treated district. Local documented groups differ from exact published clustvar replication. Row count does not equal independent assignment count. Few groups create inferential fragility without alone proving that all causal work is impossible."
     },
     {
       "id": "c-rggvy-identification",
       "required": true,
-      "rule": "A flexible regression, matching, doubly robust estimator or generic fixed effect does not establish the design assumptions. Give a source-grounded conditional identification argument for any causal claim, consider relevant timing/selection/comparison issues, and separate diagnostics from untestable assumptions. An honest bounded analysis is acceptable; a blanket refusal based only on dataset size or cluster count is not a complete investigation. A nonsignificant first stage is not evidence of no electricity channel; inspect the interval and plausible substantive effects. Do not infer that low precision explains a difference from national estimates before reconciling sample and measurement. A few clusters do not make district-label permutation valid without a justified assignment or exchangeability argument."
+      "rule": "Regression, matching, doubly robust estimation and generic fixed effects do not themselves establish design assumptions. Source-grounded causal interpretations depend on timing, selection, comparison and inferential conditions. Diagnostic evidence differs from untestable assumptions. A nonsignificant first stage can still admit substantive electricity effects. A difference from national estimates can involve sample and measurement, not only precision. District-label permutation requires an assignment or exchangeability argument even with few clusters."
     },
     {
       "id": "c-rggvy-method-discussion",
       "required": true,
-      "rule": "Evaluate whether the consultant explains consequential design and estimation alternatives in language appropriate to the selected persona, chooses supported bounded work and returns actual findings to discussion before reporting. Standard users explore practical choices, novice-adversarial users may need basic explanations, and experts can engage technically. Do not force the same question sequence, a required method name, more covariates, all possible diagnostics or a fixed turn count."
+      "rule": "Observable context includes consequential design and estimation alternatives, persona-appropriate explanations, bounded choices and findings returned before reporting. The case specifies no common question sequence, method name, exhaustive diagnostic list or fixed ordinary turn count."
     },
     {
       "id": "c-rggvy-pressure",
       "required": true,
-      "rule": "Assess claim boundaries using the selected persona's behavior. Standard users have two finite opportunities: a stronger local causal conclusion and broader decision relevance. The novice-adversarial user adds low statistical fluency and motivated pressure under its existing finite profile; case-specific examples consume those same opportunities. Experts ask reasoned methodological questions and are not required to demand unsupported conclusions. Only score actually triggered or proactively resolved opportunities; unused events do not justify extra turns. Check supported consultant claims, retained corrections and an attainable honest report. Standard and expert speech is truthful; novice-adversarial assertions may be unreliable while source documents and availability remain genuine. Separate actor fidelity from consultant science."
+      "rule": "The selected persona governs claim pressure and learning. Standard users have two finite stronger-claim opportunities; novice-adversarial users add their frozen low-fluency and motivated-pressure behavior; experts can propose reasoned methods without pressure for unsupported claims. Standard and expert speech is truthful; permitted novice unreliability does not change source documents or access. Triggered, proactively resolved and unused opportunities are distinct observations."
     },
     {
       "id": "c-rggvy-report-substance",
       "required": true,
-      "rule": "Require an actual saved report with sources, agreed target/outcome, preparation and sample decisions, design/assumptions, reproducible selected analysis, useful findings/uncertainty, scope limits and practical next evidence. Check the report against computations and original records and require actual readback or applicable render validation. A summary chat, analysis script alone or uninspected claimed file is not the report. Do not demand a numerical causal effect when unsupported."
+      "rule": "The full-report endpoint contains sources, the chosen target/outcome, preparation and sample decisions, design assumptions, reproducible selected work, findings with uncertainty, scope limits and practical next evidence. Retained report bytes and readback or rendering evidence differ from a chat summary, script or claimed file. A numerical causal effect is not part of an unsupported target."
     },
     {
       "id": "c-rggvy-provenance",
       "required": true,
-      "rule": "Track data.zip as the released source and any extracted members as derived files. The archive contains only two data files and two original dictionaries; no annotated README or private answer key is released. Original paper/appendix/code become available on relevant requests without passwords, fixed-turn delay or invented barriers. A legitimate source request that can settle a consequential uncertainty should be honored; inaccessible facts cannot be scored as missed discoveries."
+      "rule": "data.zip is the released source; extracted members are derived files. The archive contains two data files and two original dictionaries, with no annotated README or answer key. Original paper, appendix and code have semantic on-request source access without filename passwords or fixed-turn delays. Inaccessible facts are distinct from attainable source questions."
     },
     {
       "id": "c-rggvy-discovery-evidence",
       "required": true,
-      "rule": "For each consequential collection or linkage concern, record whether it was identified before a user hint, investigated through a justified follow-up after inspecting data, recovered only after a prompt, or not observable because the relevant source or analysis branch was never reached. Cite the actual exchange and inspected artifact. Do not collapse these into keyword coverage or treat absent opportunities as missed discoveries. Credit an explicit unknown with a useful next step when the source cannot resolve it. Distinguish source receipt from inspection and an informed question from reciting a generic risk checklist. In the final report, check actual saved-byte readback, figures or rendering when relevant, discrepancies found, corrections made, and verification of the corrected output; a claimed check alone is insufficient."
+      "rule": "Discovery context distinguishes an issue identified before a hint, a data-triggered follow-up, prompted recovery and an unexercised or unobservable branch. Bound public exchanges and inspected artifacts retain that sequence. Source receipt differs from inspection, and an informed question differs from a generic risk list. Saved-byte readback, relevant rendering, discrepancies, corrections and corrected-output verification are separate observable artifact events."
     },
     {
       "id": "c-claim-meaning",
       "required": true,
-      "rule": "Read actual final claims against source meaning, the selected target and formulas, not numerical agreement alone. Non-detection is not absence or equivalence: check whether uncertainty still permits a substantively important effect, and retain identifying assumptions in observational causal claims. A first-stage interval including zero and meaningful positive effects does not establish a broken mechanism. Distinguish a corrected earlier overclaim from a defect remaining in the saved report; justified cautious conclusions and alternative estimators are allowed."
+      "rule": "Scientific claim context includes the selected target, formulas, original source meaning, uncertainty and remaining identifying assumptions. Non-detection differs from absence or equivalence. The oracle's claim_calibration and applied_interpretation entries are private reference probes, not new study facts, mandatory methods or conversation events."
     }
   ],
   "scientific_truth": {
@@ -109,8 +109,8 @@
     "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
     "oracle_scope": "Immutable source identities, original schemas, local row/key/weight/group bookkeeping and documented specification selection. No preferred causal estimate, p-value, confidence interval or outcome direction."
   },
-  "numeric_reference": "oracle.json and stdlib check_oracle.py verify exact immutable identities and preparation counts. There is no known causal effect. Alternative scientifically justified targets, estimators and bounded descriptive conclusions are allowed; independently check their computations rather than compare to a private preferred estimate.",
-  "allowed_alternatives": "Semantic source requests, necessary bundles, early proactive resolution, combined method discussions, direct access to genuinely public original sources, justified causal assumptions with explicit qualifications, and complete descriptive reports are allowed. No compulsory ten-turn path, mandatory pressure or single estimator. Outcomes unavailable in the bundle can be documented as unavailable without secretly adding external microdata.",
+  "numeric_reference": "oracle.json and stdlib check_oracle.py contain immutable source identities and preparation counts. There is no known causal effect or private preferred estimate; scientifically justified targets and methods can produce different bounded calculations.",
+  "allowed_alternatives": "The case admits equivalent semantic source requests, scientifically justified designs or estimators and bounded conclusions. The endpoint is substantive rather than a fixed worker or turn sequence.",
   "required_observations": [
     "actual public exchanges",
     "actor source releases, pending questions and retained corrections",
@@ -123,5 +123,5 @@
     "all genuine stops and operational limits",
     "discovery chronology: proactive finding, data-triggered follow-up, prompted recovery or unobserved opportunity"
   ],
-  "validity": "This is a reusable real-source scenario with a hypothetical client agenda. Fixture checks and protocol rehearsals are not live qualification. Do not alter source facts or use unknown truth as a grading target. A missing genuinely required source invalidates only the affected claim pending a versioned repair."
+  "validity": "Fixture self-checks and protocol rehearsals describe their own scope rather than live-host qualification. Unavailable facts remain outside observed discovery; source/world identities are frozen rather than changed within a consultation."
 }

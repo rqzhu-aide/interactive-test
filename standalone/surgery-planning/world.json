@@ -243,7 +243,7 @@
   "provenance": {
     "source_story": "development-support/study-design-stories-2026-10-15/cases/04-surgical-care-and-equity.md",
     "source_sha256": "4776f8f67e89bf828fef70ee91c7c64ee7537f6018e11af762a1133282eef348",
-    "definition_sha256": "1a0fad4c8c3c95ef6ccf6a862023e57008b020703f06e4d169e39c89cebba910",
+    "definition_sha256": "5924bad9bee33d27dd380bcbfd8b72266dbd164830859e6c3378d3dc0706ae22",
     "adaptation_notes": [
       "This intentional variant follows the user's latest male/female-surgeon opening. Surgeon self-described gender replaces the earlier story's identity exposure; the prior story is preserved unchanged.",
       "The setting remains prospective and observational. The coordinator can improve measurement and recruitment scope but cannot manipulate treatment access or clinician assignment.",

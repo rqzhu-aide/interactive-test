@@ -6,7 +6,7 @@ for the frozen candidate profile; the current executable CLI is documented in
 
 ## Deployment Profile
 
-Keep the operator, simulated user actor, consultant host and independent reviewer
+Keep the operator, simulated user actor and consultant host
 separate. Choose and record the actual agent host and model provider. The
 current runner supports Claude Code directly and Kimi and Pi through transport
 shims; a different host needs a verified adapter with the same boundaries and
@@ -18,7 +18,7 @@ to implement this loop.
 
 Before live work, pin and record the actual testing package and consultant
 snapshot hashes, resolved runtime roots, host executable/version, model and
-provider configuration, operator/actor and reviewer identity where available,
+provider configuration and operator/actor identity where available,
 operating system, shared scientific runtimes/packages, relevant host instruction
 sources, permission profile and trace/usage capabilities. Record unavailable
 identity fields explicitly. Redact secrets; do not dump the environment.
@@ -70,9 +70,9 @@ isolation. Any exceptional
 execution profile needs explicit approval and independent boundary verification.
 
 Check isolation using harmless test files under the same execution identity/tool
-profile before a scored run, without exposing the real hidden facts. Include
+profile before a blinded run, without exposing the real hidden facts. Include
 symlinks, inherited context and source paths relevant to that profile. If the
-boundary or actor-context separation cannot be established, pause the scored
+boundary or actor-context separation cannot be established, pause the blinded
 campaign. Only an explicitly designated unblinded diagnostic may continue; label
 its validity/claims accordingly. Do not build a general security framework.
 
@@ -86,8 +86,8 @@ adapter and reply selection stays with the simulated user actor.
 |---|---|---|
 | `start` | Frozen case and candidate, host profile, fresh work/results locations, limits | Validate identities/access, stage initial public materials, create attempt record; return opaque run ID |
 | `step` | Run ID, short public message, private disclosure record, requested source releases | Validate allowed release, stage public attachments, dispatch one consultant turn, resume exact session and capture raw output; return public reply and execution status |
-| `inspect` | Run ID and caller role | Actor view: public exchange, available materials and that actor's own disclosure/update history; operator/reviewer view: private evidence locations and status |
-| `finish` | Run ID, stop reason, independent assessment when available | Close the attempt without inventing completion; bind evidence/assessment and derive disposition |
+| `inspect` | Run ID and caller role | Actor view: public exchange, available materials and that actor's own disclosure/update history; private diagnostic view: evidence locations, status and machine observations |
+| `finish` | Run ID and an externally supplied assessment | Legacy optional assessment import; not part of the tester's issue-recording/export workflow |
 
 `start` does not secretly send the first prompt; every model invocation is a
 recorded `step`, including the initial message. Never silently replay a step
@@ -118,8 +118,8 @@ helper identity and apply the private [observation profiles](observation-profile
 Use `scripts/project.cjs` read operations such as `status`, `history` and `verify`
 for appropriate snapshots, not v6 `statectl.cjs`. Capture
 the journal and run changes without demanding a write on every turn. Final prose
-alone cannot establish one-specialist compliance or commit ordering. If needed
-invocation evidence is unavailable, leave that criterion unobserved.
+alone does not establish invocation count or commit ordering. Record missing
+invocation evidence as an unresolved capture limit.
 
 Keep source inputs immutable. Preserve actual pre-result plans, frozen input
 versions, executed code/commands, outputs and failures. No-output inspection is
@@ -157,8 +157,9 @@ post-response enforced, record overshoot and do not promise a hard token ceiling
 Missing telemetry remains unknown. Report whether totals include workers and
 cached input before aggregating; do not add overlapping totals.
 
-The operator owns append-only attempt/disclosure/source-release logs and private
-evidence capture. The consultant alone owns its project. The final reviewer
-owns the assessment. Bind the assessment to captured file hashes and check them
-before finalization; changed evidence requires a new review, not a rewritten
-historical success. Archive failed/incomplete attempts rather than deleting them.
+The operator owns append-only attempt/disclosure/source-release logs, private
+evidence capture and the run's `issues.md`. The consultant alone owns its project.
+Record observable problems during the run with their evidence and uncertainty,
+then follow [issue records and export](runner.md#issue-records-and-export).
+Keep externally supplied assessments distinct from tester observations. Archive
+failed/incomplete attempts rather than deleting them or rewriting their history.

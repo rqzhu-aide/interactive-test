@@ -2,7 +2,7 @@
   "assumption_boundary": "Only observed data and explicit missing-value meanings are fixed. Untreated potential outcomes and missingness mechanism are unknown; synthetic construction does not provide a discoverable causal effect.",
   "generation": {
     "generator": "scripts/generate_problem_bank.py",
-    "generator_sha256": "a24e15dbc3e8b59cb802e1dd6ef5a742171a61905f7893b1375c9d2843780d26",
+    "generator_sha256": "fa35efdaff2f3dc48fc96df989192f3c451a02f80fda149182a677ba5e90c8d7",
     "numeric_note": "CSV values are frozen to six decimal places where indicated. Seed alone does not replace preserved bytes.",
     "seed": 26091004,
     "specification": {

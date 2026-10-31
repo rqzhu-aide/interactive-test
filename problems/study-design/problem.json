@@ -118,8 +118,8 @@
     "public/delivery-constraints.md": "4f6c619d103ca585510e9b8f00cbdb4cc6b25161607e0ad4c66827d7cc1760b5",
     "public/dictionary.md": "c7489f36e9eeefb1c4fe8ecaed86315c5898e756805511a22c60c75aa46ca5bc",
     "public/planning-inputs.json": "8c1a6f65a683d23a2f7a3aa4d706b40e08f8b20d1ee3028fd558e76f9bd3cd88",
-    "reviewer.json": "fc3a2b8b732ff937b2d082a3a51af5df9ab47f44d0082c1d48f20fe96888fcd1",
-    "world.json": "a446bd7e7389033b5bf9dcf2df29f30185f5915efd7e7ae22b541c011f5ba64f"
+    "reviewer.json": "5855871febd83f59892943d9305dbdd61be1a91d149941fb7adf13bbb7be2e4f",
+    "world.json": "3c59b6f0514fbf9c2175aa1b7923adf40cb0b3e68959c5d08a92d6d20a728263"
   },
   "goal": "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication.",
   "initial_request": "Please use the causal-consultant skill for this consultation. We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use.",

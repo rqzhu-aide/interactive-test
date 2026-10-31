@@ -11,6 +11,7 @@ Usage:
         --model <model> --context-id <id> --input-sha256 <sha> --actor-cwd <dir>
 """
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -18,6 +19,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 
 
 def resolve(binary):
@@ -120,18 +122,45 @@ def actor_argv(runtime, model, cwd):
     raise ValueError("unknown runtime: " + runtime)
 
 
-def run_runtime(runtime, model, cwd):
-    argv = actor_argv(runtime, model, cwd)
-    proc = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
-                          errors="replace", cwd=str(cwd))
+def capture_json(path, record):
+    path.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def run_runtime(runtime, model, cwd, capture_dir):
+    """Retain native bytes and process identity before interpreting any response."""
+    report = {"runtime": runtime, "model": model, "argv": None, "cwd": str(cwd),
+              "pid": None, "exit_code": None, "error": None, "started_at": time.time()}
+    capture_json(capture_dir / "command.json", report)
+    proc = None
+    with (capture_dir / "stdout.txt").open("wb") as stdout, (capture_dir / "stderr.txt").open("wb") as stderr:
+        try:
+            report["argv"] = actor_argv(runtime, model, cwd)
+            capture_json(capture_dir / "command.json", report)
+            proc = subprocess.Popen(report["argv"], stdout=stdout, stderr=stderr, cwd=str(cwd))
+            report["pid"] = proc.pid
+            capture_json(capture_dir / "command.json", report)
+            report["exit_code"] = proc.wait()
+        except BaseException as exc:
+            report["error"] = repr(exc)
+            if proc is not None:
+                if proc.poll() is None:
+                    proc.kill()
+                report["exit_code"] = proc.wait()
+            raise
+        finally:
+            report["finished_at"] = time.time()
+            capture_json(capture_dir / "process.json", report)
+    # Preserve the previous text-mode decoding, including universal newlines.
+    stdout = (capture_dir / "stdout.txt").read_bytes().decode("utf-8", errors="replace").replace("\r\n", "\n").replace("\r", "\n")
+    stderr = (capture_dir / "stderr.txt").read_bytes().decode("utf-8", errors="replace").replace("\r\n", "\n").replace("\r", "\n")
     if runtime == "claude":
-        envelope = json.loads(proc.stdout)
+        envelope = json.loads(stdout)
         if envelope.get("is_error"):
             raise RuntimeError("claude actor error: " + str(envelope)[:300])
         return envelope["result"]
     if proc.returncode != 0:
-        raise RuntimeError(runtime + " actor failed: " + proc.stderr.strip()[:300])
-    return proc.stdout
+        raise RuntimeError(runtime + " actor failed: " + stderr.strip()[:300])
+    return stdout
 
 
 def main():
@@ -150,24 +179,42 @@ def main():
 
     bundle = Path(args.bundle).read_text(encoding="utf-8")
     bundle_record = json.loads(bundle)
-    cwd = Path(args.actor_cwd)
+    cwd = Path(args.actor_cwd).resolve()
+    out = Path(args.out).absolute()
+    capture_dir = out.with_name(out.name + ".capture")
+    if capture_dir.resolve().is_relative_to(cwd):
+        raise ValueError("actor capture must be outside actor working directory")
+    capture_dir.mkdir(parents=True, exist_ok=False)
+    context = {"input_sha256": args.input_sha256, "context_id": args.context_id}
+    status = {"phase": "runtime", "status": "pending", "actor_context": context,
+              "bundle_sha256": hashlib.sha256(Path(args.bundle).read_bytes()).hexdigest()}
+    capture_json(capture_dir / "status.json", status)
     cwd.mkdir(parents=True, exist_ok=True)
     (cwd / "no-skills").mkdir(exist_ok=True)  # kimi actor: empty dir replaces skill discovery
     (cwd / "prompt.txt").write_text(CONTRACT.replace("{bundle}", bundle), encoding="utf-8")
 
-    raw = run_runtime(args.runtime, args.model, cwd)
-    (cwd / "last-raw-output.txt").write_text(raw, encoding="utf-8")
-    reply = extract_json(raw)
-    missing = [key for key in REQUIRED if key not in reply]
-    if missing:
-        raise ValueError("actor reply missing fields: " + ", ".join(missing))
-    if not isinstance(reply["stop"], bool):
-        raise ValueError("actor reply stop is not boolean")
-    check_reply_limits(reply, bundle_record)
-    reply["actor_context"] = {"input_sha256": args.input_sha256, "context_id": args.context_id}
-    out = Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(reply, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    try:
+        raw = run_runtime(args.runtime, args.model, cwd, capture_dir)
+        (capture_dir / "response.txt").write_text(raw, encoding="utf-8")
+        (cwd / "last-raw-output.txt").write_text(raw, encoding="utf-8")
+        status["phase"] = "validation"
+        capture_json(capture_dir / "status.json", status)
+        reply = extract_json(raw)
+        missing = [key for key in REQUIRED if key not in reply]
+        if missing:
+            raise ValueError("actor reply missing fields: " + ", ".join(missing))
+        if not isinstance(reply["stop"], bool):
+            raise ValueError("actor reply stop is not boolean")
+        check_reply_limits(reply, bundle_record)
+        reply["actor_context"] = context
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(reply, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    except Exception as exc:
+        status.update(status="error", error=repr(exc))
+        capture_json(capture_dir / "status.json", status)
+        raise
+    status.update(phase="complete", status="ok")
+    capture_json(capture_dir / "status.json", status)
     print(json.dumps({"out": str(out), "stop": reply["stop"],
                       "message_words": len((reply.get("message") or "").split()),
                       "attachments": reply.get("attachments", [])}, ensure_ascii=False))

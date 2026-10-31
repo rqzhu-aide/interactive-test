@@ -5,8 +5,8 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parent
-CASE_VERSIONS = {"masks-planning": "1.1.3", "forest-planning": "1.1.3",
-                 "medication-planning": "1.1.3", "surgery-planning": "1.1.4"}
+CASE_VERSIONS = {"masks-planning": "1.1.7", "forest-planning": "1.1.7",
+                 "medication-planning": "1.2.4", "surgery-planning": "1.1.8"}
 
 
 def read(name):

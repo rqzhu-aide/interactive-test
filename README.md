@@ -1,14 +1,15 @@
 # Interactive Test
 
-[![Version 8.4.7](https://img.shields.io/badge/version-8.4.7-blue)](SKILL.md)
+[![Version 8.5.6](https://img.shields.io/badge/version-8.5.6-blue)](SKILL.md)
 
 A companion skill for testing [Causal Consultant](https://github.com/rqzhu-aide/causal-consultant)
 through adaptive, multi-turn conversations. A simulated user discloses study
 information gradually and responds to the consultant's questions and choices.
-A separate reviewer checks the actual conversation, analysis and deliverables,
-distinguishing consultant issues from actor or test-design issues.
+A coordinator runs the exchange and records observable issues, uncertainty and
+supporting evidence so another programmer can investigate the problems. The
+simulated user and consultant each run as a separate agent.
 
-Supports consultant **8.0.0 through 8.0.15** and
+Supports consultant **8.0.0 through 8.0.17 and 8.1.0 through 8.1.4** and
 selected historical v7 releases. See [observation profiles](references/observation-profiles.md)
 for exact compatibility; unlisted versions need a checked profile.
 
@@ -60,7 +61,8 @@ The four planning cases are fictional prospective adaptations of published studi
 - **`medication-planning`:** Wang et al. (2024),
   [Association of semaglutide with risk of suicidal ideation in a real-world cohort](https://doi.org/10.1038/s41591-023-02672-2).
   *Nature Medicine*, 30(1), 168-176. Adapted into a planned comparison of
-  dapagliflozin versus empagliflozin and subsequent depression in England.
+  dapagliflozin versus empagliflozin and subsequent depression in England,
+  including a conditional sample-size request with fictional planning assumptions.
 - **`surgery-planning`:** Wallis et al. (2017),
   [Comparison of postoperative outcomes among patients treated by male and female surgeons: a population based matched cohort study](https://doi.org/10.1136/bmj.j4366).
   *BMJ*, 359, j4366. Adapted from Canadian retrospective records into prospective
@@ -68,9 +70,11 @@ The four planning cases are fictional prospective adaptations of published studi
 
 The papers inspire the design challenges; their findings do not supply expected
 answers. These four cases seek useful collection and conditional analysis plans,
-with no required report or numerical effect estimate. Their actors answer one
-small question at a time and retain unanswered requests. All five standalone
-cases have fixed user roles and do **not** accept `--persona`; see the
+with no required report or numerical effect estimate. Each planning reply offers
+one small answer, choice or clarification, selected for its usefulness to the
+researcher's goal. Actors may return to relevant earlier questions, retain
+unanswered requests, and preserve uncertainty about unknown study facts. All five
+standalone cases have fixed user roles and do **not** accept `--persona`; see the
 [standalone guide](standalone/README.md).
 
 ## Setup and running
@@ -96,17 +100,20 @@ Paths are examples; choose one case. Composition does not call a model. Then:
    `start` prepares the attempt without sending a user message.
 2. [Run the conversation](references/runner.md#user-actor-loop) using the frozen
    opening, then a separate simulated user and repeated `inspect`/`step` calls.
-   Each reply responds to the actual conversation.
-3. [Review and export](references/runner.md#independent-review) with a separate
-   reviewer, then `finish`, `export` and `check-package`. Diagnostic runs cannot
-   receive a passing rating; a complete evidence package does not itself mean success.
+   Each reply responds to the actual conversation. If the next step requires
+   obtaining information outside the conversation, pause after the consultant
+   responds to that deferral and keep the attempt resumable.
+3. [Record issues and export](references/runner.md#issue-records-and-export)
+   the diagnostic snapshot, private `issues.md` and raw evidence with `export`
+   and `check-package`. The tester supplies no final grade; a complete evidence
+   package does not itself establish scientific validity.
 
 ## Further details
 
-- [Skill instructions](SKILL.md): operator, actor and reviewer responsibilities.
+- [Skill instructions](SKILL.md): operator, actor and issue-recording responsibilities.
 - [Runner guide](references/runner.md): configuration, reply formats, execution and evidence packaging.
 - [Case catalog](references/problem-persona-matrix.md): selection, personas and completion rules.
-- [Evaluation guide](references/evaluation.md): scientific review, attribution and incomplete outcomes.
+- [Issue records and export](references/runner.md#issue-records-and-export): evidence for a programmer's investigation.
 - [Observation profiles](references/observation-profiles.md): current and historical compatibility.
 
 Historical attempts retain their original cases, versions and rules. Local

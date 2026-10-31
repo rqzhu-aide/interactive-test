@@ -141,8 +141,8 @@
     "public/dictionary.md": "2942c46e36840eeb7b5ab7dbdb810d52971df05a7d3dad219acfc1466c0308e0",
     "public/evaluation-access.md": "c7af7a104c653dc9e03608741f50eb43044526c5fb2340a8bb94f6f1137d6b1c",
     "public/evaluation.csv": "300906f90cbbfbe80bbb6114f6c8723638e89c5887afd0fbad2366f31e132ae3",
-    "reviewer.json": "d05600ee17b6cf686ed55738e3ca8bab03a29805c99f76156e98c079382f3a64",
-    "world.json": "c23d652e52074ba46e3e842488b973804e5f8f3572b5f5f2d4ce7b9854b6cfaf"
+    "reviewer.json": "0b9a79440d02ae100e284aa7d545bc692d234cf12135a8ec6f95da88662ed013",
+    "world.json": "7a79272e8d5eb91b5ef7624a8fa1eb6ddf4a84f0945c53c559663281617fe14f"
   },
   "goal": "Investigate who benefits from a tutoring offer, develop a feasible individualized offer rule using information available before assignment, and save a complete local report with honest policy-value evaluation, uncertainty, limitations and reproducible work. Evaluate against useful feasible baseline policies. HTML is suitable; no publication.",
   "initial_request": "Please use the causal-consultant skill for this consultation. We have study data and limited tutoring places. Please help us decide which learners to offer tutoring to, discuss how to choose the analysis, and save a report showing how well the decision might work.",

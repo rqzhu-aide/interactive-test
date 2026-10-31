@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "world_id": "medication-planning-world",
-  "world_version": "1.1.0",
+  "world_version": "1.2.0",
   "setting": "A fictional collaboration of general practices and outpatient teams in and around Bristol, Exeter and Plymouth, England, preparing a prospective study before recruitment.",
   "planning_date": "2026-10-15",
   "facts": [
@@ -58,11 +58,11 @@
     {
       "fact_id": "f-depression-outcome",
       "topic": "What depression means",
-      "statement": "The draft says new or recurrent depression without an agreed operational definition. Clinical codes, antidepressant prescriptions and symptom questionnaires are possible but different measures. A first local diagnosis may reflect an old episode, and antidepressants may be prescribed for other indications. No outcome data exist.",
+      "statement": "The draft says new or recurrent depression without an agreed operational definition. Clinical codes, antidepressant prescriptions and symptom questionnaires are possible but different measures. PHQ-9 is one questionnaire under consideration: a 0 to 27 symptom-severity score referring to the preceding two weeks. A twelve-month point score is not incident clinical depression or the whole symptom trajectory. A first local diagnosis may reflect an old episode, and antidepressants may be prescribed for other indications. No outcome data exist.",
       "certainty": "planned",
       "source": "Own draft application wording and discussions with the clinical lead.",
       "trigger": "A question about depression definition, the primary outcome, diagnoses versus symptoms or outcome validation.",
-      "answer": "The draft says new or recurrent depression, but we have not defined it. We could use clinical records or symptom questionnaires. A first local code might be an old episode, and antidepressants sometimes have another purpose.",
+      "answer": "We have not settled the outcome. PHQ-9 is one symptom questionnaire we are considering, alongside clinical-record outcomes. A twelve-month symptom score would answer a different question from new clinical depression.",
       "core": true
     },
     {
@@ -88,10 +88,10 @@
     {
       "fact_id": "f-resources",
       "topic": "Recruitment and measurement capacity",
-      "statement": "An unaudited estimate is 1,800 to 2,400 relevant prescribing decisions in a recruitment year across 42 practices and three outpatient teams. These are not unique eligible new users. Proposed funding covers a part-time nurse, an analyst, modest record validation and repeated questionnaires for about 350 participants.",
+      "statement": "An unaudited estimate is 1,800 to 2,400 relevant prescribing decisions in a recruitment year across 42 practices and three outpatient teams. These are not unique eligible new users. Proposed funding covers a part-time nurse, an analyst, modest record validation and recruitment of about 350 distinct participants offered repeated questionnaires. The 350 is recruitment capacity, not a promise of 350 complete endpoints; repeated visits do not add people.",
       "certainty": "planned",
       "source": "Own provisional staffing and budget notes; recruitment counts have not been audited.",
-      "trigger": "A question about sample size, staffing, budget, sites, feasibility or how much additional measurement can be funded.",
+      "trigger": "A question about attainable recruitment, staffing, budget, sites or how much additional measurement can be funded. Answer the requested resource only; a request for a numerical planning assumption instead uses its specific card.",
       "answer": "The unaudited forecast is 1,800 to 2,400 relevant prescribing decisions in a recruitment year, not unique eligible new users.",
       "core": true
     },
@@ -166,13 +166,53 @@
       "core": false
     },
     {
+      "fact_id": "f-planning-difference",
+      "topic": "Provisional symptom difference worth investigating",
+      "statement": "For a possible twelve-month mean PHQ-9 comparison, the fictional draft budget discussion uses a two-point between-group difference as a provisional magnitude worth investigating, with 1.5 points as a smaller-difference sensitivity. This is not an expected drug effect, a validated individual clinical threshold or a final endpoint choice.",
+      "certainty": "provisional preference",
+      "source": "Fictional draft grant-planning discussion; no agreed clinical threshold or expected effect.",
+      "trigger": "A question about a symptom-score difference worth investigating or a provisional difference to use for planning. Reveal only the selected magnitude and its status; discuss the smaller value when uncertainty or sensitivity is requested. Other endpoints need their own assumptions.",
+      "answer": "We used a two-point difference between the groups' average twelve-month PHQ-9 scores for the draft budget. It is only a working figure. We haven't agreed what would matter clinically; those two points aren't a prediction of the drug effect.",
+      "core": false
+    },
+    {
+      "fact_id": "f-planning-variability",
+      "topic": "Hypothetical twelve-month symptom-score variability",
+      "statement": "The draft budget scenario assumes a common unadjusted twelve-month PHQ-9 standard deviation of five points within each hypothetical treatment distribution, with four to six as uncertain planning values. There is no local estimate. This is not a combined-group pooled SD, a residual SD after adjustment or a change-score SD.",
+      "certainty": "provisional planning assumption",
+      "source": "Fictional draft grant-planning notes; no local variability estimate.",
+      "trigger": "A question about the twelve-month symptom-score SD, variance or a variability assumption. If an empirical or pilot estimate is presumed, clarify that no local estimate exists and five is only a planning assumption; do not invent broader pilot history. Other endpoints or adjusted residual variation need separate support.",
+      "answer": "Our draft assumes a twelve-month score standard deviation of five points within each drug group, before adjustment. We have no local estimate, so four to six are uncertain planning values.",
+      "core": false
+    },
+    {
+      "fact_id": "f-planning-mix",
+      "topic": "Hypothetical treatment mix under usual prescribing",
+      "statement": "The draft budget scenario uses 70% dapagliflozin starters and 30% empagliflozin starters, with 60:40 to 80:20 as sensitivities. The mix is hypothetical, not an audited prescribing forecast or an allocation the research team controls. Actual treatment balance and eligibility remain unknown.",
+      "certainty": "provisional planning assumption",
+      "source": "Fictional draft grant-planning notes; no audited treatment balance.",
+      "trigger": "A question about treatment balance, the recruitment ratio or a mix to use in planning. Preserve the distinction between the available hypothetical mix and unavailable observed balance. A repeated empirical question does not establish a forecast; a new hypothetical question may use this assumption.",
+      "answer": "The budget scenario uses roughly seven dapagliflozin starters for every three empagliflozin starters. That is a working assumption, not an audited prediction or an allocation we control.",
+      "core": false
+    },
+    {
+      "fact_id": "f-planning-recovery",
+      "topic": "Hypothetical usable twelve-month questionnaires",
+      "statement": "The draft budget scenario assumes usable twelve-month questionnaires for 80% of recruits, with 70% to 90% as uncertain planning values. There is no local follow-up estimate. This is endpoint recovery among recruits, not consent among invitees, guaranteed retention or evidence that missing outcomes are noninformative or equal across treatment groups.",
+      "certainty": "provisional planning assumption",
+      "source": "Fictional draft grant-planning notes; no local outcome-recovery estimate.",
+      "trigger": "A question about usable twelve-month outcomes, retention, dropout or an outcome-recovery assumption for budgeting. Reveal only that quantity and its qualification; distinguish the scenario from actual recovery. Do not use it as a consent rate or a solution to informative missingness.",
+      "answer": "For budgeting we assumed usable twelve-month questionnaires from about eight in ten recruits. We have no local follow-up estimate, and the result should be checked under worse recovery.",
+      "core": false
+    },
+    {
       "fact_id": "f-precision-unknown",
       "topic": "Information needed for sample planning",
-      "statement": "There is no reliable forecast of eligible unique new users, treatment-group balance, depression events, symptom variability or questionnaire retention. The study has no agreed minimum difference of practical importance. The prescribing-decision forecast cannot establish precision or power.",
+      "statement": "Actual eligible unique new-user counts, treatment-group balance, depression events, symptom variability, questionnaire recovery and covariate overlap remain unestablished. A provisional symptom contrast and budget scenarios have been discussed, but there is no validated minimum important difference, expected direction of effect or final primary outcome. The prescribing-decision forecast and hypothetical planning inputs cannot establish actual precision or power. No local propensity-score parameters, correlations, ICCs or baseline-adjustment gains are available.",
       "certainty": "unknown",
       "source": "Own planning notes; no audit or pilot has produced these quantities.",
-      "trigger": "A question about depression frequency, variance, expected effect, power, precision, group balance or likely retention.",
-      "answer": "We do not yet know the eligible numbers, balance between drugs, depression frequency or questionnaire retention. We also have not agreed what difference would matter to patients. The prescribing forecast is all we have so far.",
+      "trigger": "A question about empirical information not supplied by a more specific card, such as eligible unique counts, clinical-event frequency, covariate overlap or an expected drug effect. A question about an available hypothetical contrast, SD, mix or recovery uses its specific planning card, preserving its provisional status. Answer only the selected unknown.",
+      "answer": "We do not have a local estimate of depression-event frequency. It has not been established by an audit or pilot.",
       "core": false
     },
     {
@@ -219,7 +259,7 @@
   "world_only": [
     {
       "id": "w-fictional-boundary",
-      "statement": "The places and medicine names are real. The collaboration, access discussions, budgets, prescribing circumstances and dates are fictional. There is no generated dataset, known treatment effect, expected result or privileged evidence unavailable to the actor. The story is not evidence about the safety or efficacy of either medicine."
+      "statement": "The places and medicine names are real. The collaboration, access discussions, budgets, prescribing circumstances, dates and numerical planning inputs are fictional. Planning values are illustrative assumptions or preferences, not published estimates or a calibrated clinical forecast. There is no generated dataset, known treatment effect, expected result or privileged evidence unavailable to the actor. The story is not evidence about the safety or efficacy of either medicine."
     },
     {
       "id": "w-information-boundary",
@@ -233,14 +273,16 @@
   "provenance": {
     "source_story": "development-support/study-design-stories-2026-10-15/cases/03-medication-and-mental-health.md",
     "source_sha256": "0d0f741f324a47eee87ba691522ccf24087bc884b501aab3dfad264d6f676dc0",
-    "definition_sha256": "d6bb4562725560d0d98218e92962000a972b28dfd53a7d9a64c55db50231716f",
+    "definition_sha256": "ab5db65a8c6b5dffa4a830f0b2017d25842ea5172ae6c20ea3a4585eb41b44aa",
     "adaptation_notes": [
       "This case converts the existing fictional medication story into a prospective planning conversation. It retains the original story's location, medicines, populations, timing uncertainty, capacity, access limits and participant-protection concerns.",
       "No new results or real patient data are introduced. The actor's draft reference to first prescriptions intentionally leaves prior use of the other medicine unresolved, consistent with the story, so the consultant can help define a useful new-user comparison.",
-      "Novel authoring decisions concern interaction and evaluation only: one narrow answer at a time, eight to ten expected replies as private descriptive metadata, a practical planning endpoint, and several acceptable scientific routes. Fact triggers are semantic and have no fixed turn order.",
+      "The original edition's new authoring decisions concerned interaction and evaluation: one narrow answer at a time, eight to ten expected replies as private descriptive metadata, a practical planning endpoint, and several acceptable scientific routes. Fact triggers remain semantic with no fixed turn order.",
       "The actor has no actual attachment, dataset or completed linked extract to release. Its source descriptions are recollections of fictional planning notes, not promises of unavailable documents.",
       "The original-paper provenance remains in the separate story authoring materials. It is excluded from consultant-facing messages and actor fact answers. The fictional study makes no claim about actual comparative psychiatric effects of these medicines.",
-      "Case/world 1.1.0 adopts only the three prioritized refinements in validation/paper-enrichment-medication.md: dated diabetes severity, current regimen and simultaneous changes, and dated current psychiatric treatment. These are fictional draft-form options within existing resources, not completed collection, new linkage or an automatic adjustment set. The source story remains the preserved foundation."
+      "Case/world 1.1.0 adopted the three prioritized refinements in validation/paper-enrichment-medication.md: dated diabetes severity, current regimen and simultaneous changes, and dated current psychiatric treatment. These remain fictional draft-form options within existing resources, not completed collection, new linkage or an automatic adjustment set. The source story remains the preserved foundation.",
+      "Case/world 1.2.0 adds an explicit numerical recruitment-planning request and four fictional provisional inputs. The 350-person questionnaire budget is recruitment capacity. The cohort, ordinary prescribing, access limits, actor policy and descriptive duration remain unchanged. PHQ-9 is an available outcome option, not a required answer. Its 0 to 27 scale and two-week recall are supported by Kroenke, Spitzer and Williams (2001), https://pmc.ncbi.nlm.nih.gov/articles/PMC1495268/; that paper does not supply this case's drug effect or planning values. No new dataset or attachment is released.",
+      "The private illustrative arithmetic is in reviewer.json, numeric_reference. It preserves the assumed-input formula, calibration, rounding alternatives and applicability limits. These are reference facts, not actor knowledge, a required method or evidence about either medicine."
     ]
   },
   "data_status": "No future outcomes or causal effect are generated. Statements describe fictional planning facts or explicitly unresolved questions."

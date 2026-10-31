@@ -1,6 +1,6 @@
 # Planning a prospective study of surgeon gender and surgical care in KwaZulu-Natal
 
-Private case book for authors and reviewers. Do not attach this file to the consultant or supply it to the user actor.
+Private case book for fixture authors and operators. Do not attach this file to the consultant or supply it to the user actor.
 
 ## Public opening
 
@@ -278,9 +278,7 @@ Claim boundary: Associations and feasibility findings are not causal conclusions
 
 Relevant fact references: f-overlap, f-followup, f-resources, f-audit
 
-## Review and completion
-
-Judge actual disclosures and their use. Do not credit hidden truth as known, force every alternative, or fail a conditional plan merely because future data do not yet exist.
+## Planning objectives and completion
 
 - Distinguish a comparison of care received under defined surgical arrangements from an inherent or biological effect of gender. Clarify the relevant clinician or team and retain the connection to the user's original concern when proposing a different actionable question.
 - Do not infer random assignment from an on-call roster or causal adequacy from a large operation count. A causal route needs a credible account of referral, allocation, takeovers and comparable patients; restrict the target or claim when that account is not yet available.
@@ -294,7 +292,7 @@ Judge actual disclosures and their use. Do not credit hidden truth as known, for
 - The recommendation identifies a short set of collection priorities, their timing and a feasible follow-up approach, rather than demanding all possible confounders.
 - Analysis is conditional on the actual allocation and comparability evidence, and at least one attainable preparatory check is connected to the decision it could change.
 - Unanswered questions remain visible where consequential, without requiring the actor to disclose every fact card or complete a report.
-- The actor has enough guidance to prepare the next practical planning step; if it does not, review identifies the specific unresolved issue that prevented a useful endpoint.
+- The actor has enough guidance to prepare the next practical planning step; if it does not, the private issue record identifies the specific unresolved gap.
 
 ## Consequential failure examples
 

@@ -1,6 +1,6 @@
 # RGGVY coordinator bounded continuity stress case
 
-For fixture authors, operators and reviewers, not the user actor. This is the
+For fixture authors and operators, not the user actor. This is the
 only active RGGVY case, with a fixed Research Coordinator. It is standalone and
 is not crossed with the three general personas.
 Use the ordinary [runner](runner.md) with a fresh composed case:
@@ -10,7 +10,7 @@ python scripts/compose_case.py --standalone rggvy-electrification --output /priv
 ```
 
 New compositions select coordinator persona and variant **1.1.0** automatically.
-Tester **8.4.7** retains suite **8.2.0** and the case's existing behavior while
+Tester **8.5.6** retains suite **8.2.0** and the case's existing behavior while
 moving it into the standalone catalog. Earlier frozen RGGVY personas and
 coordinator **1.0.0** attempts retain their original contracts.
 The coordinator prepares a research briefing on household welfare in historical
@@ -21,7 +21,7 @@ controlled stress contract, not a descriptive duration target.
 
 The [persona](../standalone/rggvy-electrification/persona.json) contains only user
 behavior. The [private variant](../standalone/rggvy-electrification/continuity-variant.json) supplies initial wording,
-the client-priority fact, required participation and extra review criteria.
+the client-priority fact and required participation.
 The composer copies only the actor portions into `actor.json`. The actor uses
 the usual reply policy, public conversation, permitted materials and own history;
 neither this guide nor the complete variant resource belongs in its input.
@@ -61,28 +61,19 @@ participation or reporting is `incomplete`; an explicit human cancellation or
 provider failure can end earlier without completing the stress contract. General
 personas retain their prospective default of 40.
 
-The independent reviewer establishes all eight event occurrences from public
-anchors and measures the actual deferral/return gap. Count at least two
-substantive responses to events 4 through 6 strictly between event 3's deferral
-and event 7's return; the response to deferral does not supply this gap.
-Actor update assertions do not prove
-occurrence. Compare relevant original and current consultant records privately
-for preservation of facts, qualifications and decisions.
+The deferral/return gap includes at least two substantive responses to events 4
+through 6 strictly between event 3's deferral and event 7's return; the response
+to deferral does not supply this gap. Retain the public event anchors and gap
+alongside existing actor updates. Actor update assertions alone do not establish
+public occurrence. Record missing or unproven participation and observed
+discrepancies in the run's issue notes, with their evidence and uncertainty.
+Numeric checks remain mechanical; a delivered count does not establish the
+required participation or scientific validity. Same-session continuity does not
+establish recovery after a pause or a fresh context.
 
-Numeric checks are mechanical. Public event occurrence and correct consultant
-handling are separate questions: `coverage: observed` never means passed. An
-absent or unproven required event makes stress outcome `incomplete`, even with a
-complete report; explain the omission or uncertainty in existing coverage and
-findings fields. If the event occurred and the consultant mishandled it, retain
-the exercised coverage and consultant finding, which can make quality `fail`.
-Unrelated missing scientific review evidence affects quality under the usual
-rules, not an automatic numeric completion override. Report completion, bounded
-participation, consultant quality and test validity remain separate. Same-session
-continuity does not establish recovery after a pause or a fresh context.
-
-Original data, source documents, scientific world, oracle and reviewer file stay
-unchanged. The composed `continuity-reviewer.json` includes the original criteria
-plus continuity criteria; `case.json` selects it. Always follow that manifest path.
+Original data, source documents, scientific world and oracle stay unchanged.
+The composed private `continuity-reviewer.json` is selected by
+`case.json`; preserve its frozen identity with the other private materials.
 The frozen variant resource and hashes retain the added design independently of
 the base scientific problem. No report-production requirement, source prerequisite
 or permission rule is relaxed by selecting this persona.

@@ -9,14 +9,17 @@ general personas, giving 17 configurations in the [full catalog](../references/p
 | `rggvy-electrification` | Research Coordinator preparing a household-welfare briefing from real Chhattisgarh electrification data | Saved scientific report and bounded continuity participation. See the [scientific guide](../references/rggvy-electrification.md) and [participation contract](../references/rggvy-continuity.md). |
 | `masks-planning` | Planner preparing a winter mask-campaign study in France | Useful prospective collection and conditional analysis plan. [Private case book](masks-planning/playbook.md). |
 | `forest-planning` | Planner preparing a rural-assistance and forest-clearing study in Peru | Same planning endpoint. [Private case book](forest-planning/playbook.md). |
-| `medication-planning` | Planner preparing a medication and depression study in England | Same planning endpoint. [Private case book](medication-planning/playbook.md). |
+| `medication-planning` | Planner preparing a medication and depression study in England | Collection and conditional analysis plan plus numerical sample-size planning. [Private case book](medication-planning/playbook.md). |
 | `surgery-planning` | Planner preparing a study of surgical outcomes by surgeon gender in South Africa | Same planning endpoint. [Private case book](surgery-planning/playbook.md). |
 
 The four prospective settings and operations are fictional. The surgical case
 uses voluntary gender self-description. None provides future outcomes or a
-known causal effect. No saved report or numerical estimate is required for these
-four cases; an accepted useful narrower question or staged feasibility plan can
-complete them. Generic refusal or reaching capacity does not.
+known causal effect. No saved report or observed treatment-effect estimate is
+required. Medication also requests a conditional numerical recruitment plan,
+with sensitivity and a comparison to the budget. An explicitly chosen narrower
+feasibility endpoint can be a useful stop; missing numerical work remains
+unobserved coverage rather than completed sizing. Generic refusal or reaching
+capacity does not complete a case.
 
 ## Selecting and running
 
@@ -36,12 +39,16 @@ coordinator persona, remains an alias; general RGGVY personas cannot be newly co
 RGGVY keeps its 1.1.0 coordinator and continuity variant under suite 8.2.0.
 Its source folder contains `problem/`, `persona.json` and `continuity-variant.json`.
 The other four folders are self-contained frozen cases under suite
-`prospective-study-design-1.1.0`. Surgery is case version 1.1.4; the other three
-are case version 1.1.3. These source patches clarify selecting one question before
+`prospective-study-design-1.1.0`. Medication is case version 1.2.4 and world
+version 1.2.0; masks and forest are case version 1.1.7, and surgery is case
+version 1.1.8. Those three retain world version 1.1.0. The current policy
+keeps precise unanswered remainders, permits grounded researcher choices, and
+distinguishes temporary pauses from completed planning goals.
+The earlier source patches clarified selecting one question before
 composing its answer and retaining the precise unanswered remainder. They preserve
 the earlier reply examples, useful stopping, disclosure, public timing and conditional
-review corrections without changing study facts. All four retain world
-version 1.1.0 and the fixed internal actor
+review corrections without changing study facts. Medication 1.2.0 adds four
+provisional planning inputs and the numerical request. All four retain the fixed internal actor
 identity `single-question-planner`; this is not a reusable persona selector.
 Running the shipped cases needs no development-support files or source stories.
 The [21 October implementation record](../../development-support/common-issues-implementation-2026-10-21/tester-implementation.md)
@@ -56,13 +63,15 @@ consultant replies, with the actual runner cap set to 12. An early report does
 not waive participation. Its source-release rules remain unchanged.
 
 The four prospective cases retain at most 50 spoken words and **one small
-semantic item** per message. They answer the first still-unanswered narrow
-question or subquestion in reading order, with a consequential false-premise
-correction taking priority. Other requests remain privately pending. A broad
-question receives one small piece of information; a single question label or
-fact card does not justify a long, compound answer. The actor can instead make
-one choice or ask one clarification when appropriate. It never dumps its book
-or automatically empties pending questions after a recommendation.
+semantic item** per message. A consequential false-premise correction takes
+priority. Otherwise the actor chooses one current or still-relevant earlier
+request, choice or clarification useful to its practical goal, guided by known
+constraints, preferences and the visible explanation. Reading order breaks ties
+when those give no reason to prefer one item. Other requests remain privately
+pending. Necessary qualifications stay with the answer; a label or fact card
+does not justify answering several questions. The actor does not dump its book
+or automatically empty pending questions after a recommendation. An external
+fact-finding pause preserves the unfinished goal and needs no extra assent turn.
 
 Their fixed facts, unknowns, preferences and detailed selection policy are in
 each `actor.json`. There are no releasable attachments. Questions about known

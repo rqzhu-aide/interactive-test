@@ -1,6 +1,6 @@
 # Planning a winter mask-campaign study in Brittany
 
-Private case book for authors and reviewers. Do not attach this file to the consultant or supply it to the user actor.
+Private case book for fixture authors and operators. Do not attach this file to the consultant or supply it to the user actor.
 
 ## Public opening
 
@@ -248,9 +248,7 @@ Claim boundary: The quoted small sample is not an established adequately powered
 
 Relevant fact references: f-testing, f-resources, f-sampling
 
-## Review and completion
-
-Judge actual disclosures and their use. Do not credit hidden truth as known, force every alternative, or fail a conditional plan merely because future data do not yet exist.
+## Planning objectives and completion
 
 - Clarifies the policy decision and distinguishes a campaign effect from the protective effect of individual mask wearing.
 - Investigates actual rollout choice and timing before treating geography or time as a credible causal comparison.

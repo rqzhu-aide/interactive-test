@@ -1,5 +1,6 @@
 import copy
 import json
+import os
 from pathlib import Path
 import py_compile
 import shutil
@@ -18,6 +19,78 @@ from compose_case import compose_case
 
 
 class InventoryTests(unittest.TestCase):
+    def test_selected_transport_uses_launch_cwd_and_ignores_unselected_sources(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            scripts, work = root / "tester/scripts", root / "work"
+            transports = scripts / "transports"
+            transports.mkdir(parents=True)
+            work.mkdir()
+            selected = transports / "selected.py"
+            selected.write_text("selected = True\n", encoding="utf-8")
+            (transports / "other.py").write_text("not selected\n", encoding="utf-8")
+            external = root / "external.py"
+            external.write_text("external\n", encoding="utf-8")
+            with patch.object(driver, "__file__", str(scripts / "session_driver.py")):
+                command = [sys.executable, "-B", os.path.relpath(selected, work), str(external)]
+                self.assertEqual(driver.selected_transport_files(command, work), ["transports/selected.py"])
+                # This same spelling from another cwd selects no in-tree file.
+                self.assertEqual(driver.selected_transport_files(command, root), [])
+
+    def test_only_established_entry_script_is_bound(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            scripts = root / "tester/scripts"
+            transports = scripts / "transports"
+            transports.mkdir(parents=True)
+            selected = transports / "selected.py"
+            decoy = transports / "decoy.py"
+            for path in (selected, decoy):
+                path.write_text("pass\n", encoding="utf-8")
+            with patch.object(driver, "__file__", str(scripts / "session_driver.py")):
+                for command in ([sys.executable, "-c", "pass", str(selected)],
+                                [sys.executable, "-mpackage", str(selected)],
+                                [sys.executable, "-m", "package", str(selected)],
+                                [sys.executable, "-", str(selected)],
+                                [sys.executable, "--unknown", str(selected)],
+                                ["unknown-launcher", str(selected)],
+                                [sys.executable, str(root / "other-entry.py"), str(selected)]):
+                    with self.subTest(command=command):
+                        self.assertEqual(driver.selected_transport_files(command, root), [])
+                for command in ([str(selected), str(decoy)],
+                                [sys.executable, "-B", "-X", "utf8", str(selected), str(decoy)],
+                                [sys.executable, "-Iu", "-Wignore", "--", str(selected), str(decoy)]):
+                    with self.subTest(command=command):
+                        self.assertEqual(driver.selected_transport_files(command, root), ["transports/selected.py"])
+
+    def test_selected_transport_rejects_linked_file_or_parent(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            scripts = root / "tester/scripts"
+            transports = scripts / "transports"
+            transports.mkdir(parents=True)
+            outside = root / "outside.py"
+            outside.write_text("outside\n", encoding="utf-8")
+            linked = transports / "linked.py"
+            # Mock link detection so this check also runs on Windows hosts that
+            # disallow unprivileged symlink creation.
+            linked.write_text("outside\n", encoding="utf-8")
+            original = Path.is_symlink
+            with patch.object(driver, "__file__", str(scripts / "session_driver.py")), \
+                    patch.object(Path, "is_symlink", lambda path: path == linked or original(path)):
+                with self.assertRaisesRegex(ValueError, "contains a link"):
+                    driver.selected_transport_files([sys.executable, str(linked)], root)
+            selected = transports / "selected.py"
+            selected.write_text("selected\n", encoding="utf-8")
+            alias = transports / "alias"
+            alias.mkdir()
+            # The link must be checked before normalizing alias/../selected.py.
+            spelling = alias / ".." / selected.name
+            with patch.object(driver, "__file__", str(scripts / "session_driver.py")), \
+                    patch.object(Path, "is_symlink", lambda path: path == alias or original(path)):
+                with self.assertRaisesRegex(ValueError, "contains a link"):
+                    driver.selected_transport_files([sys.executable, str(spelling)], root)
+
     def test_oracle_bytecode_does_not_change_fixture_or_composed_case_identity(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -97,6 +170,40 @@ class SessionTests(unittest.TestCase):
         self.assertEqual(result["loading_setup"], frozen["loading_setup"])
         self.assertFalse(result["initial_message_sent"])
         self.assertEqual(driver.read(self.attempt / "state.json")["turns"], 0)
+
+    def test_selected_transport_is_frozen_exported_and_checked_before_dispatch(self):
+        testing = self.root / "tester"
+        shutil.copytree(ROOT / "scripts", testing / "scripts", ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copytree(ROOT / "references", testing / "references")
+        for name in ("README.md", "SKILL.md"):
+            shutil.copyfile(ROOT / name, testing / name)
+        transports = testing / "scripts/transports"
+        transports.mkdir(exist_ok=True)
+        selected = transports / "selected.py"
+        shutil.copyfile(ROOT / "tests/fake_claude.py", selected)
+        (transports / "unselected.py").write_text("unselected\n", encoding="utf-8")
+        self.config["claude_command"] = [sys.executable, "-B", os.path.relpath(selected, self.work), "ok"]
+        with patch.object(driver, "__file__", str(testing / "scripts/session_driver.py")):
+            self.begin()
+            frozen = driver.read(self.attempt / "freeze.json")
+            self.assertEqual(frozen["adapter_files"]["transports/selected.py"], driver.digest(selected))
+            self.assertEqual((self.attempt / "testing/scripts/transports/selected.py").read_bytes(), selected.read_bytes())
+            self.assertNotIn("transports/unselected.py", frozen["adapter_files"])
+            self.assertNotIn("scripts/transports/unselected.py", frozen["testing_files"])
+            driver.integrity(self.attempt, driver.read(self.attempt / "state.json"), frozen)
+            driver.inspect(self.attempt, "reviewer")
+            output = self.root / "selected-source.zip"
+            driver.export_package(self.attempt, output)
+            driver.check_package(output)
+            with zipfile.ZipFile(output) as archive:
+                self.assertEqual(archive.read("private/testing/scripts/transports/selected.py"), selected.read_bytes())
+            selected.write_text("changed source\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "adapter changed during attempt"):
+                driver.step(self.attempt, self.reply(True))
+            self.assertEqual(list((self.attempt / "events").iterdir()), [])
+            # A historical freeze continues checking only its retained list.
+            del frozen["adapter_files"]["transports/selected.py"]
+            driver.integrity(self.attempt, driver.read(self.attempt / "state.json"), frozen)
 
     def test_deliberate_discovery_cannot_claim_verified_host(self):
         self.config.update(candidate_loading="diagnostic_discovery", mode="verified_host")
@@ -330,13 +437,13 @@ process.stdout.write(JSON.stringify(store.status(root)));
         candidate = self.root / "version-probe"
         candidate.mkdir()
         (candidate / "SKILL.md").write_text("Test-only runtime file.", encoding="utf-8")
-        for version in ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15"):
+        for version in ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15", "8.0.16", "8.0.17", "8.1.0", "8.1.1", "8.1.2", "8.1.3", "8.1.4"):
             with self.subTest(version=version):
                 driver.write(candidate / "package.json", {"version": version, "files": ["SKILL.md"]})
                 self.assertEqual(driver.candidate_inventory(candidate), {
                     "SKILL.md": driver.digest(candidate / "SKILL.md"),
                     "package.json": driver.digest(candidate / "package.json")})
-        for version in ("6.9.9", "7.0.3", "7.0.14", "7.1.0", "7.0.2-preview", "7.0.4-preview", "7.0.5-preview", "7.0.6-preview", "7.0.7-preview", "7.0.8-preview", "7.0.9-preview", "7.0.10-preview", "7.0.11-preview", "7.0.12-preview", "7.0.13-preview", "7.5.4-preview", "7.5.3-preview", "7.5.2-preview", "8.0.11-preview", "8.0.12-preview", "8.0.13-preview", "8.0.14-preview", "8.0.15-preview", "8.0.16"):
+        for version in ("6.9.9", "7.0.3", "7.0.14", "7.1.0", "7.0.2-preview", "7.0.4-preview", "7.0.5-preview", "7.0.6-preview", "7.0.7-preview", "7.0.8-preview", "7.0.9-preview", "7.0.10-preview", "7.0.11-preview", "7.0.12-preview", "7.0.13-preview", "7.5.4-preview", "7.5.3-preview", "7.5.2-preview", "8.0.11-preview", "8.0.12-preview", "8.0.13-preview", "8.0.14-preview", "8.0.15-preview", "8.0.16-preview", "8.0.17-preview", "8.0.18", "8.1.0-preview", "8.1.1-preview", "8.1.2-preview", "8.1.3-preview", "8.1.4-preview", "8.1.5", "8.2.0"):
             with self.subTest(version=version):
                 driver.write(candidate / "package.json", {"version": version, "files": ["SKILL.md"]})
                 with self.assertRaisesRegex(ValueError, "observation profile"):
@@ -345,7 +452,7 @@ process.stdout.write(JSON.stringify(store.status(root)));
     def test_v8_profiles_preserve_journal_and_option_word_limits(self):
         candidate = self.root / "v8-profile-probe"
         candidate.mkdir()
-        for version, option_limit in (("8.0.0", 100), ("8.0.1", 50), ("8.0.2", 50), ("8.0.3", 50), ("8.0.4", 50), ("8.0.5", 50), ("8.0.6", 50), ("8.0.7", 50), ("8.0.8", 50), ("8.0.9", 50), ("8.0.10", 50), ("8.0.11", 50), ("8.0.12", 50), ("8.0.13", 50), ("8.0.14", 50), ("8.0.15", 50)):
+        for version, option_limit in (("8.0.0", 100), ("8.0.1", 50), ("8.0.2", 50), ("8.0.3", 50), ("8.0.4", 50), ("8.0.5", 50), ("8.0.6", 50), ("8.0.7", 50), ("8.0.8", 50), ("8.0.9", 50), ("8.0.10", 50), ("8.0.11", 50), ("8.0.12", 50), ("8.0.13", 50), ("8.0.14", 50), ("8.0.15", 50), ("8.0.16", 50), ("8.0.17", 50), ("8.1.0", 50), ("8.1.1", 50), ("8.1.2", 50), ("8.1.3", 50), ("8.1.4", 50)):
             driver.write(candidate / "package.json", {"version": version})
             capability = {"ok": True, "version": version, "journal_schema": 8,
                           "default_journal_format": driver.V8_FORMAT,

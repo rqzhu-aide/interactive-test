@@ -16,22 +16,20 @@ requested sources and coherent bundles retain their existing disclosure rules.
 
 ## Information Boundaries
 
-Prepare separately accessible public, world, actor and reviewer materials. The actor packet is private to
+Prepare separately accessible public, world, actor and private reference materials. The actor packet is private to
 the user simulator, not a file to attach to the consultant.
 
 | Packet | Required content |
 |---|---|
 | Public | Natural initial request; initial files and dictionaries; audience information a real user would share; valid initial history only when the case calls for it |
-| World (`world.json`) | Immutable study facts or documented unknowns, real-source provenance or synthetic generation process, and available evidence; separate from actor access and reviewer judgments |
+| World (`world.json`) | Immutable study facts or documented unknowns, real-source provenance or synthetic generation process, and available evidence; separate from actor access and run observations |
 | Actor | User goal and decision constraints; domain/statistical fluency; factual beliefs with certainty and source; facts the user can learn and how; accessible source inventory; disclosure/correction rules; unknown and declined-source replies; allowed action choices and stopping behavior |
-| Reviewer | Answer key and independent reference outputs grounded in the world; acceptable alternative paths and claim boundaries; observable success/failure criteria; actor fidelity criteria; required coverage; fixture validation and limitations |
+| Private reference | Source/reference facts and independent numerical outputs grounded in the world, kept outside actor and consultant access |
 
-Declare a conditionally applicable reviewer criterion with `conditional: true`
-and state its trigger in the criterion text. A scope label alone does not enable
-`not_applicable`. Reviewers justify whether the trigger occurred. A triggered
-criterion cannot be not applicable: mark it observed when evidence supports a
-judgment, including a supported omission or counterexample; otherwise retain
-unobserved. Do not relabel coverage to satisfy finalization.
+The current adapter requires the legacy `reviewer` manifest path and a private
+packet with nonempty, unique `criteria[].id` identifiers. Retain those metadata,
+their fact links and frozen hashes for compatibility; they do not assign a
+reviewer task to the tester.
 
 The actor and consultant never receive the world dossier or reviewer key. Freeze
 persona differences in initial knowledge, mistaken beliefs, learning conditions,
@@ -69,8 +67,8 @@ The author also supplies a private manifest containing:
 
 For an end-to-end report case, set `completion_contract: "full_report"` in
 `case.json`. Absence or `"focused"` retains the older case-specific endpoint.
-The full-report public request, actor goal/action/stopping rules and reviewer
-criteria must agree that a saved consultant report is required. The four
+The full-report public request, actor goal/action/stopping rules and manifest
+must agree that a saved consultant report is required. The four
 standalone planning cases explicitly use `focused`: a useful collection and
 conditional analysis plan requires no report or numerical effect. Freeze the
 audience and necessary content, allowing equivalent structure and scientifically
@@ -78,9 +76,8 @@ justified claims. A complete bounded descriptive report can satisfy the goal
 when causal identification is unsupported; a recap alone cannot.
 
 Full-report completion requires captured evidence of a completed, verified
-report run and its actual saved output. The reviewer separately checks report
-substance, source/result consistency and applicable readback/render validation.
-Keep the consultant report separate from the final testing assessment. Older
+report run and its actual saved output. Keep the consultant report separate
+from the public transcript and private issue notes. Older
 external packages retain their recorded endpoint; do not change them in place.
 
 For `consultation-loop-v1`, behavioral validity is separate from the scientific
@@ -147,13 +144,13 @@ participation and a minimum of eight delivered replies, with a hard ceiling of
 twelve. It adds no method requirement or source-release gate. Initially
 unvolunteered study context becomes available on a relevant request without an
 arbitrary waiting period. Preserve reply limits, disclosure policy and private
-unanswered-request history. Record an untriggered pressure as a coverage limit;
+unanswered-request history. Record an untriggered pressure as unexercised;
 do not manufacture resistance.
 
 If a question reaches an unspecified fact, the actor says it does not know and
-records a fixture gap privately. If that gap materially affects evaluation, mark
-the case invalid for that claim. Fix the version and rerun all candidates being
-compared; do not invent facts or repair one candidate's run in place.
+records a fixture gap privately, including the affected question and uncertainty.
+Fix the version before rerunning candidates being compared; do not invent facts
+or repair one candidate's run in place.
 
 ## Randomization and Reproducibility
 
@@ -169,9 +166,9 @@ case catalog is removed; prior versions remain in Git and frozen run packages.
 The previous four personas are archived outside the active catalog. They remain
 valid within their original frozen runs and must not be rewritten there.
 
-The RGGVY continuity variant preserves the original source-bound `reviewer.json`
-and selects a combined `continuity-reviewer.json` through `case.json`'s `reviewer`
-field. Follow that field when building reviewer input. Its private variant resource
+The RGGVY continuity variant uses the problem's private `reviewer.json`
+and selects the composed `continuity-reviewer.json` through `case.json`'s `reviewer`
+field. Its private variant resource
 and hash are retained in the composition; actor input receives only its selected
 facts and behavior, never this case guide, private criteria or descriptive
 duration target. Coordinator 1.1.0 actor-safe participation includes its required
@@ -179,17 +176,16 @@ events and bounds; frozen 1.0.0 attempts retain their original packet.
 
 Matrix and RGGVY manifests add `problem_id`, `problem_version`, `persona_version` and
 `target_turns`. Private `problem.json`, `persona.json` and `composition.json` are
-hash-bound alongside ordinary files. The target is operator/reviewer metadata;
+hash-bound alongside ordinary files. The target is private composition metadata;
 it does not appear in actor packets, govern release or change report completion.
 Operational caps remain a separate frozen configuration.
 New coordinator 1.1.0 manifests additionally declare
 `minimum_consultant_replies: 8` and reuse `run_limits.consultant_turns: 12`.
 Its actual configuration must agree at 12, without an extra opt-in flag. A
-delivered-count check is mechanical; public event occurrence, consultant handling
-and report substance require independent review. Use existing actor updates,
-coverage, findings and outcome fields, not a new mutable event schema. Required
-stress completion cannot retire after an early report; omitted or unproven
-events leave outcome incomplete.
+delivered-count check is mechanical. Retain public messages and existing actor
+updates so the required events and their deferral/return gap can be located.
+Required participation cannot retire after an early report; record missing or
+unproven events as unresolved in the run's issue notes.
 
 Useful axes include operational definitions, linkage/missingness patterns,
 source availability, user knowledge, statistical fluency and wording. A changed
@@ -204,7 +200,7 @@ candidate order and keep model/configuration/tool conditions matched when the
 comparison concerns the skill alone. Cross-system comparisons are separate and
 must identify the host/configuration differences.
 
-## Validation Before a Scored Run
+## Fixture Validation Before a Run
 
 Check that public files agree with the world, actor knowledge is attainable, each
 planned source can be supplied, and legitimate unknowns have useful dispositions.
@@ -214,15 +210,13 @@ Do not require discovery of inaccessible truth or a single preferred route.
 For preparation, freeze row IDs, inclusion/exclusion reasons, expected joins and
 timing boundaries using an independent calculation. For estimation, define the
 target, valid reference calculations and tolerances before consultant output is
-seen. Synthetic causal truth is not the same as the realized estimator: do not
-fail a sound estimate because it differs from the generating effect, or require
-every single confidence interval to contain it. Coverage claims require their
-own repeated-simulation design. Real observational data do not supply a known
+seen. Synthetic causal truth is not the same as the realized estimator, and
+an individual confidence interval need not contain it. Coverage properties
+require their own repeated-simulation design. Real observational data do not supply a known
 causal truth merely because a reference analysis exists.
 For the RGGVY case, independently check extract dimensions, sample construction,
-source handling and arithmetic. Score the discovery and use of consequential
-information, plus defensible alternatives, rather than proximity to a published
-coefficient. See the [case guide](rggvy-electrification.md) for the study-specific
+source handling and arithmetic. Published coefficients are not the case's
+known causal truth. See the [case guide](rggvy-electrification.md) for the study-specific
 evidence boundaries.
 
 Author-created examples and protocol rehearsals are not live observations. A

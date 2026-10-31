@@ -124,7 +124,6 @@ class RggvyContinuityComposition(unittest.TestCase):
         self.assertIn("Prioritize requested accessible records without delay", actor["pacing"])
         review = read(self.case / self.manifest["reviewer"])
         self.assertIn("Missing required events", review["continuity_coverage"]["interpretation"])
-        self.assertIn("not a pass", review["continuity_coverage"]["interpretation"])
         self.assertNotIn("descriptive_target", review["continuity_coverage"])
 
     def test_legacy_variant_keeps_optional_minimum_and_overridable_cap(self):

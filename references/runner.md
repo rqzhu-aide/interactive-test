@@ -1,7 +1,7 @@
 # Executable adapter
 
 The user actor supplies adaptive replies; this standard-library adapter sends
-them to a consultant host and captures evidence for a separate reviewer. It
+them to a consultant host and records per-run issues and evidence for external programmers. It
 currently supports Claude Code directly and Kimi and Pi through
 `scripts/transports/cli_transport.py`. Use shared Python 3.10+, Node 18.18+,
 an installed supported agent CLI, and a consultant snapshot
@@ -16,9 +16,9 @@ against the actual public transcript and per-reply snapshots. Existing captures
 and older profiles retain their historical meaning.
 Startup binds the actual candidate's version, package inventory and hashes
 separately from the composed case identity.
-Tester 8.4.7 supports the separate consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 journal
+Tester 8.5.6 supports the separate consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4 journal
 profile while preserving the matrix/RGGVY suite 8.2.0 and the planning suite
-`prospective-study-design-1.1.0`, preserving scientific worlds and fixed actor profile identities.
+`prospective-study-design-1.1.0`, with fixed actor profile identities and case/world versions listed in the [standalone catalog](../standalone/README.md).
 Read full v8 journal entries
 for handling, scope, decisions, work and actual replies; generated project/brief
 views support navigation. A `knowledge` or `decision` entry can handle an incoming
@@ -44,7 +44,7 @@ inherit the answer exception. Preserve full text;
 these observations neither truncate content nor invalidate internal evidence.
 For v11, explicitly requested answers have a 200-word ceiling. Apply the frozen
 [observation profile](observation-profiles.md) to options: consultant 8.0.1,
-8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 require every option to stay within 50 words. Consultant 8.0.0 and retained
+8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4 require every option to stay within 50 words. Consultant 8.0.0 and retained
 historical profiles allow up to 100 only for complete essential scope terms
 that need the additional words; a pointer option keeps the 50-word budget.
 The unnumbered summary also stays within 50. Earlier renderer contracts are
@@ -117,7 +117,8 @@ New RGGVY coordinator persona/variant 1.1.0 compositions automatically require
 minimum eight and hard cap twelve and the actor packet. This is not an optional
 flag or overridable descriptive target. Frozen 1.0.0 attempts retain their limits.
 Follow `case.json`'s
-`reviewer` path for reviewer input, including the continuity case's combined file.
+legacy `reviewer` path for private case reference metadata, including the
+continuity case's combined file. This is not a reviewer-agent assignment.
 
 The four standalone planning cases retain 50-word, one-item replies and focused
 planning endpoints. Their expected 8 to 10 replies are descriptive, with no
@@ -162,12 +163,12 @@ Missing or invalid staged entry bytes fail before dispatch. These are explicit
 entry instructions, not proof of filesystem isolation or of which later script
 the consultant actually executed.
 
-Reviewer inspection reconciles those retained files with the frozen entry hash,
+The loading observation compares those retained files with the frozen entry hash,
 work directory, command flags and native session identity for every call. Missing
-or conflicting loading captures prevent a qualified pass and a complete evidence
-package, including when a receipt was omitted from the review index. The final
-review still needs actual native tool-path evidence to establish which guides and
-helpers were used; instruction binding alone cannot establish that behavior.
+or conflicting loading captures remain recorded issues and prevent a complete
+evidence package, including when a receipt was omitted from the index. Actual
+native tool-path evidence is still needed to establish which guides and helpers
+were used; instruction binding alone cannot establish that behavior.
 
 For deliberate discovery select `candidate_loading: "diagnostic_discovery"` with
 `mode: "diagnostic"`. A personal
@@ -199,9 +200,9 @@ For an isolated host, `mode: verified_host` requires a nonempty `host_evidence`
 directory containing the redacted configuration/environment, candidate loading
 smoke, exact-resume exchange, separate-context setup and harmless private-read
 probes, including relevant source/link access. This directory is frozen with
-the attempt. Its presence is not verification: the independent reviewer checks
-the actual outputs and applicability to this run before assigning valid execution.
-The adapter does not create an OS sandbox or validate attestation semantics.
+the attempt. Its presence alone does not verify isolation or applicability to
+this run. Record unsupported host claims as unresolved in the issue log. The
+adapter does not create an OS sandbox or validate attestation semantics.
 
 ```sh
 python scripts/compose_case.py --problem observational-did --persona standard --output /private/cases/run001
@@ -255,10 +256,9 @@ the independently returned public reply. It never writes a consultant delivery
 receipt. Prepared `exchanges/.../response.md` files under retained v7 profiles,
 and v8 `reply_prepared` entries/exports, are drafts, not reports or proof of delivery.
 The per-turn exchange observation distinguishes `matched`, `wrapped`, `mismatch`
-and `unobserved`. A unique intact body inside extra text is `wrapped`; the reviewer
-must still read that text. Final review independently compares retained candidate
-captures and recovery spans against the complete public reply. It cannot repair
-the candidate's delivery or memory records.
+and `unobserved`. A unique intact body inside extra text is `wrapped`; retain the
+complete text so the extra content remains inspectable. These observations do
+not repair the candidate's delivery or memory records.
 
 Do not edit or normalize a fixture to make hashes pass. `.gitattributes` preserves
 the shipped fixture bytes across platforms. Changed facts/data require a new
@@ -304,7 +304,8 @@ Put replies in an operator inbox outside the attempt and work. Only `message`
 goes to the selected consultant transport. Attachments are source IDs with frozen on-request triggers;
 their bytes are staged at public destinations. Identify neutral filenames in the
 public message when supplying them. The adapter checks IDs/paths/hashes; the actor
-and the reviewer check whether the disclosure was warranted by the exchange.
+uses its frozen disclosure policy. Retain the triggering request and any
+suspected mismatch in the private run evidence.
 
 ```sh
 python scripts/session_driver.py step --attempt /private/run001 --reply /private/inbox/reply.json
@@ -334,8 +335,8 @@ context to the actor and label it a fresh context.
 goal request. Each item has `kind` (`selection`, `goal_request`, `decline`, `defer`)
 and an exact `message_quote`. A selection also has `public_turn` and an exact
 `option_quote` from an earlier completed assistant reply. The driver checks these
-anchors; the reviewer checks whether later clarifications changed the option or
-the user's words actually chose it. An eventual report goal remains distinct
+anchors; matching quotes alone cannot establish that later clarifications left
+the option unchanged or that the user's words selected it. An eventual report goal remains distinct
 from the current selected work. These records never change the public message.
 
 For the first release of a source with `release_prerequisite`, the operator adds a
@@ -346,8 +347,8 @@ earlier `public_turn`, an exact `public_quote` identifying the saved plan, and
 `artifact` path relative to work, its `sha256`, and an exact saved `quote` covering
 that component. Components may share one file. Its public path must occur in the
 public quote; the saved bytes must agree with both the prior turn snapshot and
-current file. No held-out hash is required. Statistical adequacy remains for the
-reviewer. A failed release check retains the proposed reply and reason under
+current file. No held-out hash is required. These checks do not establish
+statistical adequacy. A failed release check retains the proposed reply and reason under
 `rejected-releases/`, without staging any file or consuming a turn. Preserve that
 failure; do not invent a consultant commitment to make the check pass.
 Derive a missing receipt from already public, retained commitments when they
@@ -390,9 +391,9 @@ views. `exchange-observation.json` compares the actual returned final response's
 UTF-8 hash with the current prepared exchange and reports whether that exchange
 changed since the previous observation when available. Missing evidence is
 unobserved; a reused older exchange is not a new turn's closeout. The actor never
-reads these private observations. The reviewer checks interpretation, preserved
-conditions and unfinished turns separately. No delivery record or host hook is
-created, and a matching response hash does not establish scientific validity.
+reads these private observations. Interpretation, preserved conditions and
+unfinished turns remain available for external inspection. No delivery record or
+host hook is created, and a matching response hash does not establish scientific validity.
 The observation also retains the renderer, structured `response.user_questions`
 and `views.work.pending_user_question_refs` when present. Missing fields remain
 null rather than being interpreted as no outstanding user questions.
@@ -452,145 +453,113 @@ replies separately where they differ.
 
 Pending means interruption left delivery uncertain. A stale `operator.lock`
 requires checking that no operator/process is active before removing just that
-lock. Removing it does not clear pending state. Inspect and finalize as an
-execution error if safe exact continuation cannot be established; retry as a
+lock. Removing it does not clear pending state. Inspect and export the available
+error evidence if safe exact continuation cannot be established; retry as a
 fresh attempt. There is no force-resend/state-repair command. Startup failures
 remain in `startup-error.json`.
 
-## Independent review
+## Issue records and export
 
-Give a separate reviewer the frozen world dossier when present, reviewer packet,
-oracle, private [observation profiles](observation-profiles.md) and actual evidence.
-Evaluate actor fidelity separately using the existing
-coverage/findings fields; the actor's private update claims are not scientific verification.
-Credit learned facts only from actual disclosures or inspected sources, and
-apply the frozen scope/stopping conditions when a descriptive result is offered.
-Private actor facts and saved review counts cannot fill missing evidence.
-When selecting `useful_stop`, include `useful_stop_basis` explaining the frozen
-case's permitted stopping condition. A full-report case still requires its report
-completion evidence; a faithful pause can leave that objective incomplete.
-Do numerical reruns in a separate output directory. Put new evidence to be cited
-inside the private attempt before the final inspect, then obtain its hash index:
+The tester records what happened and what may need investigation. External
+programmers interpret these results; this skill does not dispatch a reviewer
+or assign a scientific grade.
+
+During the run, maintain a concise private `issues.md` in the attempt directory.
+Record an issue when it is observed, with the turn/event, actual behavior,
+expected case behavior when relevant, supporting file or message references,
+and any unresolved attribution or uncertainty. Include execution failures and
+consequential unfinished requests. When checking actor fidelity, compare the
+delivered wording, disclosure annotations and exact pending remainders with
+the actor's permitted knowledge and the actual public exchange. Record noticed
+extra answers, unsupported strengthening, lost unresolved qualifications or
+false annotations that information was supplied, with the discrepancy's limits.
+Retain uncertainty and genuine fixture gaps without turning these observations
+into a scientific grade. Structural validation cannot certify semantic fidelity.
+Keep a suspected issue distinct from a
+confirmed mechanical failure; do not turn a missing capture into a claim about
+what the consultant did. Record later corrections without erasing the original
+observation. If no additional issue was noticed, say so without claiming a
+complete scientific assessment.
+
+Keep this record and all observer output private from the actor and consultant.
+The actor still receives only its allowed conversation and disclosure history.
+Do not change its answers, supply hidden facts or add turns to investigate a
+private issue. Do not coach it with private feedback or retry its reply against
+a hidden standard. Preserve the actual stop, error, cap or user-directed pause.
+
+When the next useful action must occur outside the conversation, the actor may
+express a natural deferral with `stop: false` and an applicable `defer` intent,
+retaining the unresolved goal. After capturing the consultant's response to that
+pause, end the active dispatch loop and leave the attempt `ready`. If the response
+ignores the pause, record the discrepancy without another actor turn; pausing
+does not need the consultant's agreement. If the visible exchange already
+contains the pause and its response, stop dispatching immediately without another
+deferral or acknowledgment. Distinguish this pause from fulfillment of an
+actually chosen planning endpoint; an interim task alone does not change the
+overall goal. A narrower endpoint needs a visible choice; fulfillment of an
+already chosen objective needs no extra assent turn. Resume only on actual
+user/operator steering and with permitted knowledge. Elapsed time or a promise
+creates no new fact or permission.
+
+Each turn already saves transport outputs, public exchanges, actor disclosure
+records, source-release failures and available exchange/loop observations.
+At a useful checkpoint, and after the final issue-log update, collect the bound
+issue snapshot:
 
 ```sh
 python scripts/session_driver.py inspect --attempt /private/run001 --view reviewer
 ```
 
-Create the assessment outside the attempt/work so it does not change the evidence:
+`reviewer` is the legacy name of this evidence view. It launches no model and
+writes `review-observations.json` and `review-index.json`. The observations
+contain `machine_findings`, missing captures, source-release traces, candidate
+loading checks, presentation flags and available completion/chronology checks.
+The index binds the current evidence and observations by hash. `state_at_review`
+is a canonical JSON state identity, not a snapshot file or its byte hash.
 
-- `evidence_sha256`: returned digest; `reviewer`: identity/context; `stop_reason`.
-- `observations_sha256`: returned digest of `review-observations.json`. Inspect
-  computes final completion, chronology, correspondence and capture checks before
-  prose is written. Address every `machine_findings` ID with a corresponding
-  `machine_finding_dispositions` entry containing `status` (`confirmed`,
-  `false_positive`, `unresolved`), a substantive `reason`, and bound `evidence_refs`.
-  Confirming a capture discrepancy does not establish who caused it. Use finding
-  owner `undetermined` when attribution lacks evidence; material uncertainty
-  leaves quality inconclusive. A different owner is not a false-positive check.
-  Source-release observations expose on-request bytes appearing without a recorded
-  release or a gated release's receipt; unexplained gaps prevent a pass, without
-  claiming early use or leakage. Missing counterpart captures are evidence gaps,
-  not proof that messages differ.
-  Read the cited content; a boilerplate disposition is not independent review.
-- `test_validity` and `outcome` from [evaluation.md](evaluation.md), plus a
-  nonempty `test_validity_reason` explaining the validity judgment.
-- `coverage`: object keyed by every frozen criterion ID, with `status`, `reason`
-  and `evidence_refs`. References are exact keys in review-index.json, such as
-  `private/events/001/public.json`. Observed claims need bound references.
-- `findings`: owner, severity, criterion, description, consequence, evidence_refs.
-- For valid execution in verified_host mode, `host_checks` includes
-  `candidate_loading`, `exact_resume`, `private_isolation`, `role_separation`.
-  Each has `verified: true`, a substantive reason and evidence_refs including
-  captured outputs under `private/host/`. A claim alone is insufficient.
+The issue log complements these raw records; it does not replace or silently
+resolve them. A word-count flag may need contextual interpretation; a successful
+artifact check does not establish scientific validity. The saved observations
+and their sources remain inspectable even when the operator notes a possible
+false positive or cannot identify the cause. Fresh evidence or a changed issue
+log requires another inspect before export.
 
-Most review-index keys identify retained files; `state_at_review` is the
-canonical JSON identity of state, not a snapshot-file path or its byte hash.
-Apply the frozen evidence contract and package checker to integrity claims,
-including its permitted finalization transition. State whether the export
-precedes or follows assessment finalization. A successful check establishes
-only its implemented integrity checks; it does not establish scientific
-validity or dismiss contradictory evidence.
-
-```sh
-python scripts/session_driver.py finish --attempt /private/run001 --assessment /private/inbox/review.json
-```
-
-Finish rejects changed evidence and waived unconditional criteria, then derives
-the rating from the existing evaluation rules. Execution failure overrides a
-claimed completed outcome. Diagnostic runs cannot pass. Empty findings do not
-override missing coverage. An attributable material consultant defect can still
-yield a bounded fail in an invalid run. Finalized attempts cannot dispatch again.
-Material or fundamental simulator, fixture, harness or environment findings also
-make test validity invalid; they do not erase separately evidenced consultant defects.
-For full-report cases, reviewer inspect derives `completion_check` from the latest captured
-project status, successful verification and actual manifested report output.
-It checks the retained report evidence against the current captured project;
-reviewer assertions cannot supply this result. A missing, unfinished or unverifiable
-report changes a claimed `objective_met` or `useful_stop` to `incomplete`.
-Finalization remains available for failures. Scientific/report-content quality
-still needs the independent review; artifact verification alone cannot earn a pass.
-
-For coordinator 1.1.0, finalization mechanically overrides a completed outcome
-outside the delivered 8 to 12 bounds, preserving the existing report-integrity
-gate. The reviewer separately establishes all required public events and their
-deferral/return gap under the [case guide](rggvy-continuity.md), setting outcome
-incomplete for an omitted or unproven event. `coverage: observed` is not passed;
-an exercised event with consultant mishandling retains observed coverage and its
-quality finding. Generic missing scientific review evidence is not an automatic
-stress-completion override. Use existing outcome, coverage and findings fields.
-
-For the new loop profile, each turn also saves
-`consultation-loop-observation.json`. Reviewer inspect reconstructs
-`consultation_loop_check` from retained public messages and snapshots, rather
-than trusting that saved observation or the candidate's latest state. The first
-protected start must follow an actual scope offer and later user text attributed
-to its selection. A report also requires actual findings discussion. A captured
-structural breach confirmed by review makes quality fail even after later approval. Missing captures
-remain unobserved. The reviewer must still interpret the whole user reply,
-classify unregistered artifacts/computations and assess evidence changes. The
-observer records evidence and never creates delivery or permission records.
-Keep the snapshot, public JSON, observer module and raw transport evidence in
-the run package. A temporary user pause leaves the session `ready`: send no stop
-record and resume later within its frozen limits. A stop record changes the
-session to `awaiting_review` and ends further dispatch for that attempt.
-A pause or stop without a report leaves the full-report objective incomplete.
-
-Finish recomputes the checks and requires the same evidence and observation
-digests. A changed capture or a newly added reviewer rerun requires another
-inspect and updated assessment. Raw findings remain visible. Disputed structural
-flags with no confirmed material consultant defect leave the rating inconclusive;
-they cannot silently turn into a pass. Missing reporting cannot be waived by a
-reviewer disposition. Explain corrections and coverage limits in the final prose.
-
-Export after assessment using the evidence packager. Create the output parent
-directory first; export does not create it:
+Export successful, stopped, capped and failed attempts alike. An assessment is
+not required. Keep the actual runner state instead of manufacturing a
+`finished` result or a grading file. Create the output parent directory first:
 
 ```sh
 python scripts/session_driver.py export --attempt /private/run001 --output /packages/run001.zip
 python scripts/session_driver.py check-package --package /packages/run001.zip
 ```
 
-The ZIP retains the actual private and work trees, raw stdout/stderr for every
-turn, public exchanges, snapshots, frozen inputs, observations and assessment.
-Its manifest binds file hashes and checks review-index expectations and raw/public
-correspondence. Complete export refuses omissions, changed evidence, links,
-overlapping paths and existing output files. A failed or interrupted attempt with
-readable `state.json` can be packaged with `--allow-partial`; its status and
-specific omissions remain visible. Earlier startup failures without retained
-state need their original startup evidence kept separately.
-Use the same flag to inspect a partial package. For an explicitly relocated work
-tree, pass `--work`; original state bytes and paths are retained. Never manually
-drop raw logs or rewrite a previous archive to make it appear complete. Complete
-evidence packaging does not mean the consultation itself passed.
+The ZIP retains the private issue log and evidence, work tree, raw stdout/stderr,
+public exchanges, snapshots, frozen inputs and observations. Its manifest binds
+file hashes and checks index expectations and raw/public correspondence.
+Complete export refuses omissions, changed evidence, links, overlapping paths
+and existing output files. A failed or interrupted attempt with readable
+`state.json` can be packaged with `--allow-partial`; its actual omissions remain
+visible. Use the same flag when checking a partial package. Startup failures
+without retained state need their original startup evidence saved separately.
+For an explicitly relocated work tree, pass `--work`; original state bytes and
+paths remain retained. Do not drop logs or rewrite an old archive to make it
+appear complete. Package integrity does not imply successful consulting.
+
+The existing `finish --assessment` interface remains available for importing an
+assessment supplied externally, including older workflows. It is not a required
+tester step and the tester does not author that assessment. A previously
+finalized attempt keeps its bound assessment and historical meaning; no frozen
+run is rewritten by this change.
 
 ## Validation and target-host handoff
 
 Run `python -m unittest discover -s tests -v` with the sibling consultant package.
 The tests invoke real subprocesses using `tests/fake_claude.py`; they validate
 adapter behavior, not consultant performance or live host compatibility.
-Before claiming live performance, run the actual host smoke and the selected
-persona full-report consultations with independent review. Missing worker traces remain unobserved;
-do not infer cadence from final prose or add overlapping usage totals.
+Local tests do not establish live performance. Keep actual host-smoke evidence
+and selected consultation results available for external inspection. Missing
+worker traces remain unobserved; do not infer cadence from final prose or add
+overlapping usage totals.
 
 The direct Claude flags follow the official [CLI reference](https://code.claude.com/docs/en/cli-reference)
 and [headless guide](https://code.claude.com/docs/en/headless). Confirm support and

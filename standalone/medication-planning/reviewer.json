@@ -5,42 +5,42 @@
     {
       "id": "planning-usefulness",
       "owner": "consultant",
-      "description": "The selected question, collection plan, feasible analysis direction and remaining conditions form a useful prospective plan. No outcome estimate, report artifact or named estimator is mandatory."
+      "description": "The focused endpoint is a usable prospective question, collection plan, feasible analysis direction and explicit remaining conditions. It does not require an observed effect, report artifact or named estimator."
     },
     {
       "id": "evidence-and-elicitation",
       "owner": "consultant",
-      "description": "Credit only disclosed or otherwise legitimately established facts. Evaluate whether omitted consequential questions materially weaken the advice; do not require the entire book or every core card. A pending unanswered question is not evidence that its answer is unavailable."
+      "description": "Issue context distinguishes publicly disclosed or legitimately inspected facts from private truth, consequential unanswered questions and information known to be unavailable. An omitted answer alone establishes none of the latter facts."
     },
     {
       "id": "scientific-initiative",
       "owner": "consultant",
-      "description": "Consider a beneficial alternative or changed target when the evidence motivates it, explain its requirements, and preserve user choice. No count of alternatives or fixed method sequence is required."
+      "description": "Observable issue context includes beneficial alternatives, changed targets, their scientific requirements and actual user choices. The case specifies no fixed method sequence or alternative count."
     },
     {
       "id": "actor-one-item",
       "owner": "simulator",
-      "description": "Each spoken reply is at most 50 words and answers one small question or subquestion, or makes one choice/clarification. Semantic breadth requires reading the actual reply; a single sentence, card ID or question label does not certify one item."
+      "description": "The frozen actor speaks at most 50 words and one small question answer, choice or clarification. The semantic content of the actual reply, rather than a sentence, card ID or label, determines item breadth."
     },
     {
       "id": "actor-selective-disclosure",
       "owner": "simulator",
-      "description": "When several requests occur, the actor follows the frozen selection rule, intentionally omits the others publicly and retains them privately. No full-book attachment, source identity or evaluator reasoning is disclosed. If a compound request never occurs, record that stress coverage as unobserved, not a failure."
+      "description": "A compound request activates the frozen selection rule: one request is answered publicly and the others remain private pending scopes. Full-book disclosure, source identities and evaluator reasoning are outside actor speech. An absent compound-request opportunity is an unexercised path."
     },
     {
       "id": "actor-faithfulness",
       "owner": "simulator",
-      "description": "Replies remain within allowed facts, stable unknowns and decision preferences. Do not invent recruitment, approvals, datasets, results or communication. Actor failures are separate from consultant quality."
+      "description": "Allowed facts, stable unknowns, decision preferences and supported learning delimit actor replies. Unsupported recruitment, approvals, datasets, results or communications are possible actor issues, separate from consultant behavior."
     },
     {
       "id": "useful-stopping",
       "owner": "consultant_and_simulator",
-      "description": "Stop at an accepted actionable plan or useful narrower planning conclusion. The private expected duration is descriptive; finishing outside it is not itself a defect. A capacity stop before that useful endpoint is incomplete, and a blanket refusal is not useful completion."
+      "description": "The actor's endpoint is an accepted actionable plan or useful narrower conclusion. Expected duration is descriptive. A capacity stop and a satisfied stop are distinct observations; a refusal alone does not establish the practical planning endpoint."
     },
     {
       "id": "j-prospective-actionability",
-      "description": "Provide an attainable prospective collection and analysis plan, with a meaningful improvement over merely listing methods or refusing observational inference.",
-      "evidence_needed": "The public conversation connects priority information to at least one realistic comparison and analysis, identifies what can be arranged before recruitment, and distinguishes a planning recommendation from a completed empirical result. Do not require a saved report or disclosure of every card.",
+      "description": "A planning recommendation connects feasible priority collection, a realistic comparison and conditional analysis before recruitment. It differs from a completed empirical result. A report or disclosure of every card is outside the focused endpoint.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-treatment-choice",
@@ -51,8 +51,8 @@
     },
     {
       "id": "j-comparable-target",
-      "description": "Align the population, treatment decision and causal target without silently treating all indications or prior treatment histories as interchangeable. When relevant, distinguish the selected drug from simultaneous changes to the care package.",
-      "evidence_needed": "The consultant establishes relevant eligibility and choice information or explicitly makes its recommendation conditional on it. It explains an appropriate common-indication, new-user or other justified comparison and records what a restriction changes about the population. Neither a categorical ban on mixed populations nor one specific estimator is required.",
+      "description": "Population, treatment decision and causal target vary with indication, prior treatment history and simultaneous care changes. Common-indication and new-user restrictions change the population; a mixed population is not categorically excluded. Relevant eligibility and treatment-choice information can remain explicit conditions.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-population",
@@ -63,8 +63,8 @@
     },
     {
       "id": "j-baseline-and-entry",
-      "description": "Make treatment classification, entry and collection timing coherent. Use measurement and treatment-history dates when they matter to the chosen comparison. Collection of severity, current medicines or later changes does not make every variable an adjustment target; preserve unknown timing and distinguish baseline state, treatment components and downstream changes.",
-      "evidence_needed": "For the proposed route, the consultant distinguishes a prescription decision from verified initiation, aligns eligibility and follow-up, and does not call a post-start questionnaire pretreatment without support. It avoids conditioning entry on later survival, a second prescription or future questionnaire response. Conditional alternatives are acceptable when initiation access remains uncertain.",
+      "description": "Prescription decisions and verified initiation are distinct. Eligibility, treatment classification, baseline collection and follow-up start require coherent dates. Post-start questionnaires are not pretreatment by default. Later survival, a second prescription and future response are post-entry selection events. Severity, current medicines and later changes differ as baseline state, treatment components and downstream variables; unknown timing remains unknown.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-entry-timing",
@@ -77,8 +77,8 @@
     },
     {
       "id": "j-outcome-and-history",
-      "description": "Define a depression outcome whose meaning is supported by the collection plan.",
-      "evidence_needed": "The consultant distinguishes diagnosis, treatment and symptoms as necessary for its selected outcome, preserves unknown previous history, and does not equate no local code with no prior or current depression. It can narrow the target to symptom change, documented episodes or another supported outcome if it explains the consequence.",
+      "description": "Diagnosis, treatment and symptom constructs are distinct. A missing local code does not establish no past or current depression. Symptom change, documented episodes and other supported outcomes correspond to different chosen questions and history requirements.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-depression-outcome",
@@ -88,8 +88,8 @@
     },
     {
       "id": "j-feasible-claims",
-      "description": "Match causal claims and precision to the data actually proposed and the access still unresolved.",
-      "evidence_needed": "The recommendation identifies relevant measured-confounding and comparison assumptions, a feasible way to improve the most consequential measurements, and how unresolved access or sample information changes next steps. It does not present matching, weighting, flexible prediction, a large prescription count or clinician preference as sufficient identification. A scoped feasibility phase is acceptable when paired with useful decisions it will resolve.",
+      "description": "The selected causal interpretation depends on measured-confounding and comparison assumptions, measurement quality, access and sample information. Matching, weighting, prediction, a large prescription count or clinician preference alone does not establish identification. Scoped feasibility work and numerical planning under j-sample-planning answer different parts of the practical decision.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-comparison-eligibility",
@@ -101,9 +101,25 @@
       ]
     },
     {
+      "id": "j-sample-planning",
+      "description": "The numerical request concerns a stated endpoint, target, inputs, consequential sensitivity and relation to affordable recruitment. An offer or input list is not a numerical result. A simple independent-person calculation is a bounded benchmark, distinct from sizing matched to the proposed estimator and inference. A warning or arbitrary inflation alone does not model omitted design features. A changed clinical target or overlap population is a user choice. A benchmark with concrete feasibility work can support an accepted limited endpoint while analysis-matched sizing remains unestablished; explicit narrowing can leave numerical work outside the delivered scope.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-depression-outcome",
+        "f-resources",
+        "f-questionnaire-followup",
+        "f-planning-difference",
+        "f-planning-variability",
+        "f-planning-mix",
+        "f-planning-recovery",
+        "f-precision-unknown"
+      ]
+    },
+    {
       "id": "j-followup-coverage",
-      "description": "Avoid equating missing contact with a negative outcome, and explain how treatment changes and follow-up coverage affect the chosen target.",
-      "evidence_needed": "The proposed analysis states an appropriate initial-treatment or sustained-treatment interpretation and a plausible plan for observation, dropout, death and switching at the level needed by that route. It can leave unresolved details conditional, but cannot claim complete twelve-month coverage or informative censoring resolved by routine exclusion.",
+      "description": "Initial-treatment and sustained-treatment targets differ. Observation, dropout, death and switching affect those targets. Missing contact is not a negative outcome, and routine exclusion does not establish complete twelve-month coverage or resolve informative censoring.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-post-baseline-treatment",
@@ -113,8 +129,8 @@
     },
     {
       "id": "j-questionnaire-route",
-      "description": "If recommending repeated questionnaires, address subgroup selection, observation timing and a feasible response to serious distress.",
-      "evidence_needed": "The consultant explains who would be invited and what population the symptom result represents, uses a comparable schedule or addresses differences, and makes any clinical response arrangements a condition before questionnaire launch. It does not promise continuous monitoring or treat a positive screening response as a confirmed new clinical episode.",
+      "description": "Repeated-questionnaire context includes who is invited, the represented subgroup, observation schedule and clinical response arrangements before launch. Different schedules affect comparison. A screening response is not automatically a confirmed new clinical episode; the packet supplies no continuous monitoring or already arranged response service.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "if_route_selected",
       "conditional": true,
       "fact_ids": [
@@ -126,8 +142,8 @@
     },
     {
       "id": "j-proportionate-protection",
-      "description": "Keep the design within the team's treatment authority, participant protection and unresolved confidential-data access.",
-      "evidence_needed": "The consultant's recommendation preserves ordinary care and makes collection or linkage dependent on appropriate locally determined access and review. It does not call the proposal ethically approved, treat pseudonymization as permission, or rely on withholding treatment solely to improve the design. It should connect protections to actual proposed activities rather than require a generic regulatory checklist.",
+      "description": "The team controls collection proposals rather than ordinary clinical treatment. Collection and linkage depend on locally determined access and review. Pseudonymization does not grant access or ethics approval; withholding treatment solely for the study lies outside the team's authority. Protection requirements depend on the actual proposed activities.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
       "scope": "always",
       "fact_ids": [
         "f-treatment-choice",
@@ -175,36 +191,69 @@
         "f-resources",
         "f-precision-unknown"
       ],
-      "benefit": "Checks attainable access, eligible overlap, event or symptom information, baseline collection workflow and follow-up capacity before spending the main grant. The consultant should prioritize the few checks most likely to change the proposed design.",
+      "benefit": "Checks attainable access, eligible overlap, event or symptom information, baseline collection workflow and follow-up capacity before spending the main grant. The design-relevant checks concern changes to the proposed study.",
       "claim_limit": "The phase establishes whether and how to launch a credible main study; it is not itself evidence of a treatment effect. Refusal without an actionable feasibility objective does not satisfy this route."
     }
   ],
-  "route_scoring": "Routes are examples, not an exhaustive answer key. Fact references identify relevant evidence, not a mandatory question checklist. Review only the chosen route's material needs. Conditional plans can identify facts to establish later.",
   "failure_examples": [
-    "Promise a causal conclusion because the two drugs are from the same class, the groups can be matched or the sample has thousands of prescriptions.",
-    "Combine first use, switching after intolerance, diabetes and heart-failure-only prescribing without considering their distinct treatment decisions and targets.",
-    "Use a questionnaire completed ten days after treatment as an unqualified pretreatment confounder or require future adherence to enter the cohort.",
-    "Count no local depression code as no previous episode, count every antidepressant prescription as depression, or silently change from clinical depression to symptom scores.",
-    "Drop everyone with no later visit and interpret the remainder as the complete baseline population, or treat absent hospital or mortality linkage as complete event-free follow-up.",
-    "Recommend an instrument based only on prescribing habit or cost preference without establishing its causal conditions.",
-    "Recommend routine linkage or distress screening as immediately launchable despite unresolved data access or an unfunded clinical response route.",
-    "Keep asking for already unavailable power inputs or refuse all planning instead of supplying a useful conditional design or bounded feasibility phase.",
-    "Treat an actor's omitted answer as confirmation, lack of knowledge or proof that a measurement cannot be collected.",
-    "Require every hidden fact or a particular named estimator for success, even when a different coherent route answers the user's planning need."
+    "A causal guarantee based only on common drug class, matching or a large prescription count.",
+    "First use, switching after intolerance and different indications pooled without a defined treatment decision and target.",
+    "A questionnaire ten days after treatment called pretreatment, or future adherence used for entry.",
+    "No local code treated as no previous episode, every antidepressant prescription treated as depression, or clinical depression silently replaced by symptoms.",
+    "No later visit treated as complete baseline-population follow-up, or missing hospital/mortality linkage treated as event-free observation.",
+    "A prescribing-habit or cost-preference instrument without supported causal conditions.",
+    "Linkage or distress screening called immediately launchable despite unresolved access or response staffing.",
+    "Repeated unavailable empirical-input requests, suppressed hypothetical inputs, or absent conditional work or chosen bounded feasibility scope.",
+    "A collection plan or offer substituted for the outstanding numerical planning answer.",
+    "An independent-person benchmark called causal-analysis sizing using only a warning or arbitrary inflation, 350 recruits counted as complete endpoints, or repeated visits counted as people.",
+    "Fictional inputs represented as local estimates, drug effects or validated thresholds, or transferred silently to a different endpoint.",
+    "An omitted actor answer treated as confirmation, an unknown or proof of collection impossibility.",
+    "A hidden-fact quota or mandatory estimator substituted for the user's coherent chosen planning route."
   ],
   "completion_signs": [
-    "The visible conversation gives the coordinator a coherent attainable choice of population, comparison, outcome, priority collection and conditional analysis, with important assumptions and unresolved access or precision limits attached.",
+    "The visible conversation gives the coordinator a coherent attainable choice of population, comparison, outcome, priority collection and conditional analysis, with important assumptions and unresolved access or precision limits attached. Ordinary completion also delivers an understandable conditional numerical planning answer, a consequential sensitivity and comparison to affordable recruitment.",
     "The consultant explains which remaining information could materially change its recommendation and what to arrange before recruitment, rather than asking for an exhaustive data inventory.",
-    "The actor can choose an explained feasible route or accept a bounded feasibility phase under the stated preferences. It may request a short integrated plan once substantive advice is available and no current narrow question needs answering.",
-    "The endpoint is preparation for a future study. No outcome estimate, completed data extraction, saved report, specific method or full disclosure of the information book is required.",
+    "An explicitly chosen narrower feasibility endpoint has concrete next steps and stated remaining limits. An accepted numerical benchmark can be useful while analysis-matched sizing remains unestablished; explicit narrowing can leave numerical work outside the delivered scope.",
+    "The actor may request one missing planning element at a no-current-question opportunity. A collection plan that omits sizing calls for one focused calculation reminder, not a factual answer combined with a new request or repeated demands for work already delivered.",
+    "The endpoint is preparation for a future study. No observed treatment-effect estimate, completed data extraction, saved report, specific method or full disclosure of the information book is required. A numerical recruitment plan is distinct from an observed effect estimate.",
     "Eight to ten consultant replies is the descriptive expected length, not a turn-indexed disclosure schedule, minimum reply requirement or permission to pad a completed conversation. An operational cap is set separately by the case runner."
   ],
-  "useful_stop": "An accepted actionable collection and conditional analysis plan, or a user-chosen narrower planning endpoint with concrete next steps. Blanket refusal or reaching a cap is not useful completion.",
+  "useful_stop": "An actionable collection and conditional analysis plan fulfilling the chosen goal, or an explicitly chosen narrower endpoint understood with its limits and concrete next steps. Selecting an interim task does not itself narrow the goal. A temporary pause preserves the unfinished goal; blanket refusal or reaching a cap is not useful completion. Fulfillment of an already chosen goal needs no extra public assent.",
   "expected_turn_range": [
     8,
     10
   ],
   "target_turns": 9,
-  "duration_rule": "Count delivered consultant replies from the first answer to the useful endpoint. The range is descriptive, not a pass threshold or actor instruction. Record the actual count. At the configured ceiling, stop and retain incomplete status if the goal is unmet.",
-  "validation_scope": "Structural fixture checks and independent review do not prove actor adherence, causal validity or live host qualification."
+  "duration_rule": "Duration is the number of delivered consultant replies from the first answer to the useful endpoint. The expected range is descriptive; the separately configured ceiling can leave the practical goal unfinished.",
+  "validation_scope": "Fixture checks establish structural identities and information boundaries, not observed actor behavior, causal validity or live-host qualification.",
+  "numeric_reference": {
+    "kind": "Private illustrative arithmetic reference, not actor knowledge, study data or a mandatory method",
+    "model": "Independent-person equal-variance normal approximation with equal-across-group noninformative endpoint recovery",
+    "formula": "n_observed = (z_0.975 + z_0.80)^2 * s^2 / (delta^2 * p * (1-p)); n_recruited = n_observed / r",
+    "inputs": {
+      "two_sided_alpha": 0.05,
+      "power": 0.8,
+      "s": 5,
+      "delta": 2,
+      "p": 0.7,
+      "r": 0.8
+    },
+    "definitions": "p is the complete-endpoint treatment share; s is the common unadjusted within-treatment-distribution SD; delta is the mean contrast magnitude; r is endpoint recovery.",
+    "reference": {
+      "n_observed": 233.6,
+      "recruited_final_quotient_ceiling": 292,
+      "recruited_endpoints_first_rounding": 293,
+      "recruits": 350,
+      "assumed_usable_endpoints": 280,
+      "detectable_difference_approx": 1.83
+    },
+    "one_input_sensitivities_recruits_approx": {
+      "delta_1_5": 520,
+      "s_6": 421,
+      "p_0_80": 384,
+      "r_0_70": 334
+    },
+    "rounding": "Final-quotient, endpoint-first, arm-wise and t-based calculations can give different integers for their stated procedures.",
+    "limits": "This reference does not model confounding, unequal conditional variances, site dependence, selective invitation or informative missingness. The SD is not combined-group, adjusted-residual or change-score variation; other endpoints need their own inputs. Death differs from ordinary nonresponse. Repeated visits are not independent people; 42 practices and three teams need not be 45 independent clusters. These values do not establish that 350 suffice for the actual causal analysis."
+  }
 }

@@ -162,6 +162,66 @@ class PackageEvidenceTests(unittest.TestCase):
             self.assertIn("private/events/001/project-verify/stdout.txt", archive.namelist())
             self.assertIn("private/events/001/work-snapshot/project/report.html", archive.namelist())
 
+    def test_private_actor_rejections_and_undispatched_proposals_export_in_actual_states(self):
+        rejected = self.attempt / "operator-evidence/actor-rejected"
+        self.write(rejected / "proposal.json.capture/status.json", {"phase": "validation", "status": "error"})
+        self.write(rejected / "proposal.json.capture/process.json", {"pid": 123, "exit_code": 0, "error": None})
+        native = b"native invalid output\xff\r\n"
+        (rejected / "proposal.json.capture/stdout.txt").write_bytes(native)
+        evidence = self.attempt / "operator-evidence/actor-undispatched"
+        self.write(evidence / "proposal.json", {"message": "Undispatched proposal."})
+        self.write(evidence / "dispatch.json", {"status": "not_dispatched_cap", "event": None})
+        frozen = json.loads((self.attempt / "freeze.json").read_text())
+        self.write(self.attempt / "freeze.json", {**frozen, "review_package_profile": "review-observations-v1"})
+        for status in ("ready", "awaiting_review", "limit_reached", "execution_error"):
+            with self.subTest(status=status):
+                self.state["status"] = status
+                self.write(self.attempt / "state.json", self.state)
+                self.index()
+                self.write(self.attempt / "review-observations.json", {"schema_version": 1,
+                    "evidence_sha256": self.review_index["sha256"], "machine_findings": []})
+                self.review_index["observations_sha256"] = package._sha_file(self.attempt / "review-observations.json")
+                self.write(self.attempt / "review-index.json", self.review_index)
+                output = self.root / (status + ".zip")
+                result = package.export_package(self.attempt, output)
+                self.assertEqual(result, package.check_package(output))
+                with zipfile.ZipFile(output) as archive:
+                    self.assertEqual(archive.read("private/operator-evidence/actor-rejected/proposal.json.capture/stdout.txt"), native)
+                    self.assertIn("private/operator-evidence/actor-undispatched/proposal.json", archive.namelist())
+                    self.assertNotIn("private/operator-evidence/actor-rejected/proposal.json", archive.namelist())
+                    self.assertEqual(json.loads(archive.read("private/state.json"))["status"], status)
+                    self.assertNotIn("private/events/002/public.json", archive.namelist())
+
+    def test_unassessed_issues_and_machine_observations_export_intact(self):
+        issues = "# Run issues\n\nNative message identity remains unobserved; see private/events/001/public.json.\n"
+        self.write(self.attempt / "issues.md", issues)
+        frozen = json.loads((self.attempt / "freeze.json").read_text())
+        self.write(self.attempt / "freeze.json", {**frozen, "review_package_profile": "review-observations-v1"})
+        self.index()
+        observations = {"schema_version": 1, "evidence_sha256": self.review_index["sha256"],
+                        "machine_findings": [{"id": "native-capture-unobserved", "check": "capture_completeness",
+                            "observation": {"missing": ["private/events/001/transport/native-messages.json"],
+                                            "meaning": "Native message identity remains unobserved."}}]}
+        self.write(self.attempt / "review-observations.json", observations)
+        self.review_index["observations_sha256"] = package._sha_file(self.attempt / "review-observations.json")
+        self.write(self.attempt / "review-index.json", self.review_index)
+        before = self.inventory(self.attempt)
+
+        result = package.export_package(self.attempt, self.output)
+
+        self.assertEqual(result["completeness"], "complete")
+        self.assertEqual(package.check_package(self.output), result)
+        self.assertEqual(self.inventory(self.attempt), before)
+        self.assertFalse((self.attempt / "assessment.json").exists())
+        with zipfile.ZipFile(self.output) as archive:
+            self.assertEqual(json.loads(archive.read(package.MANIFEST))["attempt_status"], "awaiting_review")
+            self.assertNotIn("private/assessment.json", archive.namelist())
+            self.assertEqual(archive.read("private/issues.md"), (self.attempt / "issues.md").read_bytes())
+            self.assertEqual(archive.read("private/review-observations.json"),
+                             (self.attempt / "review-observations.json").read_bytes())
+            retained_index = json.loads(archive.read("private/review-index.json"))
+            self.assertEqual(retained_index["files"]["private/issues.md"], package._sha_file(self.attempt / "issues.md"))
+
     def test_legacy_review_package_format_remains_readable(self):
         package.export_package(self.attempt, self.output)
 

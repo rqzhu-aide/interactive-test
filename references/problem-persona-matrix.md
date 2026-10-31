@@ -13,8 +13,8 @@ analysis or final report. The persona responds to actual proposed scopes and
 findings, selects useful extensions or the report, and retains changed choices.
 An extension returns to discussion. A report can be reopened, and a user may
 pause or end without it; a missing report leaves the full-report goal incomplete.
-For general personas, do not manufacture these paths or extra turns in every run. Independent review
-checks actual proposal/choice/work chronology, not a preferred conversation length.
+For general personas, do not manufacture these paths or extra turns in every run.
+Retain actual proposal/choice/work chronology without imposing a preferred length.
 
 ## Reusable problems
 
@@ -28,7 +28,7 @@ checks actual proposal/choice/work chronology, not a preferred conversation leng
 The original four worlds are explicitly synthetic. Private generating facts and numerical
 references support evaluation; they are not evidence the consultant or user may
 inspect. Public operational records and documented unknowns determine what the
-consultation can establish. Accept valid alternative methods within that scope.
+consultation can establish.
 
 Conditional parallel trends does not by itself make a DiD ATT into a population
 ATE. The report must justify an additional assumption-dependent extension, or
@@ -49,7 +49,7 @@ the missing causal comparison.
 | `surgery-planning` | Planner preparing a South African surgical-care study | Same focused planning contract. |
 
 See the [standalone guide](../standalone/README.md) for package layout and the
-planning cases' disclosure rules. RGGVY has no known causal effect for scoring;
+planning cases' disclosure rules. RGGVY has no known causal effect;
 its paper supplies evidence, not an answer key. Its [scientific guide](rggvy-electrification.md)
 and [continuity contract](rggvy-continuity.md) govern the fixed coordinator case.
 It inherits no expert proposal quota, deception permission or mandatory extra analysis.
@@ -90,7 +90,7 @@ retire this required expert contribution, and no particular methods are scripted
 ## Pacing and stopping
 
 For the 12 matrix pairs, the 5/10/15/8 values are descriptive expectations, not deadlines, exact lengths,
-minimums, hard limits or success criteria. They stay in operator/reviewer metadata
+minimums, hard limits or success criteria. They stay in private composition metadata
 and are not supplied in actor packets or consultant prompts. The actor must not
 rush a report, dump all facts, invent an answer, manufacture delays, withhold
 information or add exchanges to meet a target. Depending on the persona and
@@ -176,17 +176,16 @@ a self-contained frozen package. Generated run copies belong to
 private run directories and retain versions, composition hashes and source bytes.
 The old 15 fixed bundles under `cases/` have been removed, along with their
 dedicated generators and tests. The private RGGVY continuity resource extends
-behavior and review without changing the scientific problem. Prior versions remain in Git history and
+behavior and private reference material without changing the scientific problem. Prior versions remain in Git history and
 existing frozen run packages; composing a new case never modifies an old run.
 
 Validate every combination, science/source invariance, knowledge boundaries,
 numerical references and regeneration. Fixture validation does not establish
-live model behavior or host qualification. Review actual replies and artifacts:
+live model behavior or host qualification. Retain actual replies and artifacts:
 a saved answered status or correct hash is not a scientific guarantee. Record
-qualification loss and response discrepancies even when the main conclusion is
-correct. Compare actual duration descriptively, without grading proximity to
-the target for ordinary pairs. For coordinator 1.1.0 separately report numeric
-bounds, required public event occurrence and actual gap, report completion and
-consultant quality. Neither eight replies nor observed coverage certifies success.
-Required scientific work determines depth; missing stress events leave completion
-incomplete, and exercised consultant failures remain findings.
+observable qualification loss, response discrepancies and unresolved gaps with
+their turn/file evidence, even when the main conclusion appears unchanged.
+Record duration descriptively. For coordinator 1.1.0 retain numeric bounds,
+public participation anchors, the actual deferral/return gap and saved report
+evidence. Record missing participation or report evidence in the run's issue notes;
+neither eight replies nor a complete package establishes scientific validity.

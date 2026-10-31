@@ -1,10 +1,12 @@
-"""Adaptive consultation adapter. A user actor supplies replies; a separate reviewer grades."""
+"""Adaptive consultation adapter with user replies, issue observations and evidence export."""
 import argparse
 from contextlib import contextmanager
 import hashlib
 import json
 import math
+import os
 from pathlib import Path, PurePosixPath
+import re
 import shutil
 import subprocess
 import sys
@@ -20,8 +22,8 @@ from source_release import validate_source_prerequisite, validate_release_receip
 from package_evidence import export_package, check_package, candidate_loading_check
 
 ACTOR_UPDATES = ("knowledge_updates", "belief_updates", "decision_updates")
-TESTER_VERSION = "8.4.7"
-CONSULTANT_VERSIONS = ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15")
+TESTER_VERSION = "8.5.6"
+CONSULTANT_VERSIONS = ("7.0.0", "7.0.1", "7.0.2", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6", "8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15", "8.0.16", "8.0.17", "8.1.0", "8.1.1", "8.1.2", "8.1.3", "8.1.4")
 EXCHANGE_CAPABILITY = "durable-exchanges-v1"
 USER_QUESTION_CAPABILITY = "user-question-routing-v1"
 V8_CAPABILITIES = {"canonical-memory-v8", "content-authoring-v8", "six-section-brief-v8", "exact-record-read-v8",
@@ -269,7 +271,7 @@ def candidate_observation_profile(candidate, config):
                "enforcement": "observational_only", "capabilities": [], "user_question_routing": False,
                "consultation_loop": False, "intact_reply_recovery": False, "source_attributed_memory": False,
                "deferred_release": False, "assisted_authoring": False, "claude_transcript_capture": False, "agent_recorded_reply": False}
-    if profile["consultant_version"] in ("8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15"):
+    if profile["consultant_version"] in ("8.0.0", "8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15", "8.0.16", "8.0.17", "8.1.0", "8.1.1", "8.1.2", "8.1.3", "8.1.4"):
         version = profile["consultant_version"]
         probe = subprocess.run(config["node_command"] + [str(candidate / "scripts/project.cjs"), "capabilities"],
                                cwd=candidate, capture_output=True, timeout=30)
@@ -289,7 +291,7 @@ def candidate_observation_profile(candidate, config):
                 "consultation_loop": True, "agent_recorded_reply": True,
                 "public_presentation": "four-section-responses-v1",
                 "public_presentation_renderer": "lead-markdown-v11",
-                "public_presentation_option_max_words": 50 if version in ("8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15") else 100}
+                "public_presentation_option_max_words": 50 if version in ("8.0.1", "8.0.2", "8.0.3", "8.0.4", "8.0.5", "8.0.6", "8.0.7", "8.0.8", "8.0.9", "8.0.10", "8.0.11", "8.0.12", "8.0.13", "8.0.14", "8.0.15", "8.0.16", "8.0.17", "8.1.0", "8.1.1", "8.1.2", "8.1.3", "8.1.4") else 100}
     if profile["consultant_version"] in ("7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.2.0", "7.3.0", "7.3.1", "7.4.0", "7.4.1", "7.5.0", "7.5.1", "7.5.2", "7.5.3", "7.5.4", "7.5.5", "7.5.6"):
         probe = subprocess.run(config["node_command"] + [str(candidate / "scripts/project.cjs"), "capabilities"],
                                cwd=candidate, capture_output=True, timeout=30)
@@ -429,6 +431,54 @@ def locked(attempt):
         lock.unlink()
 
 
+def selected_transport_files(command, work):
+    """Only the selected entry script, using supported direct/Python launch forms."""
+    argument = command[0]
+    if Path(argument).suffix.lower() == ".py":
+        if not Path(argument).is_absolute():
+            return []  # Direct executable lookup is host-specific; do not guess.
+    else:
+        if not re.fullmatch(r"pythonw?(?:\d+(?:\.\d+)*)?(?:\.exe)?", Path(argument).name, re.I):
+            return []  # Unknown launchers cannot establish which script runs.
+        index = 1
+        while index < len(command):
+            option = command[index]
+            if option == "--":
+                index += 1
+                break
+            if not option.startswith("-"):
+                break
+            if option in ("-W", "-X", "--check-hash-based-pycs"):
+                index += 2
+            elif re.fullmatch(r"-[bBdEiIOPqsSuvx]+", option) or option.startswith(("-W", "-X")):
+                index += 1
+            else:
+                return []  # Includes -c/-m, stdin, help and unknown options.
+        if index >= len(command):
+            return []
+        argument = command[index]
+    if Path(argument).suffix.lower() != ".py":
+        return []
+    scripts = Path(__file__).resolve().parent
+    transports = scripts / "transports"
+    launch_path = Path(argument)
+    if not launch_path.is_absolute():
+        launch_path = Path(work) / launch_path
+    lexical = Path(os.path.abspath(launch_path))
+    if not lexical.is_relative_to(transports):
+        return []  # External adapters need separately bound host evidence.
+    # Inspect the uncollapsed launch path as well: a linked parent followed
+    # by '..' must not be normalized into an apparently ordinary source.
+    current = launch_path
+    while current != current.parent:
+        require(not current.is_symlink() and not (hasattr(current, "is_junction") and current.is_junction()),
+                "selected transport contains a link: " + str(current))
+        current = current.parent
+    require(launch_path.is_file() and launch_path.resolve().is_relative_to(transports.resolve()),
+            "selected transport is not an ordinary in-tree file: " + str(launch_path))
+    return [lexical.relative_to(scripts).as_posix()]
+
+
 def start(case, candidate, config, attempt, work):
     require(not attempt.exists() and not work.exists(), "attempt and work must both be fresh paths")
     roots = [attempt, work, case, candidate]
@@ -457,8 +507,9 @@ def start(case, candidate, config, attempt, work):
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(case / source["file"], destination)
                 public[source["destination"]] = digest(destination)
-        frozen["adapter_files"] = {
-            name: digest(Path(__file__).parent / name) for name in ("session_driver.py", "claude_transport.py", "consultation_observer.py", "consultation_v8.py", "source_release.py", "package_evidence.py", "room_actor.py", "room_reviewer.py")}
+        adapter_names = ["session_driver.py", "claude_transport.py", "consultation_observer.py", "consultation_v8.py", "source_release.py", "package_evidence.py", "room_actor.py"]
+        adapter_names += selected_transport_files(config["claude_command"], work)
+        frozen["adapter_files"] = {name: digest(member(Path(__file__).parent, name)) for name in adapter_names}
         testing_root = Path(__file__).resolve().parents[1]
         testing_files = [testing_root / "SKILL.md", testing_root / "README.md"]
         testing_files += list((testing_root / "references").glob("*"))
@@ -502,7 +553,7 @@ def integrity(attempt, state, frozen):
     for name, sha in state["public_files"].items():
         path = member(Path(state["work"]), name)
         require(path.is_file() and digest(path) == sha, "released public input changed: " + name)
-    require(all(digest(Path(__file__).parent / name) == sha for name, sha in frozen["adapter_files"].items()), "adapter changed during attempt")
+    require(all(digest(member(Path(__file__).parent, name)) == sha for name, sha in frozen["adapter_files"].items()), "adapter changed during attempt")
 
 
 def project_binding(files, config):

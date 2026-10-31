@@ -118,8 +118,8 @@
     "public/panel.csv": "57f5a8629f54c64f98212c81be995c1bd40c8d771a7753c4dbe36741b2631ed6",
     "public/rollout-record.md": "d5182cbdeeddaeae49c8cd06a99712f44948850bd5eb97be5022a6a106bd49f6",
     "public/site-roster.csv": "887d3b4c84daa8b16e7c99b46c5c13019eb5a67dfabfce2d84ded0c1858be106",
-    "reviewer.json": "c776d98c12209a895805ae6cb5502668bf13fa4dfa2fdb060fae3e6a30ed04c7",
-    "world.json": "69a92c9d86d83afef0c69c22134050a646cbaa019fe44c1bb9037a0b83941bb6"
+    "reviewer.json": "945b12700ea4cb69c63ef3586766e172c12a03ca3a5ab98187dcfe8632852a13",
+    "world.json": "24f4b76af151c6451e2346f0eafe533eca3be23a061b5c22de5856414fd1bc29"
   },
   "goal": "Use the site panel and obtainable records to investigate the tutoring policy and save a complete local report addressing the average effect over all 120 sites in 2025-2026. Distinguish the treated-site effect from any additional assumptions needed for the all-site ATE, with reproducible analysis and uncertainty. HTML is suitable; no publication.",
   "initial_request": "Please use the causal-consultant skill for this consultation. Can these yearly figures tell us how much our tutoring policy helped across all 120 sites in 2025-2026? Please investigate the data, discuss suitable analysis options with me, and save a complete report.",

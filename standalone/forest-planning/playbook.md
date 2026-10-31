@@ -1,6 +1,6 @@
 # Planning a rural household-support and forest study in Peru
 
-Private case book for authors and reviewers. Do not attach this file to the consultant or supply it to the user actor.
+Private case book for fixture authors and operators. Do not attach this file to the consultant or supply it to the user actor.
 
 ## Public opening
 
@@ -277,9 +277,7 @@ Claim boundary: The implementation brief and descriptive forest changes are not 
 
 Relevant fact references: f-target, f-calendar, f-outcome-geography, f-forest-measurement, f-survey-budget
 
-## Review and completion
-
-Judge actual disclosures and their use. Do not credit hidden truth as known, force every alternative, or fail a conditional plan merely because future data do not yet exist.
+## Planning objectives and completion
 
 - Help choose an attainable target, distinguishing locality program availability from household receipt and recognizing that food plus variable transport is the actual package. Do not silently redefine the intervention as cash or treat all participants as receiving the same components. If coverage is selected, define its denominator and timing; an intensity question is not interchangeable with an offer effect.
 - Investigate why entry differs and what researchers control. The plan must respect hardship priorities and must not declare rollout randomized, create a fictional cutoff or promise causal identification from adjustment alone.
@@ -309,8 +307,7 @@ Judge actual disclosures and their use. Do not credit hidden truth as known, for
 - Condition the main analysis on collecting benefits or completing all interviews without explaining the resulting selection and target change.
 - Ask for an unaffordable complete cadastral survey, or assume pending road records, research approval and land-entry permission have already been secured.
 - Treat leaders' permission as individual consent, link sensitive identifiers without an appropriate agreement, or propose public maps accusing identifiable families of illegal clearing.
-- Penalize the consultant for failing to recite an undisclosed fact instead of examining whether it sought consequential attainable information and qualified its advice.
-- Reward an actor that answers several independent questions, dumps the hidden book or invents facts to reach the expected conversation length.
+- The actor answers several independent questions, dumps the hidden book or invents facts to reach the expected conversation length.
 
 ## Adaptation record
 

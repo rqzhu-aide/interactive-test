@@ -1,18 +1,18 @@
 # Private consultant observation profiles
 
-For operators, observer developers and independent reviewers only. Do not put
+For operators and observer developers only. Do not put
 this reference, candidate instructions or observer results in an actor prompt
 or bundle. The simulated user follows its own protocol, setting and persona,
 using the public conversation and legitimately received materials.
 
-Tester 8.4.7 source supports consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15. Freeze the actual
+Tester 8.5.6 source supports consultant 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4. Freeze the actual
 candidate inventory, capabilities, journal format and presentation policy for
-each attempt. Focused admission, observation and continuity checks accompany
-this release; live host qualification remains pending.
+each attempt. Retained admission, observation and continuity checks cover these
+profiles; live host qualification remains pending.
 Historical attempts keep their frozen contracts;
 do not reinterpret them using a newer record schema or renderer.
 
-## Consultants 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15
+## Consultants 8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4
 
 The primary journal format is `consultation-journal-v8`. Its top-level
 capabilities include `canonical-memory-v8`, `content-authoring-v8`,
@@ -35,11 +35,11 @@ Original input is retained as `user_message`. Whole-message handling may be a
 `knowledge`, `decision` or `interpretation` entry linked to it. A clear decision
 or sourced update needs no additional interpretation narrative. Work, reviews
 and prepared replies cite their committed handling through `responds_to`.
-Review mixed intentions, qualifications, partial answers and timing against the
-original message. The presence of a handling link does not prove sound judgment.
+The original message retains mixed intentions, qualifications, partial answers
+and timing; a handling link alone does not establish their interpretation.
 On a resumed turn, a prepared closeout can cite only the current handling while
-answer and work references retain their earlier sources. Compare frozen plans
-and completion manifests with the original work start, not the later closeout.
+answer and work references retain their earlier sources. Frozen plans and
+completion manifests retain the original work start separately from later closeout.
 
 Continuation is derived from explicit direction and owned records. Do not
 require an authored checkpoint, a fixed window of recent intakes, a new entity
@@ -51,8 +51,8 @@ obligations, question remainders and newer user steering even after focus change
 `reply_prepared` is a draft. `reply_recorded` retains the actual prior reply,
 normally at the next appropriate resume before interpreting a dependent choice.
 Its `before_user` anchor and source identify the public reply being recorded.
-Compare the ordered actual items, labels, qualifications and mappings with the
-independently captured public conversation. Native host capture is optional;
+Ordered actual items, labels, qualifications and mappings are recorded separately
+from the independently captured public conversation. Native host capture is optional;
 assistant recording does not establish native identity or exact byte provenance.
 A latest reply can legitimately await its next-turn record. A repaired account
 of unchanged terms preserves existing acceptance; changed or omitted terms
@@ -64,24 +64,21 @@ offered. An accepted option absent from a structurally readable public reply is
 a record contradiction. Missing public text or differences in wording or format
 remain unobserved for semantic review, not automatic permission violations.
 
-Scopes, decisions and run starts use entry identities. Read the scope's shared
-`terms`, execution-only `execution`, actual public offer, later user choice and
-run binding together. Do not demand v7 `scopes/<scope_id>/scope.json` exports or
-v7 field names from a v8 journal. Reports remain selected, revisable artifacts.
+Scopes, decisions and run starts use entry identities. A scope has shared
+`terms` and execution-only `execution`; public offers, later user choices and
+run bindings retain their own evidence. V8 does not use v7
+`scopes/<scope_id>/scope.json` exports or v7 field names. Reports remain selected, revisable artifacts.
 Full-report cases still require their frozen report endpoint; a valid user pause
 can leave that objective incomplete.
 
 The report observer's `prior_discussion_refs` is a raw reference collection,
-not proof that completed findings were delivered. Review the work version at
-the public reply's time: a progress item can name a run before completion.
-A completed-run review can support its linked findings; a distinct later review
-needs its own coverage. Follow the actual review-to-run links and qualifications
-without treating every review of the same run as interchangeable. A raw-ID
-`report_discussion_unobserved` finding requires this evidence review, not an
-automatic breach. Do not require another answer or a bookkeeping-only reply
-when the retained public text already communicates the relevant findings.
+not proof that completed findings were delivered. A progress item can name a run
+before completion; work versions, public reply times and review-to-run links
+remain distinct evidence. A raw-ID `report_discussion_unobserved` finding records
+an unresolved observation rather than an established breach. Preserve the public
+text and relevant work versions with the issue.
 
-## Public response review
+## Public presentation observations
 
 V8 retains `lead-markdown-v11`. Its populated sections, in order, are
 `[To answer your question]`, `[What has been done]`, `[Questions for you]` and
@@ -95,34 +92,33 @@ in one actual reply, not global records or permission.
 Count the complete visible item, including its title, qualifications, expanded
 scope terms and visible pointer text. Ordinary items and the optional summary
 have a 50-word allowance. Explicitly requested answers or clarification may use
-up to 200 words, subject to review of the actual request.
+up to 200 words; word count alone does not establish whether the request qualifies.
 
 Consultant 8.0.0 retains the allowance of up to 100 words for essential selectable
-scope terms when needed; review necessity before applying it. Consultants 8.0.1,
-8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15 require every next-step option to stay within 50 words, including scope options.
+scope terms when needed. Consultants 8.0.1,
+8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4 require every next-step option to stay within 50 words, including scope options.
 The frozen profile's `public_presentation_option_max_words` selects this policy
 for both per-turn and final observation. Historical profiles without that field
 retain the earlier 100-word scope ceiling; journal format and renderer alone do
-not select the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15 rule.
+not select the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15/8.0.16/8.0.17/8.1.0/8.1.1/8.1.2/8.1.3/8.1.4 rule.
 
 A requested answer may show complete same-reply scope terms once, with its option
-pointing to that visible answer; the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15 option still stays within 50 words.
+pointing to that visible answer; the 8.0.1/8.0.2/8.0.3/8.0.4/8.0.5/8.0.6/8.0.7/8.0.8/8.0.9/8.0.10/8.0.11/8.0.12/8.0.13/8.0.14/8.0.15/8.0.16/8.0.17/8.1.0/8.1.1/8.1.2/8.1.3/8.1.4 option still stays within 50 words.
 A heading or saved link alone proves neither disclosure nor consent. Internal
 records and report artifacts retain their needed detail.
 
 Preserve complete public text and report presentation observations separately
 from scientific meaning, provenance, consent and chronology. Draft byte
 comparison is informational for profiles using next-turn actual reply recording.
-Public structure, omitted qualifications and user understanding still require
-review. No renderer label, valid manifest or successful verification certifies
+Presentation observations do not determine scientific meaning or user
+understanding. No renderer label, valid manifest or successful verification certifies
 scientific validity.
 
-Retain at most one substantive specialist review per consultant assistant turn,
-whether performed locally or delegated. Direct explanation, synthesis,
-clarification or justified stopping can use zero. A prerequisite answer precedes
-dependent work; clearly authorized independent work need not wait for an
-unrelated unresolved question. Distinguish acceptance, immediate direction,
-execution and communication instead of demanding another ritual approval.
+The profile allows at most one substantive specialist review per consultant
+assistant turn, whether performed locally or delegated. Direct explanation,
+synthesis, clarification or justified stopping can use zero. Missing invocation
+evidence remains unobserved. Acceptance, immediate direction, execution and
+communication have separate records.
 
 ## Retained v7 profiles
 
@@ -165,6 +161,6 @@ adjustments. A local format request does not authorize changed science.
 
 For 7.5.6, associate next-turn agent records with the independently retained
 public conversation using the retained next-user source and stable intake event.
-Review meanings, mappings and omissions without treating agent records as native
-capture proof. A latest reply may await its next-turn record. Earlier prepared
+Agent records do not establish native capture provenance. A latest reply may
+await its next-turn record. Earlier prepared
 replies and actual-message evidence keep their own historical contracts.

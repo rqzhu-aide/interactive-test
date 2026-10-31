@@ -1,10 +1,10 @@
 # Preparing a comparison of diabetes medicines and depression
 
-Private case book for authors and reviewers. Do not attach this file to the consultant or supply it to the user actor.
+Private case book for fixture authors and operators. Do not attach this file to the consultant or supply it to the user actor.
 
 ## Public opening
 
-> Please use $causal-consultant. It's 15 October 2026. We are planning a study in southwest England comparing depression after patients start dapagliflozin or empagliflozin. Treatment stays with their usual doctors. Before recruitment, what information should we collect, and how could we make a credible causal comparison?
+> Please use $causal-consultant. It's 15 October 2026. We're planning a southwest England study of depression after starting dapagliflozin or empagliflozin; usual doctors choose treatment. Before recruitment, what should we collect for a credible causal comparison, and can you calculate how many participants we need?
 
 ## Setting and goal
 
@@ -12,7 +12,7 @@ A fictional collaboration of general practices and outpatient teams in and aroun
 
 Planning date: 2026-10-15
 
-Prepare an attainable future study: decide whom to recruit, what information to collect before treatment, how to measure depression and follow people, and which analysis can support an appropriately qualified causal conclusion. A practical conditional plan in the conversation is sufficient; no completed estimate or saved report is required.
+Prepare an attainable future observational study: decide whom to recruit, what to collect before treatment, how to measure depression and follow people, and which analysis can support a qualified causal conclusion. Also obtain an understandable conditional numerical recruitment plan, with a consequential sensitivity and comparison to affordable recruitment. An offer to calculate or a list of missing inputs does not answer that request. No observed treatment-effect estimate or saved report is required.
 
 Expected duration: about 8 to 10 delivered consultant replies. Nominal target: 9. Operational ceiling for a future run: 12. These are private operator metadata, not disclosure triggers or completion criteria.
 
@@ -24,6 +24,9 @@ Expected duration: about 8 to 10 delivered consultant replies. Nominal target: 9
 - Prefer a short list of indispensable measurements over an unrestricted wish list. Can revise recruitment forms and follow-up plans before recruitment.
 - If offered realistic alternatives, choose according to their explained measurement quality, staff burden and relevance to patient wellbeing, without demanding a particular estimator or a beneficial drug effect.
 - Accept a conditional causal analysis plan with explicit remaining assumptions; do not demand that the consultant guarantee a causal answer.
+- Can choose an explained twelve-month mean PHQ-9 symptom-score comparison for planning. Understand that it is a point-in-time symptom outcome, not incident clinical depression or the entire symptom trajectory. Other justified outcomes remain acceptable; changing the clinical question requires an explained choice.
+- Can accept a transparent illustrative calculation, including explained alternative assumptions, when it is useful to the practical goal under the shared actor policy; use reading order only when known constraints, stated preferences and the visible explanation give no reason to prefer another item. Do not force disclosure of every private default or a separate approval for each numerical input. Conventional two-sided 5% testing and 80% power may be working defaults, not grant requirements. A precision-only replacement for the sizing question needs an explained choice.
+- Prefer a numerical answer that helps decide what the budget can support. Can accept a clearly limited benchmark plus concrete feasibility work or explicitly narrow to a useful feasibility phase. Keep the limitation understood; acceptance does not establish empirical inputs or the adequacy of the actual causal analysis.
 
 ## Hidden fact cards
 
@@ -83,11 +86,11 @@ Possible small reply: The alert would fire when a prescription is issued, but re
 
 Status: planned. Source: Own draft application wording and discussions with the clinical lead..
 
-Known content: The draft says new or recurrent depression without an agreed operational definition. Clinical codes, antidepressant prescriptions and symptom questionnaires are possible but different measures. A first local diagnosis may reflect an old episode, and antidepressants may be prescribed for other indications. No outcome data exist.
+Known content: The draft says new or recurrent depression without an agreed operational definition. Clinical codes, antidepressant prescriptions and symptom questionnaires are possible but different measures. PHQ-9 is one questionnaire under consideration: a 0 to 27 symptom-severity score referring to the preceding two weeks. A twelve-month point score is not incident clinical depression or the whole symptom trajectory. A first local diagnosis may reflect an old episode, and antidepressants may be prescribed for other indications. No outcome data exist.
 
 Reveal when: A question about depression definition, the primary outcome, diagnoses versus symptoms or outcome validation.
 
-Possible small reply: The draft says new or recurrent depression, but we have not defined it. We could use clinical records or symptom questionnaires. A first local code might be an old episode, and antidepressants sometimes have another purpose.
+Possible small reply: We have not settled the outcome. PHQ-9 is one symptom questionnaire we are considering, alongside clinical-record outcomes. A twelve-month symptom score would answer a different question from new clinical depression.
 
 ### f-prior-mental-health: Mental health before treatment
 
@@ -113,9 +116,9 @@ Possible small reply: We could record current mental-health medicines, their pur
 
 Status: planned. Source: Own provisional staffing and budget notes; recruitment counts have not been audited..
 
-Known content: An unaudited estimate is 1,800 to 2,400 relevant prescribing decisions in a recruitment year across 42 practices and three outpatient teams. These are not unique eligible new users. Proposed funding covers a part-time nurse, an analyst, modest record validation and repeated questionnaires for about 350 participants.
+Known content: An unaudited estimate is 1,800 to 2,400 relevant prescribing decisions in a recruitment year across 42 practices and three outpatient teams. These are not unique eligible new users. Proposed funding covers a part-time nurse, an analyst, modest record validation and recruitment of about 350 distinct participants offered repeated questionnaires. The 350 is recruitment capacity, not a promise of 350 complete endpoints; repeated visits do not add people.
 
-Reveal when: A question about sample size, staffing, budget, sites, feasibility or how much additional measurement can be funded.
+Reveal when: A question about attainable recruitment, staffing, budget, sites or how much additional measurement can be funded. Answer the requested resource only; a request for a numerical planning assumption instead uses its specific card.
 
 Possible small reply: The unaudited forecast is 1,800 to 2,400 relevant prescribing decisions in a recruitment year, not unique eligible new users.
 
@@ -189,15 +192,55 @@ Reveal when: A question about mortality, loss to follow-up, moving practices, na
 
 Possible small reply: Hospital and mortality linkage still need agreements. People may move practice, withdraw from questionnaires or get care elsewhere. A quiet record does not tell us what happened. We could keep dates and known reasons when each source stops contributing.
 
+### f-planning-difference: Provisional symptom difference worth investigating
+
+Status: provisional preference. Source: Fictional draft grant-planning discussion; no agreed clinical threshold or expected effect..
+
+Known content: For a possible twelve-month mean PHQ-9 comparison, the fictional draft budget discussion uses a two-point between-group difference as a provisional magnitude worth investigating, with 1.5 points as a smaller-difference sensitivity. This is not an expected drug effect, a validated individual clinical threshold or a final endpoint choice.
+
+Reveal when: A question about a symptom-score difference worth investigating or a provisional difference to use for planning. Reveal only the selected magnitude and its status; discuss the smaller value when uncertainty or sensitivity is requested. Other endpoints need their own assumptions.
+
+Possible small reply: We used a two-point difference between the groups' average twelve-month PHQ-9 scores for the draft budget. It is only a working figure. We haven't agreed what would matter clinically; those two points aren't a prediction of the drug effect.
+
+### f-planning-variability: Hypothetical twelve-month symptom-score variability
+
+Status: provisional planning assumption. Source: Fictional draft grant-planning notes; no local variability estimate..
+
+Known content: The draft budget scenario assumes a common unadjusted twelve-month PHQ-9 standard deviation of five points within each hypothetical treatment distribution, with four to six as uncertain planning values. There is no local estimate. This is not a combined-group pooled SD, a residual SD after adjustment or a change-score SD.
+
+Reveal when: A question about the twelve-month symptom-score SD, variance or a variability assumption. If an empirical or pilot estimate is presumed, clarify that no local estimate exists and five is only a planning assumption; do not invent broader pilot history. Other endpoints or adjusted residual variation need separate support.
+
+Possible small reply: Our draft assumes a twelve-month score standard deviation of five points within each drug group, before adjustment. We have no local estimate, so four to six are uncertain planning values.
+
+### f-planning-mix: Hypothetical treatment mix under usual prescribing
+
+Status: provisional planning assumption. Source: Fictional draft grant-planning notes; no audited treatment balance..
+
+Known content: The draft budget scenario uses 70% dapagliflozin starters and 30% empagliflozin starters, with 60:40 to 80:20 as sensitivities. The mix is hypothetical, not an audited prescribing forecast or an allocation the research team controls. Actual treatment balance and eligibility remain unknown.
+
+Reveal when: A question about treatment balance, the recruitment ratio or a mix to use in planning. Preserve the distinction between the available hypothetical mix and unavailable observed balance. A repeated empirical question does not establish a forecast; a new hypothetical question may use this assumption.
+
+Possible small reply: The budget scenario uses roughly seven dapagliflozin starters for every three empagliflozin starters. That is a working assumption, not an audited prediction or an allocation we control.
+
+### f-planning-recovery: Hypothetical usable twelve-month questionnaires
+
+Status: provisional planning assumption. Source: Fictional draft grant-planning notes; no local outcome-recovery estimate..
+
+Known content: The draft budget scenario assumes usable twelve-month questionnaires for 80% of recruits, with 70% to 90% as uncertain planning values. There is no local follow-up estimate. This is endpoint recovery among recruits, not consent among invitees, guaranteed retention or evidence that missing outcomes are noninformative or equal across treatment groups.
+
+Reveal when: A question about usable twelve-month outcomes, retention, dropout or an outcome-recovery assumption for budgeting. Reveal only that quantity and its qualification; distinguish the scenario from actual recovery. Do not use it as a consent rate or a solution to informative missingness.
+
+Possible small reply: For budgeting we assumed usable twelve-month questionnaires from about eight in ten recruits. We have no local follow-up estimate, and the result should be checked under worse recovery.
+
 ### f-precision-unknown: Information needed for sample planning
 
 Status: unknown. Source: Own planning notes; no audit or pilot has produced these quantities..
 
-Known content: There is no reliable forecast of eligible unique new users, treatment-group balance, depression events, symptom variability or questionnaire retention. The study has no agreed minimum difference of practical importance. The prescribing-decision forecast cannot establish precision or power.
+Known content: Actual eligible unique new-user counts, treatment-group balance, depression events, symptom variability, questionnaire recovery and covariate overlap remain unestablished. A provisional symptom contrast and budget scenarios have been discussed, but there is no validated minimum important difference, expected direction of effect or final primary outcome. The prescribing-decision forecast and hypothetical planning inputs cannot establish actual precision or power. No local propensity-score parameters, correlations, ICCs or baseline-adjustment gains are available.
 
-Reveal when: A question about depression frequency, variance, expected effect, power, precision, group balance or likely retention.
+Reveal when: A question about empirical information not supplied by a more specific card, such as eligible unique counts, clinical-event frequency, covariate overlap or an expected drug effect. A question about an available hypothetical contrast, SD, mix or recovery uses its specific planning card, preserving its provisional status. Answer only the selected unknown.
 
-Possible small reply: We do not yet know the eligible numbers, balance between drugs, depression frequency or questionnaire retention. We also have not agreed what difference would matter to patients. The prescribing forecast is all we have so far.
+Possible small reply: We do not have a local estimate of depression-event frequency. It has not been established by an audit or pilot.
 
 ### f-prescribing-context: Site and calendar influences on choice
 
@@ -241,7 +284,7 @@ Possible small reply: Recruitment could start in May 2027 if funding and permiss
 
 ## Unknowns
 
-For a relevant question, use the applicable fact card and preserve whether it is known, planned or unresolved. Apply the shared actor policy's first-still-unanswered selection rule and answer only that small question in natural language; retain the other requests privately as unanswered. Repeated or paraphrased requests do not unlock a stronger fact. Missing study details stay unknown, with the fixture gap recorded privately; never fabricate counts, approvals, records, contact outcomes or a completed audit. The actor may accept a proposed future measurement or conditional plan within the stated resources, but acceptance does not mean funding, access or measurement has already occurred. Without a question, react to the actual recommendation using the goal and preferences; do not volunteer a dossier or manufacture another obstacle. No hidden fact is an identifying assumption that the actor can certify merely by agreement.
+For a relevant question, use the applicable fact card and preserve whether it is known, planned or unresolved. Apply the shared actor policy's one-item selection rule and answer only that small question in natural language; retain the other requests privately as unanswered. Repeated or paraphrased requests do not unlock a stronger empirical fact. Missing study details stay unknown, with the fixture gap recorded privately; never fabricate counts, approvals, records, contact outcomes or a completed audit. The actor may accept a proposed future measurement or conditional plan within the stated resources, but acceptance does not mean funding, access or measurement has already occurred. Without a question, react to the actual recommendation using the goal and preferences; do not volunteer a dossier or manufacture another obstacle. No hidden fact is an identifying assumption that the actor can certify merely by agreement. Specific hypothetical questions can receive available planning assumptions even after an empirical quantity was truthfully unavailable. Do not use f-precision-unknown to suppress a responsive assumption card. Preserve accepted outcome choices, scenarios and explicit narrowing in existing decision updates and learned distinctions in knowledge/belief updates, tied to visible messages; do not overwrite frozen facts or promote accepted assumptions to observations. Keep unanswered_questions for omitted consultant questions, not the actor's own sizing goal.
 
 ## Acceptable directions, not a method key
 
@@ -269,23 +312,23 @@ Claim boundary: The phase establishes whether and how to launch a credible main 
 
 Relevant fact references: f-comparison-eligibility, f-existing-records, f-resources, f-precision-unknown
 
-## Review and completion
-
-Judge actual disclosures and their use. Do not credit hidden truth as known, force every alternative, or fail a conditional plan merely because future data do not yet exist.
+## Planning objectives and completion
 
 - Provide an attainable prospective collection and analysis plan, with a meaningful improvement over merely listing methods or refusing observational inference.
 - Align the population, treatment decision and causal target without silently treating all indications or prior treatment histories as interchangeable. When relevant, distinguish the selected drug from simultaneous changes to the care package.
 - Make treatment classification, entry and collection timing coherent. Use measurement and treatment-history dates when they matter to the chosen comparison. Collection of severity, current medicines or later changes does not make every variable an adjustment target; preserve unknown timing and distinguish baseline state, treatment components and downstream changes.
 - Define a depression outcome whose meaning is supported by the collection plan.
 - Match causal claims and precision to the data actually proposed and the access still unresolved.
+- Answer the visible numerical planning request with useful conditional work, distinguish a limited benchmark from sizing matched to the proposed causal analysis, and relate the result to recruitment capacity. Explicitly chosen narrower feasibility work remains a useful stop while analysis-specific numerical requirements can remain unresolved.
 - Avoid equating missing contact with a negative outcome, and explain how treatment changes and follow-up coverage affect the chosen target.
 - If recommending repeated questionnaires, address subgroup selection, observation timing and a feasible response to serious distress.
 - Keep the design within the team's treatment authority, participant protection and unresolved confidential-data access.
 
-- The visible conversation gives the coordinator a coherent attainable choice of population, comparison, outcome, priority collection and conditional analysis, with important assumptions and unresolved access or precision limits attached.
+- The visible conversation gives the coordinator a coherent attainable choice of population, comparison, outcome, priority collection and conditional analysis, with important assumptions and unresolved access or precision limits attached. Ordinary completion also delivers an understandable conditional numerical planning answer, a consequential sensitivity and comparison to affordable recruitment.
 - The consultant explains which remaining information could materially change its recommendation and what to arrange before recruitment, rather than asking for an exhaustive data inventory.
-- The actor can choose an explained feasible route or accept a bounded feasibility phase under the stated preferences. It may request a short integrated plan once substantive advice is available and no current narrow question needs answering.
-- The endpoint is preparation for a future study. No outcome estimate, completed data extraction, saved report, specific method or full disclosure of the information book is required.
+- The actor can explicitly choose an explained narrower feasibility endpoint with concrete next steps and an account of what it leaves unestablished. An accepted numerical benchmark can support a useful stop while analysis-matched sizing remains unestablished. If numerical work is absent after legitimate narrowing, that work remains undone at the chosen endpoint. Do not invent an outstanding user request after an accepted endpoint.
+- The actor may request one missing planning element at a no-current-question opportunity. A collection plan that omits sizing calls for one focused calculation reminder, not a factual answer combined with a new request or repeated demands for work already delivered.
+- The endpoint is preparation for a future study. No observed treatment-effect estimate, completed data extraction, saved report, specific method or full disclosure of the information book is required. A numerical recruitment plan is distinct from an observed effect estimate.
 - Eight to ten consultant replies is the descriptive expected length, not a turn-indexed disclosure schedule, minimum reply requirement or permission to pad a completed conversation. An operational cap is set separately by the case runner.
 
 ## Consequential failure examples
@@ -297,15 +340,20 @@ Judge actual disclosures and their use. Do not credit hidden truth as known, for
 - Drop everyone with no later visit and interpret the remainder as the complete baseline population, or treat absent hospital or mortality linkage as complete event-free follow-up.
 - Recommend an instrument based only on prescribing habit or cost preference without establishing its causal conditions.
 - Recommend routine linkage or distress screening as immediately launchable despite unresolved data access or an unfunded clinical response route.
-- Keep asking for already unavailable power inputs or refuse all planning instead of supplying a useful conditional design or bounded feasibility phase.
+- Keep asking for already unavailable empirical power inputs, overlook explicitly hypothetical assumptions, or refuse all planning instead of supplying useful conditional work or an explicitly chosen bounded feasibility phase.
+- Close with a collection plan while ignoring the visible calculation request, or treat an offer to calculate as a delivered numerical answer.
+- Call a simple independent-person benchmark adequate for the causal analysis merely by adding a warning or arbitrary inflation factor; treat 350 recruits as 350 observed endpoints or repeated visits as extra people.
+- Present fictional budget inputs as local estimates, drug effects or validated clinical thresholds, or silently reuse symptom endpoint inputs for clinical-event incidence or change scores.
 - Treat an actor's omitted answer as confirmation, lack of knowledge or proof that a measurement cannot be collected.
-- Require every hidden fact or a particular named estimator for success, even when a different coherent route answers the user's planning need.
+- Demanding every hidden fact or a particular named estimator despite an otherwise useful planning endpoint, even when a different coherent route answers the user's planning need.
 
 ## Adaptation record
 
 - This case converts the existing fictional medication story into a prospective planning conversation. It retains the original story's location, medicines, populations, timing uncertainty, capacity, access limits and participant-protection concerns.
 - No new results or real patient data are introduced. The actor's draft reference to first prescriptions intentionally leaves prior use of the other medicine unresolved, consistent with the story, so the consultant can help define a useful new-user comparison.
-- Novel authoring decisions concern interaction and evaluation only: one narrow answer at a time, eight to ten expected replies as private descriptive metadata, a practical planning endpoint, and several acceptable scientific routes. Fact triggers are semantic and have no fixed turn order.
+- The original edition's new authoring decisions concerned interaction and evaluation: one narrow answer at a time, eight to ten expected replies as private descriptive metadata, a practical planning endpoint, and several acceptable scientific routes. Fact triggers remain semantic with no fixed turn order.
 - The actor has no actual attachment, dataset or completed linked extract to release. Its source descriptions are recollections of fictional planning notes, not promises of unavailable documents.
 - The original-paper provenance remains in the separate story authoring materials. It is excluded from consultant-facing messages and actor fact answers. The fictional study makes no claim about actual comparative psychiatric effects of these medicines.
-- Case/world 1.1.0 adopts only the three prioritized refinements in validation/paper-enrichment-medication.md: dated diabetes severity, current regimen and simultaneous changes, and dated current psychiatric treatment. These are fictional draft-form options within existing resources, not completed collection, new linkage or an automatic adjustment set. The source story remains the preserved foundation.
+- Case/world 1.1.0 adopted the three prioritized refinements in validation/paper-enrichment-medication.md: dated diabetes severity, current regimen and simultaneous changes, and dated current psychiatric treatment. These remain fictional draft-form options within existing resources, not completed collection, new linkage or an automatic adjustment set. The source story remains the preserved foundation.
+- Case/world 1.2.0 adds an explicit numerical recruitment-planning request and four fictional provisional inputs. The 350-person questionnaire budget is recruitment capacity. The cohort, ordinary prescribing, access limits, actor policy and descriptive duration remain unchanged. PHQ-9 is an available outcome option, not a required answer. Its 0 to 27 scale and two-week recall are supported by Kroenke, Spitzer and Williams (2001), https://pmc.ncbi.nlm.nih.gov/articles/PMC1495268/; that paper does not supply this case's drug effect or planning values. No new dataset or attachment is released.
+- The private illustrative arithmetic is in reviewer.json, numeric_reference. It preserves the assumed-input formula, calibration, rounding alternatives and applicability limits. These are reference facts, not actor knowledge, a required method or evidence about either medicine.

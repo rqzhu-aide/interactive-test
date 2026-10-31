@@ -105,6 +105,22 @@ class StandaloneCases(unittest.TestCase):
                 self.assertEqual(result["quality_rating"], "inconclusive")
                 self.assertEqual(result["coverage"]["planning-usefulness"]["status"], "unobserved")
 
+                if identity == "medication-planning":
+                    # The public sizing request cannot be waived merely because
+                    # an accepted narrower endpoint is a legitimate useful stop.
+                    waived_sizing = copy.deepcopy(review)
+                    waived_sizing["coverage"]["j-sample-planning"]["status"] = "not_applicable"
+                    with self.assertRaisesRegex(ValueError, "unconditional criterion cannot be waived"):
+                        assess(waived_sizing, state, frozen, index)
+                    narrowed = copy.deepcopy(review)
+                    narrowed["coverage"]["j-sample-planning"] = {
+                        "status": "unobserved",
+                        "reason": "The synthetic user explicitly chose a feasibility endpoint before numerical work."}
+                    result = assess(narrowed, state, frozen, index)
+                    self.assertEqual(result["outcome"], "useful_stop")
+                    self.assertEqual(result["quality_rating"], "inconclusive")
+                    self.assertEqual(result["coverage"]["j-sample-planning"]["status"], "unobserved")
+
                 if identity == "forest-planning":
                     triggered = copy.deepcopy(review)
                     triggered["coverage"]["j-staggered-comparison"] = {

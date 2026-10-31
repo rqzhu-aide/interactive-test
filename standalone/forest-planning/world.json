@@ -229,7 +229,7 @@
   "provenance": {
     "source_story": "development-support/study-design-stories-2026-10-15/cases/02-rural-support-and-forest-change.md",
     "source_sha256": "104bdc9cc1cdefb9be29b5e98438172ab2b69ee65a4a293c69206ca72b9543fa",
-    "definition_sha256": "af3d8a4207d4e2872cae8d35c517a9a7d35acd0010ded82ef8a744d200dd7179",
+    "definition_sha256": "2616c4408c4ff792bd9d855386678551fd3c92c0533940c70dd6fdfcee40c3e0",
     "adaptation_notes": [
       "Retains the fictional story's planning date, location, in-kind package, rollout calendar, nonrandom priorities, route grouping, budget, measurement gaps and permissions.",
       "Converts the narrative into semantically triggered fact cards, with core topic markers for author review. Core markers are not an actor disclosure quota or a fixed conversation sequence.",

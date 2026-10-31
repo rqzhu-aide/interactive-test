@@ -1,8 +1,8 @@
 ---
 name: interactive-test
-description: Define, run and evaluate adaptive multi-turn tests of causal-consultant across supported agent hosts and model providers. Use for end-to-end investigation and saved reporting, or focused tests of elicitation, preparation, useful stopping and continuity.
+description: Define and run adaptive multi-turn tests of causal-consultant across supported agent hosts and model providers, recording observed issues and evidence for a programmer. Use for end-to-end investigation or focused tests of elicitation, preparation, useful stopping and continuity.
 metadata:
-  version: "8.4.7"
+  version: "8.5.6"
 ---
 
 # Adaptive Causal Consultation Testing
@@ -20,23 +20,23 @@ RGGVY has only its fixed [Research Coordinator](references/rggvy-continuity.md).
 The four prospective planning cases also have fixed actors; standalone cases
 do not accept persona selection.
 Fixture validation, actor rehearsal and live qualification are separate stages.
-Use the [runner guide](references/runner.md) for startup, adaptive steps and review.
+Use the [runner guide](references/runner.md) for startup, adaptive steps and issue records.
 Local subprocess tests do not establish compatibility with a live agent host.
 Host smoke and live qualification of selected compositions remain pending.
 
 ## Compatibility
 
-Tester **8.4.7** source supports `causal-consultant` **8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14 and 8.0.15**, pinned
+Tester **8.5.6** source supports `causal-consultant` **8.0.0, 8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7, 8.0.8, 8.0.9, 8.0.10, 8.0.11, 8.0.12, 8.0.13, 8.0.14, 8.0.15, 8.0.16, 8.0.17, 8.1.0, 8.1.1, 8.1.2, 8.1.3 and 8.1.4**, pinned
 to each attempt's candidate inventory and presentation policy, and retains the
-supported v7 profiles. Operators and reviewers use the private
+supported v7 profiles. Operators use the private
 [observation profiles](references/observation-profiles.md)
 for version-specific records, presentation and evidence rules. Unlisted versions
-need an explicitly checked profile. Focused admission, observation and continuity
-checks accompany this release; they do not establish live host qualification.
+need an explicitly checked profile. Retained admission, observation and continuity
+checks cover these profiles; they do not establish live host qualification.
 
 The reusable matrix and RGGVY retain suite **8.2.0** and their scientific versions.
 The four planning cases retain suite **prospective-study-design-1.1.0**.
-Tester 8.4.7 retains the RGGVY coordinator persona/variant 1.1.0,
+Tester 8.5.6 retains the RGGVY coordinator persona/variant 1.1.0,
 automatically composed with its bounded 8 to 12 participation contract. It is
 not yet live-qualified; frozen 1.0.0 attempts retain their old contract.
 Frozen attempts retain their own versions, source identities, loading choices
@@ -54,19 +54,17 @@ other hosts need their own verified adapter:
 
 | Role | Reads | Produces |
 |---|---|---|
-| Fixture author | [Case contract](references/case-contract.md), selected [problem and persona](references/problem-persona-matrix.md), [evaluation rules](references/evaluation.md) | Frozen public materials, private world dossier, actor packet and reviewer packet |
+| Fixture author | [Case contract](references/case-contract.md), selected [problem and persona](references/problem-persona-matrix.md) | Frozen public materials, private world/reference facts and actor packet |
 | User actor | [Reply policy](references/user-simulator.md), actor packet, visible conversation and legitimately received materials | Persona-appropriate reply and private disclosure/update record |
-| Run operator | [Runner guide](references/runner.md), [Agent-host contract](references/host-contract.md), frozen run configuration | Exact-session transport and captured evidence |
-| Independent final reviewer | [Evaluation rules](references/evaluation.md), [observation profiles](references/observation-profiles.md), reviewer packet and actual evidence | Evidence-backed outcome, findings and coverage limits |
+| Run operator | [Runner guide](references/runner.md), [Agent-host contract](references/host-contract.md), frozen run configuration | Exact-session transport, observed issue records and captured evidence |
 
 Read only the references for the current role. Start the actor with its own
 protocol, setting, persona, public conversation, permitted materials and its own
-disclosure/update history. Do not supply this entrypoint, operator/reviewer
+disclosure/update history. Do not supply this entrypoint, operator
 references, candidate skill or guides, internal state/tool reasoning, observer
 results, private `world.json` or answer criteria. If the same model authored the
-fixture, use a separate actor context containing only that allowed input. The
-final reviewer uses a separate context, not the actor's self-assessment.
-These can be separate phases; additional live-agent services are not required.
+fixture, use a separate actor context containing only that allowed input.
+Additional live-agent services are not required.
 
 For adapter development or deployment readiness, use the current
 [runner guide](references/runner.md) and [host contract](references/host-contract.md).
@@ -89,7 +87,7 @@ presented, then choose useful extensions or the offered report after findings
 discussion. Each extension returns to the user; it does not also authorize a
 report. The actor may naturally ask early for a report and should respond to the
 consultant's explanation according to its persona, without policing internal
-records. The reviewer checks whether the consultant handled the shortcut.
+records.
 A report can be revised or reopened. User pause/end is legitimate; without the
 requested report the full-report objective remains incomplete. Do not dispatch
 background work or repeat prompts while waiting for user steering.
@@ -151,15 +149,15 @@ issue. These requirements do not set a fixed total turn count.
    Use `inspect --view actor` to retain the permitted actor input and bind its
    digest to the separate actor context. The operator records source-release
    receipts for held-out data; a promise to save a plan later cannot release it.
+   Record observable problems as they arise in the run's private `issues.md`,
+   with their evidence and unresolved limits; keep this outside the actor input.
 5. Continue until the frozen objective or its permitted useful stopping condition
    is reached, or a declared limit/failure ends the attempt. In a full-report case,
    continue from investigation and supported analysis through report delivery and
-   any needed correction. Then independently review the conversation, committed
-   evidence, code and report. A missing report leaves that objective incomplete.
-   Run `inspect --view reviewer` before writing the assessment, address every
-   resulting machine finding, and finalize against that exact evidence snapshot.
-   Use `export` and `check-package` to retain all raw captures. An incomplete
-   evidence package must be explicitly marked partial.
+   any needed correction. A missing report leaves that objective incomplete.
+   Follow [issue records and export](references/runner.md#issue-records-and-export)
+   to retain the final diagnostic snapshot, `issues.md` and all raw captures.
+   An incomplete evidence package must be explicitly marked partial.
 
 For ordinary cases, do not stop after a fixed number of rounds or a convenient first result. A round
 is one consultant response to a dispatched user message; the actor's final stop
@@ -179,38 +177,14 @@ passwords. Disclosure follows the issue being discussed and persona understandin
 with unfinished requests and learning retained in the actor's private history.
 See the reply policy for progressive disclosure, bounded pressure and corrections.
 
-Review consultant mechanics privately under the frozen
-[observation profile](references/observation-profiles.md). Distinguish user
-questions from information requests and assess whether their answers were needed
-before work or depended on its results. Preserve actual wording, qualifications,
-user steering and evidence gaps. Do not teach these review rules to the actor,
-require artificial record growth or impose a predetermined method order.
+## Issue records and programmer handoff
 
-## What Counts as Success
-
-Judge the consequential evidence chain, correct use of the information, scientific and
-computational validity, understandable advice and proportionate user effort.
-Credit facts only when actually disclosed or established from inspected sources.
-Acceptance of an intermediate descriptive result does not itself close the
-original causal inquiry; follow the actor's frozen scope and stopping choices.
-Do not reward question count, a preferred estimator or refusal alone. A fully
-specified attainable analysis must be tested alongside cases needing questions
-or weaker claims. Use independent row/numerical checks where the case requires
-them; a valid manifest is not proof of a valid analysis.
-
-Evaluate actor fidelity separately from consultant quality. Keep outcome,
-findings, test validity, coverage and resources separate. Missing
-evidence is not a pass; reaching a cap before the frozen endpoint is incomplete. Save
-failed attempts as well as successes. Report current cost descriptively under
-prospectively frozen limits; do not retrospectively relabel earlier cap failures.
-For full-report cases, the adapter checks retained evidence of a completed,
-verified report artifact before accepting a successful outcome. The independent
-reviewer still assesses whether its content answers the actual question and
-preserves results, uncertainty, limitations and source evidence.
-For the loop profile, a retained early start or report creation is a protocol
-failure even if later approved. `consultation_loop_check` records structural
-chronology separately from artifact completion and scientific judgment. Read
-its actual user text and proposal evidence; a candidate approval record, actor
-update or keyword match cannot certify the user's meaning.
-Selected problem/persona runs diagnose observed behavior; they do not establish
-population reliability or untested combination coverage.
+Record problems during the conversation with the actual turn, wording or file
+reference, observed discrepancy and any uncertainty. Retain unanswered scopes,
+missing captures and machine findings without converting them into final grades
+or assuming who caused them. Keep issue records and private diagnostic observations
+out of actor input. Export failed and incomplete attempts as well as completed
+ones, preserving measured resources and the run's original limits. Another
+programmer interprets the issues and supporting evidence outside this tester.
+An issue list or complete package does not certify scientific validity, population
+reliability or untested combinations.

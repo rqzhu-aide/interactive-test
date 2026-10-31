@@ -9,7 +9,7 @@ Current release identity and compatibility are specified in [SKILL.md](../SKILL.
 - Package: `interactive-test-cc`, `7.0.9`
 - Current consultant target: an identified `7.0.9` snapshot
 
-## Active testing contract
+## Version 7.0.9 testing contract
 
 Four reusable problems combine with four independent personas, producing 16
 possible pairings. The problems are study design, observational DiD/ATE,
@@ -60,11 +60,12 @@ withdrawals, superseded offers and captured findings. Missing or damaged
 captures stay unobserved and cannot erase earlier retained failures. The
 observer never writes consultant records or repairs the conversation.
 
-Assessment keeps protocol, saved report completion, scientific validity,
-actor fidelity and execution validity distinct. An actual material consultant
-breach can fail even in a diagnostic run. Structural success still needs human
-or independent model review of the whole reply, scientific claims and artifacts.
-A user pause is respected while an undelivered report remains incomplete.
+Version 7.0.9 assessments kept protocol, saved report completion, scientific
+validity, actor fidelity and execution validity distinct. An actual material
+consultant breach could fail even in a diagnostic run. Structural success still
+required human or independent model review of the whole reply, scientific claims
+and artifacts. A user pause was respected while an undelivered report remained
+incomplete.
 
 ## Retained implementation
 
@@ -127,10 +128,10 @@ review fixes and supersede the earlier 88-test snapshot for this release.
 
 Before making a live reliability or round-count claim, use the actual target
 host, demonstrate runtime loading, exact resume, tools and private isolation,
-then run the selected pairs with independent review and prospectively frozen
+then run the selected pairs with retained observations and prospectively frozen
 limits. Diagnostic mode cannot qualify a blinded comparison. A local test pass
 is evidence about the adapter, not about real user behavior or scientific
-performance. See [runner.md](runner.md) and [evaluation.md](evaluation.md).
+performance. See [runner.md](runner.md).
 
 ## Version 7.0.8 tester correction, September 11, 2026
 
