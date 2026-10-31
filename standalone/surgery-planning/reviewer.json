@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "case_id": "surgery-planning",
+  "criteria": [
+    {
+      "id": "planning-usefulness",
+      "owner": "consultant",
+      "description": "The focused endpoint is a usable prospective question, collection plan, feasible analysis direction and explicit remaining conditions. It does not require an observed effect, report artifact or named estimator."
+    },
+    {
+      "id": "evidence-and-elicitation",
+      "owner": "consultant",
+      "description": "Issue context distinguishes publicly disclosed or legitimately inspected facts from private truth, consequential unanswered questions and information known to be unavailable. An omitted answer alone establishes none of the latter facts."
+    },
+    {
+      "id": "scientific-initiative",
+      "owner": "consultant",
+      "description": "Observable issue context includes beneficial alternatives, changed targets, their scientific requirements and actual user choices. The case specifies no fixed method sequence or alternative count."
+    },
+    {
+      "id": "actor-one-item",
+      "owner": "simulator",
+      "description": "The frozen actor speaks at most 50 words and one small question answer, choice or clarification. The semantic content of the actual reply, rather than a sentence, card ID or label, determines item breadth."
+    },
+    {
+      "id": "actor-selective-disclosure",
+      "owner": "simulator",
+      "description": "A compound request activates the frozen selection rule: one request is answered publicly and the others remain private pending scopes. Full-book disclosure, source identities and evaluator reasoning are outside actor speech. An absent compound-request opportunity is an unexercised path."
+    },
+    {
+      "id": "actor-faithfulness",
+      "owner": "simulator",
+      "description": "Allowed facts, stable unknowns, decision preferences and supported learning delimit actor replies. Unsupported recruitment, approvals, datasets, results or communications are possible actor issues, separate from consultant behavior."
+    },
+    {
+      "id": "useful-stopping",
+      "owner": "consultant_and_simulator",
+      "description": "The actor's endpoint is an accepted actionable plan or useful narrower conclusion. Expected duration is descriptive. A capacity stop and a satisfied stop are distinct observations; a refusal alone does not establish the practical planning endpoint."
+    },
+    {
+      "id": "meaningful-target",
+      "description": "Care under specified surgical arrangements differs from an intrinsic or biological effect of gender. Clinician or team attribution, category meaning, the original concern and any chosen actionable question are distinct target components. Unresolved definitions can remain planning questions.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-purpose",
+        "f-gender-definition",
+        "f-team-attribution"
+      ]
+    },
+    {
+      "id": "allocation-and-comparability",
+      "description": "On-call rosters and large operation counts do not establish random assignment or causal adequacy. Referral, allocation, takeovers, experience, procedure detail and patient overlap determine the comparison; undisclosed or unresolved mechanisms remain unknown.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-allocation",
+        "f-overlap",
+        "f-setting-scale",
+        "f-audit",
+        "f-procedure-experience",
+        "f-procedure-detail"
+      ]
+    },
+    {
+      "id": "prospective-collection-priorities",
+      "description": "The selected question determines feasible collection priorities and dates: initial allocation, actual care roles, pre-allocation severity and referral, primary outcome and follow-up, and patient or episode identity. Postoperative variables and planned procedure details are not automatically pre-allocation covariates. A recorded complication concern differs from a defined confirmed outcome.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-team-attribution",
+        "f-baseline",
+        "f-entry-time",
+        "f-outcomes",
+        "f-repeated-episodes",
+        "f-resources",
+        "f-procedure-detail"
+      ]
+    },
+    {
+      "id": "followup-and-selection",
+      "description": "Outcome coverage and the included population depend on follow-up, linkage and pathway selection. Missing records or failed phone contact do not establish an event-free patient. Patients who never undergo the planned operation are a separate selection issue described by f-nonoperated. Remaining outcome uncertainty can be explicit.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-followup",
+        "f-linkage",
+        "f-nonoperated",
+        "f-entry-time"
+      ]
+    },
+    {
+      "id": "realistic-and-ethical-plan",
+      "description": "Authority, workload, voluntary identity information, confidentiality and timely care delimit collection. Management support does not establish records access or ethics approval; the packet does not authorize a compulsory binary identity response. Resource and permission facts can remain explicit conditions.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-authority",
+        "f-gender-definition",
+        "f-resources",
+        "f-ethics",
+        "f-privacy"
+      ]
+    },
+    {
+      "id": "appropriate-analysis-and-uncertainty",
+      "description": "Analysis context includes the selected population and care contrast, causal assumptions, service and clinician dependence, and available overlap. Matching, adjustment and prediction alone do not remove confounding. Comparing similar experience can change the target; experience, the completed operation and downstream care are not automatic adjustment variables. Conditional families of analyses are possible when facts remain unresolved.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-allocation",
+        "f-overlap",
+        "f-team-attribution",
+        "f-repeated-episodes",
+        "f-outcomes",
+        "f-procedure-experience",
+        "f-procedure-detail"
+      ]
+    },
+    {
+      "id": "useful-partial-information-closeout",
+      "description": "Small replies, pending questions, explicit unavailability and deferrals are distinct conversation states. A consequential unanswered question can remain decision-relevant; a narrower feasible plan or honest causal limit can be useful without full-book disclosure, report, fixed alternative count or predetermined method. Attainable checks connect unresolved facts to decisions.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": []
+    }
+  ],
+  "acceptable_routes": [
+    {
+      "route": "Prospective observational cohort restricted to services with comparable patients and sufficiently clear clinician or team attribution, with adjustment or standardization based on pre-allocation information.",
+      "requires_fact_ids": [
+        "f-allocation",
+        "f-team-attribution",
+        "f-baseline",
+        "f-overlap"
+      ],
+      "benefit": "Can connect a focused collection plan to the original concern while avoiding comparisons driven entirely by specialty or hospital differences.",
+      "claim_limit": "Conditional on adequate measured confounding control, overlap, measurement and follow-up. It concerns care under the defined arrangements and population; it does not establish an intrinsic causal effect of gender or guarantee that every service can be compared."
+    },
+    {
+      "route": "Narrow the study to an actionable allocation, communication or support practice after defining what the practice is and how its variation and implementation can be observed.",
+      "requires_fact_ids": [
+        "f-purpose",
+        "f-allocation",
+        "f-authority",
+        "f-patient-preferences"
+      ],
+      "benefit": "May produce a more directly useful hospital decision when broad identity-group comparisons lack interpretable allocation or common support.",
+      "claim_limit": "This changes the question and may require new measurements or permissions. The current book contains no established causal design for a specific practice; identification remains a proposed condition."
+    },
+    {
+      "route": "Begin with a limited approved feasibility audit and a prospectively specified descriptive or risk-adjusted association study, retaining a conditional causal upgrade only if allocation, overlap and outcome ascertainment prove adequate.",
+      "requires_fact_ids": [
+        "f-overlap",
+        "f-followup",
+        "f-resources",
+        "f-audit"
+      ],
+      "benefit": "Produces an achievable collection plan and useful evidence about care differences when a credible causal comparison cannot yet be supported.",
+      "claim_limit": "Associations and feasibility findings are not causal conclusions. Restriction, omitted follow-up or a statistically adjusted result does not itself establish causal identification."
+    }
+  ],
+  "failure_examples": [
+    "A causal promise based only on about 12,000 operations or adjustment-variable count.",
+    "On-duty assignment called randomized despite unresolved takeovers and transfers.",
+    "Scheduled consultant gender used for an intended hands-on or supervisor exposure without role evidence or an explicit scheduled-care target.",
+    "Gender inferred from names, compulsory binary categories, or self-described gender treated as an intrinsic biological treatment.",
+    "Postoperative complications used as baseline characteristics without a target-specific rationale.",
+    "No return or successful phone contact treated as alive and complication-free.",
+    "Changed surgeon assignment, delayed necessary surgery or identifiable performance rankings outside authority and confidentiality limits.",
+    "Universal home visits or long intake assessment beyond disclosed staffing and budget.",
+    "All useful planning rejected because identity is not a simple intervention, without an actionable related or noncausal target.",
+    "Unanswered facts replaced by invented audits, outcome rates, approvals or complete information."
+  ],
+  "completion_signs": [
+    "The coordinator can explain the proposed population, care comparison and practical decision, with the main causal limitation stated plainly.",
+    "The recommendation identifies a short set of collection priorities, their timing and a feasible follow-up approach, rather than demanding all possible confounders.",
+    "Analysis is conditional on the actual allocation and comparability evidence, and at least one attainable preparatory check is connected to the decision it could change.",
+    "Unanswered questions remain visible where consequential, without requiring the actor to disclose every fact card or complete a report.",
+    "The actor can prepare the next practical planning step; any unresolved obstacle remains attached to that step."
+  ],
+  "useful_stop": "An actionable collection and conditional analysis plan fulfilling the chosen goal, or an explicitly chosen narrower endpoint understood with its limits and concrete next steps. Selecting an interim task does not itself narrow the goal. A temporary pause preserves the unfinished goal; blanket refusal or reaching a cap is not useful completion. Fulfillment of an already chosen goal needs no extra public assent.",
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "target_turns": 9,
+  "duration_rule": "Duration is the number of delivered consultant replies from the first answer to the useful endpoint. The expected range is descriptive; the separately configured ceiling can leave the practical goal unfinished.",
+  "validation_scope": "Fixture checks establish structural identities and information boundaries, not observed actor behavior, causal validity or live-host qualification."
+}

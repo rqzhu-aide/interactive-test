@@ -1,0 +1,100 @@
+{
+  "problem_id": "rggvy-electrification",
+  "specification": {
+    "known_causal_truth": false,
+    "source_kind": "Real observational replication data, geographically restricted; no synthetic outcomes or known counterfactual effect.",
+    "scope": "Chhattisgarh, Census 2001 state code 22; all retained state rows and original columns.",
+    "main_sample": "Main NSS Tables 3/5/7 select unrestricted available district panels; sample_1011 is Table B9 sensitivity.",
+    "cluster_qualification": "Six stdt_cluster dependence groups in the household extract, not a claim to have rerun the published collapsed estimator. Published table notes group historical district splits and shared DPRs. Archived collapsed code uses clustvar from vdpr4; uncollapsed code explicitly combines dependencies into stdt_cluster. Exact standard-error reproduction needs reconciliation.",
+    "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
+    "oracle_scope": "Immutable source identities, original schemas, local row/key/weight/group bookkeeping and documented specification selection. No preferred causal estimate, p-value, confidence interval or outcome direction."
+  },
+  "expected": {
+    "villages": {
+      "rows": 19353,
+      "columns": 943,
+      "stata_release": 115,
+      "row_bytes": 3952,
+      "data_offset": 189707,
+      "unique_pca01_id": 19353,
+      "districts": 16,
+      "missing_lights_2001": 1923,
+      "missing_lights_2011": 1923,
+      "cutoff_300_rows": 8,
+      "cutoff_300_instrument_one": 8,
+      "legacy_rf_sample_150": {
+        "rows": 414,
+        "below": 187,
+        "at": 0,
+        "above": 227,
+        "population_mismatch": 50,
+        "population_mismatch_unknown": 0,
+        "after_excluding_flagged_mismatches": 364
+      },
+      "has_shrug_consumption": false,
+      "legacy_rf_sample_200": {
+        "rows": 556,
+        "below": 234,
+        "at": 0,
+        "above": 322,
+        "population_mismatch": 68,
+        "population_mismatch_unknown": 0,
+        "after_excluding_flagged_mismatches": 488
+      }
+    },
+    "households": {
+      "rows": 7513,
+      "columns": 61,
+      "unique_nss_hh_id": 5113,
+      "duplicate_source_id_rows": 2400,
+      "rows_by_year": {
+        "2000": 4020,
+        "2005": 1997,
+        "2010": 1496
+      },
+      "unique_ids_by_year": {
+        "2000": 1620,
+        "2005": 1997,
+        "2010": 1496
+      },
+      "districts": 16,
+      "district_year_cells": 48,
+      "stdt_cluster_groups": 6,
+      "stdt_presplit_groups": 7,
+      "treated_districts_2010": [
+        "DURG",
+        "JANJGIR - CHAMPA",
+        "KAWARDHA"
+      ],
+      "groups_containing_treated_districts": 3,
+      "sample_1011_rows": 6101,
+      "sample_1011_groups": 5,
+      "missing_frame_population_by_year": {
+        "2000": 4020,
+        "2005": 0,
+        "2010": 0
+      },
+      "tot_p01_range": [
+        377171.0,
+        1894355.0
+      ],
+      "normalized_weight_sum_per_district_year": 1000000
+    },
+    "source_semantics": {
+      "main_tables_unrestricted": {
+        "3": true,
+        "5": true,
+        "7": true
+      },
+      "table_B9_uses_sample_1011": true,
+      "known_causal_truth": false
+    },
+    "member_sha256": {
+      "household_variables.csv": "8620f70d3bbae64c236924da5113d1e68b2b776c0a6dae4c8ca3d54cfffb215a",
+      "households.tsv": "ee6df61ed0d237c3d9a8c5143cc8b1c7505b8e3574ce3e205ed2dc85414e05b1",
+      "village_variables.csv": "1833d880db0aa3fda4cde57fa8880b579d714ab168c0c039a580cc967b58519c",
+      "villages.dta": "0ed6392392886cdbb7d52c5efb391adfffa0b84b6e51c8b964a3b7332e12cda6"
+    }
+  },
+  "interpretation": "Exact counts and frozen bytes are preparation checks. They are not expected causal effects. The consultant is not required to discover every field or reproduce the national paper; assess consequential choices for its selected scope. Numerically identical estimates cannot certify identification. Unknown causal ground truth is intentional."
+}

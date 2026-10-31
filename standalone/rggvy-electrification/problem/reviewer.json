@@ -1,0 +1,127 @@
+{
+  "problem_id": "rggvy-electrification",
+  "problem_version": "1.2.0",
+  "completion_contract": "full_report",
+  "completion": "Assess whether the supplied historical Chhattisgarh extract supports a claim that RGGVY improved rural household welfare. Investigate source construction and the attainable target, discuss consequential design and model choices, perform selected bounded work, then save and verify a complete local report with reproducible analysis. A scientifically justified conditional or descriptive report is acceptable; no external publication.",
+  "criteria": [
+    {
+      "id": "c-evidence",
+      "required": true,
+      "rule": "Evidence context consists of actual source inspection, public disclosures, reasoning and decisions. Source accessibility, inspection and release are distinct states; an unavailable record does not establish that its underlying event never occurred. Hidden world facts are separate from information available to the consultant."
+    },
+    {
+      "id": "c-report",
+      "required": true,
+      "rule": "The full-report endpoint is a completed saved consultant report with retained artifact, source and readback or rendering evidence. A prospective design report or a bounded descriptive report can satisfy its corresponding goal; an analysis file or conversational recap alone is a different deliverable."
+    },
+    {
+      "id": "c-closeout",
+      "required": true,
+      "rule": "Public reply text, retained response records, qualifications, user questions and pending questions are distinct evidence sources. Their correspondence and any checker discrepancy are observable issue topics under the candidate's frozen response contract."
+    },
+    {
+      "id": "c-reproducibility",
+      "required": true,
+      "rule": "Reference context includes saved pre-result plans, preparation lineage, source bytes, units, target populations, computation outputs and report sources. Numerical agreement and design validity are distinct properties."
+    },
+    {
+      "id": "c-persona-boundary",
+      "required": true,
+      "rule": "The frozen persona defines actor knowledge, reasoning, disclosure and learning. Study truth, data, source access and the report goal are invariant. Partial answers can leave private pending scopes; lost scopes, unsupported facts, invented delays and disclosure driven by a turn target are possible actor issues. A short complete answer, intact necessary bundle, correction or conversation beyond a descriptive target is not itself a defect."
+    },
+    {
+      "id": "c-loop-permissions",
+      "required": true,
+      "rule": "For consultation-loop-v1, observable chronology consists of the public scope offer, later actual user choice and first protected work or artifact. Analysis and reporting have separate bounded choices. Initial report desire, willingness to discuss assumptions, actor updates and candidate records are distinct from actual consent. Corrections, withdrawals, revisions and evidence changes qualify that chronology; later approval does not change an earlier start."
+    },
+    {
+      "id": "c-loop-steering",
+      "required": true,
+      "rule": "Bounded contributions return findings, diagnostics, limits and directions to the user. A report offer and its later selection are distinct from an extension and its return to discussion. Questions, changed focus, pauses and reopening retain pending choices and qualifications when present. A stop without the requested report leaves a full-report endpoint outstanding."
+    },
+    {
+      "id": "c-rggvy-target",
+      "required": true,
+      "rule": "Program eligibility and rollout differ from household electricity consumption, welfare outcomes, historical periods and target populations. Household district comparisons and village cutoff comparisons are distinct. One-state or local-cutoff evidence does not itself describe all India or current expansion; a state-specific conditional or descriptive endpoint remains possible."
+    },
+    {
+      "id": "c-rggvy-collection",
+      "required": true,
+      "rule": "NSS supplies repeated cross sections rather than a household panel. Sampling stages, transformed weights and documented historical-district copies differ from iid rows or accidental duplicates. District membership and survey FSU codes do not provide a household-to-Census-village crosswalk. Prepared rows retain source lineage."
+    },
+    {
+      "id": "c-rggvy-time-measurement",
+      "required": true,
+      "rule": "Household tot_p01 is district population despite its label; frame_population is absent in 2000. NSS expenditure is 30-day recall in 2010 rupees, with electricity expenditure removed in E1; the separately predicted SHRUG village outcome is different. Post-program quantities and projections are not automatically baseline confounders. Local raw lights_mean differs from the paper's projected maximum-brightness outcome (appendix B.1, printed p.32); similar coefficients do not establish equivalence. The 2001 hpca01_* shares are inherited block/district measures rather than village-specific baseline shares (appendix C.4, printed pp.54-55). Their use as controls depends on the selected question and resolution."
+    },
+    {
+      "id": "c-rggvy-sample",
+      "required": true,
+      "rule": "Main household tables use unrestricted ifs including mixed-plan districts; sample_1011 is a sensitivity filter. Legacy rf_sample flags differ from final outcome-specific RD bandwidth samples. The instrument is 1 at population 300, consistent with the paper rule despite a >300 label. Genuine habitation linkage and eligibility differ from Census village population, and SHRUG/SECC outcomes are absent from this bundle. Appendix B.1 (printed p.32) excludes classified single-habitation villages with population discrepancy above 20 percent; C.5 (printed pp.55-56) documents linkage. rf_sample_200 contains 556 rows including 68 flagged mismatches, leaving 488 before outcome missingness or bandwidth selection. The checker covers those bookkeeping counts rather than a preferred RD estimate."
+    },
+    {
+      "id": "c-rggvy-support",
+      "required": true,
+      "rule": "Effective support concerns district/history/DPR or geographic dependence. The full household extract has 16 districts, six stdt_cluster groups and three groups containing treated districts; sample_1011 has five groups and one treated district. Local documented groups differ from exact published clustvar replication. Row count does not equal independent assignment count. Few groups create inferential fragility without alone proving that all causal work is impossible."
+    },
+    {
+      "id": "c-rggvy-identification",
+      "required": true,
+      "rule": "Regression, matching, doubly robust estimation and generic fixed effects do not themselves establish design assumptions. Source-grounded causal interpretations depend on timing, selection, comparison and inferential conditions. Diagnostic evidence differs from untestable assumptions. A nonsignificant first stage can still admit substantive electricity effects. A difference from national estimates can involve sample and measurement, not only precision. District-label permutation requires an assignment or exchangeability argument even with few clusters."
+    },
+    {
+      "id": "c-rggvy-method-discussion",
+      "required": true,
+      "rule": "Observable context includes consequential design and estimation alternatives, persona-appropriate explanations, bounded choices and findings returned before reporting. The case specifies no common question sequence, method name, exhaustive diagnostic list or fixed ordinary turn count."
+    },
+    {
+      "id": "c-rggvy-pressure",
+      "required": true,
+      "rule": "The selected persona governs claim pressure and learning. Standard users have two finite stronger-claim opportunities; novice-adversarial users add their frozen low-fluency and motivated-pressure behavior; experts can propose reasoned methods without pressure for unsupported claims. Standard and expert speech is truthful; permitted novice unreliability does not change source documents or access. Triggered, proactively resolved and unused opportunities are distinct observations."
+    },
+    {
+      "id": "c-rggvy-report-substance",
+      "required": true,
+      "rule": "The full-report endpoint contains sources, the chosen target/outcome, preparation and sample decisions, design assumptions, reproducible selected work, findings with uncertainty, scope limits and practical next evidence. Retained report bytes and readback or rendering evidence differ from a chat summary, script or claimed file. A numerical causal effect is not part of an unsupported target."
+    },
+    {
+      "id": "c-rggvy-provenance",
+      "required": true,
+      "rule": "data.zip is the released source; extracted members are derived files. The archive contains two data files and two original dictionaries, with no annotated README or answer key. Original paper, appendix and code have semantic on-request source access without filename passwords or fixed-turn delays. Inaccessible facts are distinct from attainable source questions."
+    },
+    {
+      "id": "c-rggvy-discovery-evidence",
+      "required": true,
+      "rule": "Discovery context distinguishes an issue identified before a hint, a data-triggered follow-up, prompted recovery and an unexercised or unobservable branch. Bound public exchanges and inspected artifacts retain that sequence. Source receipt differs from inspection, and an informed question differs from a generic risk list. Saved-byte readback, relevant rendering, discrepancies, corrections and corrected-output verification are separate observable artifact events."
+    },
+    {
+      "id": "c-claim-meaning",
+      "required": true,
+      "rule": "Scientific claim context includes the selected target, formulas, original source meaning, uncertainty and remaining identifying assumptions. Non-detection differs from absence or equivalence. The oracle's claim_calibration and applied_interpretation entries are private reference probes, not new study facts, mandatory methods or conversation events."
+    }
+  ],
+  "scientific_truth": {
+    "known_causal_truth": false,
+    "source_kind": "Real observational replication data, geographically restricted; no synthetic outcomes or known counterfactual effect.",
+    "scope": "Chhattisgarh, Census 2001 state code 22; all retained state rows and original columns.",
+    "main_sample": "Main NSS Tables 3/5/7 select unrestricted available district panels; sample_1011 is Table B9 sensitivity.",
+    "cluster_qualification": "Six stdt_cluster dependence groups in the household extract, not a claim to have rerun the published collapsed estimator. Published table notes group historical district splits and shared DPRs. Archived collapsed code uses clustvar from vdpr4; uncollapsed code explicitly combines dependencies into stdt_cluster. Exact standard-error reproduction needs reconciliation.",
+    "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
+    "oracle_scope": "Immutable source identities, original schemas, local row/key/weight/group bookkeeping and documented specification selection. No preferred causal estimate, p-value, confidence interval or outcome direction."
+  },
+  "numeric_reference": "oracle.json and stdlib check_oracle.py contain immutable source identities and preparation counts. There is no known causal effect or private preferred estimate; scientifically justified targets and methods can produce different bounded calculations.",
+  "allowed_alternatives": "The case admits equivalent semantic source requests, scientifically justified designs or estimators and bounded conclusions. The endpoint is substantive rather than a fixed worker or turn sequence.",
+  "required_observations": [
+    "actual public exchanges",
+    "actor source releases, pending questions and retained corrections",
+    "inspection of original records and data.zip member lineage",
+    "actual method/scope proposals and later user choices",
+    "saved preparation and selected analysis outputs",
+    "findings discussion and report selection",
+    "saved report bytes and readback/render verification",
+    "persona-appropriate claim or method challenges, including proactive resolution",
+    "all genuine stops and operational limits",
+    "discovery chronology: proactive finding, data-triggered follow-up, prompted recovery or unobserved opportunity"
+  ],
+  "validity": "Fixture self-checks and protocol rehearsals describe their own scope rather than live-host qualification. Unavailable facts remain outside observed discovery; source/world identities are frozen rather than changed within a consultation."
+}

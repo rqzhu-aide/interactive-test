@@ -1,0 +1,15 @@
+# Shared installations only; no project-local environments.
+__pycache__/
+*.py[cod]
+*.egg-info/
+node_modules/
+
+# Local editor and OS files.
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.pytest_cache/
+
+# Local historical materials, excluded from the published package.
+/archive/

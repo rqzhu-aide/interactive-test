@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "case_id": "forest-planning",
+  "case_version": "1.1.7",
+  "suite_version": "prospective-study-design-1.1.0",
+  "edition": "prospective-single-question",
+  "author": "Codex with independent subagent review",
+  "completion_contract": "focused",
+  "initial_message": "public/initial-message.txt",
+  "actor": "actor.json",
+  "reviewer": "reviewer.json",
+  "world": "world.json",
+  "world_id": "forest-planning-world",
+  "world_version": "1.1.0",
+  "persona_id": "single-question-planner",
+  "oracle_check": "check_fixture.py",
+  "sources": [],
+  "reply_limits": {
+    "max_words": 50,
+    "max_items": 1
+  },
+  "target_turns": 9,
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "run_limits": {
+    "consultant_turns": 12
+  },
+  "files": {
+    "actor.json": "eacfed2c99404552c70ed6a659f76c80d083f251b00edd10f211026bc674c9fb",
+    "check_fixture.py": "76152f9acf9a551a13089ff514a0f552782573a9cda5d13299a415db746451a4",
+    "playbook.md": "906c7f94ad2d7b8bf87ac03e164162db1f0963f9a6dbf4012323cde01a9fe720",
+    "public/initial-message.txt": "6f9a1b1f21c24fbdce6fe7c358f5e57bc43a96c53e516abc81ecb28472b8f779",
+    "reviewer.json": "1752ee67d2573d86fdebdc64b90338be0fca8b21ebf5c3fb26689b2875244466",
+    "world.json": "980a27084ea56f79ae7c94b5a9125a16afab1b88b9148ccfc340bd1552d63439"
+  }
+}

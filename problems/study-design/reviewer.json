@@ -1,0 +1,94 @@
+{
+  "allowed_alternatives": "The case admits equivalent semantic source requests, scientifically justified designs or estimators and bounded conclusions. The endpoint is substantive rather than a fixed worker or turn sequence.",
+  "completion": "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication.",
+  "completion_contract": "full_report",
+  "criteria": [
+    {
+      "id": "c-evidence",
+      "required": true,
+      "rule": "Evidence context consists of actual source inspection, public disclosures, reasoning and decisions. Source accessibility, inspection and release are distinct states; an unavailable record does not establish that its underlying event never occurred. Hidden world facts are separate from information available to the consultant."
+    },
+    {
+      "id": "c-report",
+      "required": true,
+      "rule": "The full-report endpoint is a completed saved consultant report with retained artifact, source and readback or rendering evidence. A prospective design report or a bounded descriptive report can satisfy its corresponding goal; an analysis file or conversational recap alone is a different deliverable."
+    },
+    {
+      "id": "c-closeout",
+      "required": true,
+      "rule": "Public reply text, retained response records, qualifications, user questions and pending questions are distinct evidence sources. Their correspondence and any checker discrepancy are observable issue topics under the candidate's frozen response contract."
+    },
+    {
+      "id": "c-reproducibility",
+      "required": true,
+      "rule": "Reference context includes saved pre-result plans, preparation lineage, source bytes, units, target populations, computation outputs and report sources. Numerical agreement and design validity are distinct properties."
+    },
+    {
+      "id": "c-persona-boundary",
+      "required": true,
+      "rule": "The frozen persona defines actor knowledge, reasoning, disclosure and learning. Study truth, data, source access and the report goal are invariant. Partial answers can leave private pending scopes; lost scopes, unsupported facts, invented delays and disclosure driven by a turn target are possible actor issues. A short complete answer, intact necessary bundle, correction or conversation beyond a descriptive target is not itself a defect."
+    },
+    {
+      "id": "c-loop-permissions",
+      "required": true,
+      "rule": "For consultation-loop-v1, observable chronology consists of the public scope offer, later actual user choice and first protected work or artifact. Analysis and reporting have separate bounded choices. Initial report desire, willingness to discuss assumptions, actor updates and candidate records are distinct from actual consent. Corrections, withdrawals, revisions and evidence changes qualify that chronology; later approval does not change an earlier start."
+    },
+    {
+      "id": "c-loop-steering",
+      "required": true,
+      "rule": "Bounded contributions return findings, diagnostics, limits and directions to the user. A report offer and its later selection are distinct from an extension and its return to discussion. Questions, changed focus, pauses and reopening retain pending choices and qualifications when present. A stop without the requested report leaves a full-report endpoint outstanding."
+    },
+    {
+      "id": "c-claim-meaning",
+      "required": true,
+      "rule": "Scientific claim context includes the selected target, formulas, original source meaning, uncertainty and remaining identifying assumptions. Non-detection differs from absence or equivalence. The oracle's claim_calibration and applied_interpretation entries are private reference probes, not new study facts, mandatory methods or conversation events."
+    },
+    {
+      "id": "c-design",
+      "required": true,
+      "rule": "The prospective target is a roster-based learner-average offer effect, with allocation unit, recruitment before assignment, comparison and follow-up defined. Sites participate voluntarily, curriculum mixing creates within-center interference and generalization is limited. Individual assignment without accounting for that mixing changes the design argument."
+    },
+    {
+      "id": "c-design-precision",
+      "required": true,
+      "rule": "There are 24 centers rather than 960 independent assignments. planning-inputs.json contains assumed SD 10, ICC scenarios 0.01/0.05/0.10, 15 percent attrition and a four-point worthwhile effect. Last year's center score concerns a different cohort, as documented in dictionary.md. Normal design-effect calculations are approximate planning references rather than exact finite-cluster power; cluster count and planned versus realized sample size remain distinct."
+    },
+    {
+      "id": "c-design-prospective",
+      "required": true,
+      "rule": "The endpoint is a future design, measurement and analysis plan. No trial outcomes, fitted program effect or guaranteed significance exists. Any planning simulation is synthetic planning work, and a design report needs no observed-effect estimation run."
+    },
+    {
+      "id": "c-design-missing",
+      "required": true,
+      "rule": "The proposed follow-up population includes learners regardless of attendance. Missingness reasons, future missing-data assumptions and sensitivity remain distinct from an administrative expectation. Unknown assessment status does not establish that no follow-up was attempted."
+    },
+    {
+      "id": "c-design-method-proposal",
+      "required": true,
+      "rule": "Method context includes target, assumptions, aggregation and uncertainty. For conditional Lee bounds on the always-assessed population under S(1)>=S(0), mixture weights are proportional to roster share times control assessment rate; roster weights alone generally describe a different mixture. The oracle contains a two-stratum counterexample, not future-study data. Lee bounds are one possible route. Rerandomization, CR2, few clusters and estimated nonresponse weights have distinct inferential conditions; ignoring rerandomization does not by itself establish CR2 conservatism. Asymptotic approximations differ from finite-sample guarantees."
+    }
+  ],
+  "numeric_reference": "oracle.json and standalone check_oracle.py contain frozen source and reference calculations. Numerical comparison tolerance is 1e-8, or half the displayed final unit for rounded results. Different estimators have different reference calculations. Generating truth and realized estimates are distinct; the oracle is not a required estimator or a guarantee of single-interval coverage.",
+  "problem_id": "study-design",
+  "problem_version": "1.3.0",
+  "required_observations": [
+    "actual public exchanges",
+    "actor disclosures and learning",
+    "source inspection and release",
+    "prospective analysis and policy plans",
+    "saved computations and report",
+    "reported checker discrepancies",
+    "all stops and attempt limits"
+  ],
+  "scientific_truth": {
+    "centers_offered": 12,
+    "future_outcomes_exist": false,
+    "historical_score_formula": "48 + (7 * center_index mod 13)",
+    "known_causal_truth": false,
+    "learners_per_center": 40,
+    "n_centers": 24,
+    "scientific_setting": "Prospective clustered curriculum study with operational within-center interference, no asserted between-center spillovers, voluntary sites, and individual follow-up planned regardless of attendance."
+  },
+  "validity": "Fixture self-checks and protocol rehearsals describe their own scope rather than live-host qualification. Unavailable facts remain outside observed discovery; source/world identities are frozen rather than changed within a consultation."
+}

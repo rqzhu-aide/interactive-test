@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "case_id": "surgery-planning",
+  "case_version": "1.1.8",
+  "suite_version": "prospective-study-design-1.1.0",
+  "edition": "prospective-single-question",
+  "author": "Codex with independent subagent review",
+  "completion_contract": "focused",
+  "initial_message": "public/initial-message.txt",
+  "actor": "actor.json",
+  "reviewer": "reviewer.json",
+  "world": "world.json",
+  "world_id": "surgery-planning-world",
+  "world_version": "1.1.0",
+  "persona_id": "single-question-planner",
+  "oracle_check": "check_fixture.py",
+  "sources": [],
+  "reply_limits": {
+    "max_words": 50,
+    "max_items": 1
+  },
+  "target_turns": 9,
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "run_limits": {
+    "consultant_turns": 12
+  },
+  "files": {
+    "actor.json": "036700a64a8f76f425107ac7c5abffb36f056cf6c00e52c7fe7535c243f3ad61",
+    "check_fixture.py": "76152f9acf9a551a13089ff514a0f552782573a9cda5d13299a415db746451a4",
+    "playbook.md": "f6db172787d7f1519152b99537921686f461d88d54ec9e6d3687690183a96df7",
+    "public/initial-message.txt": "4f590039d1d3c55d136a4f752fdcca6d58fc8bda7326a59a94aee9d97e504540",
+    "reviewer.json": "650a22d4021510ff6bdaa93a37e6b2a5ad46167b5b4669c1c3bd924ff41a548b",
+    "world.json": "f62107c1ec6ad6a9294287c54e019c53384f2391ddff1616884628c45b965a5a"
+  }
+}

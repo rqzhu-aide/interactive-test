@@ -1,0 +1,185 @@
+{
+  "actor_facts": [
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "user decision target",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-decision",
+      "knowledge_tier": "practical",
+      "source": "decision-and-assumptions.md",
+      "statement": "The office wants the average effect for all 120 listed sites, equally weighted over 2025 and 2026. An adopter-only answer is useful if the difference is explained."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-rollout",
+      "knowledge_tier": "domain",
+      "source": "rollout-record.md",
+      "statement": "Sites chose through an administrative process rather than a lottery. The office holds the rollout record and a site roster."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-cohorts",
+      "knowledge_tier": "domain",
+      "source": "dictionary.md",
+      "statement": "The observations follow sites annually, with different eligible learner cohorts. Outcome and eligibility definitions are recorded as stable over the period."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "assumptions, not confirmed facts",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-assumption-status",
+      "knowledge_tier": "statistical",
+      "source": "decision-and-assumptions.md",
+      "statement": "Conditional parallel trends and same-readiness effect transport are working hypotheses for a conditional analysis; we cannot verify them from office records or by agreeing to them."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "known access limit",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-record-access",
+      "knowledge_tier": "practical",
+      "source": "office file inventory",
+      "statement": "The listed office records are available locally. I can share records that help with the questions we are discussing. I cannot obtain other records or contact staff during this consultation."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "user preference",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-report",
+      "knowledge_tier": "practical",
+      "source": "user deliverable preference",
+      "statement": "Use the site panel and obtainable records to investigate the tutoring policy and save a complete local report addressing the average effect over all 120 sites in 2025-2026. Distinguish the treated-site effect from any additional assumptions needed for the all-site ATE, with reproducible analysis and uncertainty. HTML is suitable; no publication."
+    }
+  ],
+  "actor_rules": [
+    {
+      "action": "Retain the all-site question. Accept a clearly labeled conditional ATE under the documented additional assumption if the consultant considers it defensible, or an ATT-focused report explaining the unresolved all-site effect if not. Do not certify the assumption, force ATE wording, or require a particular estimator.",
+      "condition": "The consultant distinguishes adopter effects from effects across all sites and requests a scope or assumption choice.",
+      "fact_ids": [
+        "f-decision",
+        "f-assumption-status"
+      ],
+      "rule_id": "r-target-choice",
+      "source_ids": []
+    },
+    {
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-problem-records",
+      "source_ids": [
+        "s-dictionary",
+        "s-roster",
+        "s-rollout",
+        "s-decision",
+        "s-inventory"
+      ]
+    },
+    {
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+      "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-known-unknown",
+      "source_ids": []
+    },
+    {
+      "action": "Acknowledge the findings and choose among the actual offered directions. Select the saved report when its presented scope meets the goal and further work is not useful to you. An earlier report request is a desired outcome, not standing approval. During ongoing work, answer questions and steer bounded next actions. Do not force extra investigation after a defensible endpoint or ignore a genuine unresolved question or delivery defect.",
+      "condition": "The substantive investigation and supported analysis are settled, but only a conversational recap or intermediate artifact has been supplied and a complete saved report is still absent.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-report-goal",
+      "source_ids": []
+    },
+    {
+      "action": "Accept the supported report. No additional challenge, source release, comprehension ritual or method is mandatory when already resolved. Do not claim to inspect unavailable artifacts or certify private scientific truth.",
+      "condition": "The consultant supplies a complete saved report that answers the agreed question at the supported evidence level, including any actual requested correction.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-finish",
+      "source_ids": []
+    }
+  ],
+  "files": {
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "aedaffb1fd84a9fad0edeb6efd9745905ac8363abd39308bc5ab4044e003bb87",
+    "public/available-records.md": "2f64c87db5fa78282bf23f28377397a9ca7fe9b55622c63973376508fbd194b6",
+    "public/decision-and-assumptions.md": "757c3ec1a989478301839aaa046ebaf724e87a694b6fc6ee14e0da24faf86799",
+    "public/dictionary.md": "5827db0cf62fa2ec4cb229f9c2e614e90e5a736a9b4d2c759940b65d7c3b423b",
+    "public/panel.csv": "57f5a8629f54c64f98212c81be995c1bd40c8d771a7753c4dbe36741b2631ed6",
+    "public/rollout-record.md": "d5182cbdeeddaeae49c8cd06a99712f44948850bd5eb97be5022a6a106bd49f6",
+    "public/site-roster.csv": "887d3b4c84daa8b16e7c99b46c5c13019eb5a67dfabfce2d84ded0c1858be106",
+    "reviewer.json": "945b12700ea4cb69c63ef3586766e172c12a03ca3a5ab98187dcfe8632852a13",
+    "world.json": "24f4b76af151c6451e2346f0eafe533eca3be23a061b5c22de5856414fd1bc29"
+  },
+  "goal": "Use the site panel and obtainable records to investigate the tutoring policy and save a complete local report addressing the average effect over all 120 sites in 2025-2026. Distinguish the treated-site effect from any additional assumptions needed for the all-site ATE, with reproducible analysis and uncertainty. HTML is suitable; no publication.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. Can these yearly figures tell us how much our tutoring policy helped across all 120 sites in 2025-2026? Please investigate the data, discuss suitable analysis options with me, and save a complete report.",
+  "initial_requests": {
+    "expert": "Please use the causal-consultant skill for this consultation. Our target is the all-site average effect of tutoring policy across 120 sites in 2025-2026. Please assess it using the observational panel and save a complete report that distinguishes it from treated-site effects.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. Sites using the policy look stronger, and our board wants a benefit figure for all 120 sites in 2025-2026. Please investigate these yearly figures and save a persuasive report. I can share office records.",
+    "standard": "Please use the causal-consultant skill for this consultation. Can these yearly figures tell us how much our tutoring policy helped across all 120 sites in 2025-2026? Please investigate the data, discuss suitable analysis options with me, and save a complete report."
+  },
+  "label": "Observational DiD and population effect",
+  "oracle_check": "check_oracle.py",
+  "problem_id": "observational-did",
+  "problem_version": "1.3.0",
+  "reviewer": "reviewer.json",
+  "schema_version": 1,
+  "sources": [
+    {
+      "availability": "initial",
+      "destination": "panel.csv",
+      "file": "public/panel.csv",
+      "id": "s-panel",
+      "release_when": "Initial annual site panel."
+    },
+    {
+      "availability": "on_request",
+      "destination": "dictionary.md",
+      "file": "public/dictionary.md",
+      "id": "s-dictionary",
+      "release_when": "Questions about outcome, units, periods, eligibility, covariate timing or study documents."
+    },
+    {
+      "availability": "on_request",
+      "destination": "site-roster.csv",
+      "file": "public/site-roster.csv",
+      "id": "s-roster",
+      "release_when": "Questions about target sites, target weights, overlap, baseline characteristics or study documents."
+    },
+    {
+      "availability": "on_request",
+      "destination": "rollout-record.md",
+      "file": "public/rollout-record.md",
+      "id": "s-rollout",
+      "release_when": "Questions about adoption, selection, timing, other changes, spillovers or study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "decision-and-assumptions.md",
+      "file": "public/decision-and-assumptions.md",
+      "id": "s-decision",
+      "release_when": "Questions about the decision target, causal assumptions, extrapolation, limits or all study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "available-records.md",
+      "file": "public/available-records.md",
+      "id": "s-inventory",
+      "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
+    }
+  ],
+  "suite_version": "8.2.0",
+  "target_turns": 10,
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+  "world": "world.json"
+}

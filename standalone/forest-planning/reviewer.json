@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "case_id": "forest-planning",
+  "criteria": [
+    {
+      "id": "planning-usefulness",
+      "owner": "consultant",
+      "description": "The focused endpoint is a usable prospective question, collection plan, feasible analysis direction and explicit remaining conditions. It does not require an observed effect, report artifact or named estimator."
+    },
+    {
+      "id": "evidence-and-elicitation",
+      "owner": "consultant",
+      "description": "Issue context distinguishes publicly disclosed or legitimately inspected facts from private truth, consequential unanswered questions and information known to be unavailable. An omitted answer alone establishes none of the latter facts."
+    },
+    {
+      "id": "scientific-initiative",
+      "owner": "consultant",
+      "description": "Observable issue context includes beneficial alternatives, changed targets, their scientific requirements and actual user choices. The case specifies no fixed method sequence or alternative count."
+    },
+    {
+      "id": "actor-one-item",
+      "owner": "simulator",
+      "description": "The frozen actor speaks at most 50 words and one small question answer, choice or clarification. The semantic content of the actual reply, rather than a sentence, card ID or label, determines item breadth."
+    },
+    {
+      "id": "actor-selective-disclosure",
+      "owner": "simulator",
+      "description": "A compound request activates the frozen selection rule: one request is answered publicly and the others remain private pending scopes. Full-book disclosure, source identities and evaluator reasoning are outside actor speech. An absent compound-request opportunity is an unexercised path."
+    },
+    {
+      "id": "actor-faithfulness",
+      "owner": "simulator",
+      "description": "Allowed facts, stable unknowns, decision preferences and supported learning delimit actor replies. Unsupported recruitment, approvals, datasets, results or communications are possible actor issues, separate from consultant behavior."
+    },
+    {
+      "id": "useful-stopping",
+      "owner": "consultant_and_simulator",
+      "description": "The actor's endpoint is an accepted actionable plan or useful narrower conclusion. Expected duration is descriptive. A capacity stop and a satisfied stop are distinct observations; a refusal alone does not establish the practical planning endpoint."
+    },
+    {
+      "id": "j-target-and-package",
+      "description": "The actual package is food plus variable transport. Locality availability, household receipt, coverage intensity and offer effects are distinct exposures. Coverage depends on a denominator and reference time. Population, comparison and horizon are explicit parts of a selected target; a target change differs from new evidence about the original question.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-target",
+        "f-package",
+        "f-delivery-records",
+        "f-coverage"
+      ]
+    },
+    {
+      "id": "j-assignment-and-control",
+      "description": "Entry differs under hardship priorities and operational readiness rather than a lottery or single numerical cutoff. Researchers do not control those priorities. Adjustment alone does not establish causal identification; unresolved assignment facts remain conditions.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-rollout",
+        "f-ordering",
+        "f-authority"
+      ]
+    },
+    {
+      "id": "j-measurement-and-unit",
+      "description": "Forest outcome and aggregation depend on stable geographical units and measurement definitions. Settlement buffers do not verify household attribution, and tree-cover loss is not necessarily natural-forest conversion. A baseline forest domain differs from inclusion based on later change. Mapping uncertainty and complete cadastral measurement are distinct issues.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-outcome-geography",
+        "f-forest-measurement",
+        "f-forest-archives"
+      ]
+    },
+    {
+      "id": "j-feasible-collection",
+      "description": "Collection priorities connect identification, interpretation and feasibility to the budget, pre-exposure timing, survey selection and offers versus receipts. Known sample counts describe capacity rather than power, and allocation tradeoffs affect the next practical decision.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-survey-budget",
+        "f-register",
+        "f-baseline-collection",
+        "f-delivery-records"
+      ]
+    },
+    {
+      "id": "j-calendar",
+      "description": "The September 2028 implementation brief cannot contain two-year outcomes for every planned cohort. January 2029 entrants cannot have two years of follow-up by December 2029. A common shorter horizon, restricted cohort, later conditional work or staged reporting corresponds to a different feasible endpoint.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-rollout",
+        "f-calendar",
+        "f-followup"
+      ]
+    },
+    {
+      "id": "j-staggered-comparison",
+      "description": "For an entry-cohort comparison, substantive context includes the untreated comparison, trend assumptions, anticipation, concurrent changes, shared routes, spillovers, pre-period records and fallback if comparability fails. Already treated units are not automatically untreated controls; 84 localities need not represent 84 independent rollout decisions. Eligibility-rule history can remain unresolved and relevant to comparison composition.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-ordering",
+        "f-routes",
+        "f-forest-archives",
+        "f-concurrent-changes",
+        "f-spillovers",
+        "f-rollout",
+        "f-register"
+      ]
+    },
+    {
+      "id": "j-household-path",
+      "description": "A household causal comparison involves incomplete registers, selective collection, pre-exposure confounding measurements, missing follow-up and unverified household-linked forest outcomes. Restricting to future collectors changes selection and target; matching does not establish ignorability. A hardship or mechanism-focused descriptive component answers a narrower question.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "if_route_selected",
+      "conditional": true,
+      "fact_ids": [
+        "f-register",
+        "f-delivery-records",
+        "f-baseline-collection",
+        "f-followup",
+        "f-outcome-geography"
+      ]
+    },
+    {
+      "id": "j-ethical-implementation",
+      "description": "Assistance is independent of research participation. Interviews, linkage and mapping depend on consent, community arrangements, access and confidentiality that remain unresolved. Withheld food, leaders' permission alone, sensitive linkage without agreement and precise stigmatizing public maps conflict with the frozen authority or protection facts. The case supplies no jurisdiction-specific legal conclusion or assistant-issued approval.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-authority",
+        "f-consent",
+        "f-confidentiality"
+      ]
+    },
+    {
+      "id": "j-prospective-useful-stop",
+      "description": "The endpoint is a usable collection and analysis recommendation with residual limits, next decisions and attainable information that could change the route. Conditional causal, staged feasibility and bounded descriptive routes are possible. There are no observed outcomes or mandatory report, full-card disclosure or descriptive-turn quota.",
+      "evidence_needed": "Reference context: actual public statements, selected target and the linked case facts; any unresolved information remains distinct from a disclosed fact.",
+      "scope": "always",
+      "fact_ids": [
+        "f-target",
+        "f-authority",
+        "f-survey-budget",
+        "f-calendar"
+      ]
+    }
+  ],
+  "acceptable_routes": [
+    {
+      "route": "A prospective locality-level comparison of earlier and later rollout cohorts, with a common feasible follow-up horizon and a checked pre-program forest history.",
+      "requires_fact_ids": [
+        "f-rollout",
+        "f-ordering",
+        "f-authority",
+        "f-calendar",
+        "f-outcome-geography",
+        "f-forest-archives",
+        "f-routes"
+      ],
+      "benefit": "Uses planned implementation variation without withholding assistance; directs collection toward entry decisions, comparable outcome histories, geography and concurrent changes.",
+      "claim_limit": "A causal interpretation still requires a credible untreated counterfactual and appropriate assumptions about trends, anticipation and interference. Priority changes, hardship and roads may defeat those assumptions. Household receipt effects and a universal two-year effect do not follow automatically."
+    },
+    {
+      "route": "A matched or weighted prospective comparison of program localities with suitable external areas, considered only after access, outcome comparability and reasons for exclusion from the plan are established.",
+      "requires_fact_ids": [
+        "f-authority",
+        "f-ordering",
+        "f-forest-archives",
+        "f-outcome-geography",
+        "f-concurrent-changes"
+      ],
+      "benefit": "Could preserve an untreated comparison when later program localities no longer supply one, while making required access and comparability checks explicit.",
+      "claim_limit": "The twelve neighboring areas are merely potential participants with different road access. Matching measured characteristics or a favorable pre-period fit does not establish exchangeability or remove time-varying confounding."
+    },
+    {
+      "route": "A prospective household component for hardship or behavior, paired with an explicitly separate locality forest analysis or an explained narrower target.",
+      "requires_fact_ids": [
+        "f-target",
+        "f-register",
+        "f-package",
+        "f-delivery-records",
+        "f-baseline-collection",
+        "f-followup",
+        "f-survey-budget"
+      ],
+      "benefit": "Uses the feasible survey to understand household outcomes and program reach, while distinguishing individual measurements from geographical forest change.",
+      "claim_limit": "Causal household comparisons require defensible exposure, timing, support and confounding assumptions. Mechanisms are not identified merely by observing post-program household behavior, and locality forest changes cannot be attributed to particular households without suitable linkage."
+    },
+    {
+      "route": "A staged implementation and measurement study, followed by a conditional causal evaluation if comparison and measurement requirements can be met.",
+      "requires_fact_ids": [
+        "f-target",
+        "f-calendar",
+        "f-outcome-geography",
+        "f-forest-measurement",
+        "f-survey-budget"
+      ],
+      "benefit": "Provides useful delivery, recruitment, mapping and outcome-quality information before making causal claims that the available rollout cannot yet support.",
+      "claim_limit": "The implementation brief and descriptive forest changes are not estimates of a causal program effect. State which decisions or evidence are still needed and do not quietly replace the original causal goal."
+    }
+  ],
+  "failure_examples": [
+    "Delayed food or altered hardship priorities to manufacture controls outside researcher authority.",
+    "Administrative rollout described as randomized, an invented numerical threshold, or a readiness instrument without a supported exclusion argument.",
+    "A forest decline called proof of prevention before intervention outcomes or a defensible comparison exists.",
+    "Tree-cover loss, alerts and permanent natural-forest conversion treated as interchangeable measurements.",
+    "Settlement buffers treated as verified farms, or overlapping forest areas treated as independent.",
+    "Two post-start years promised for January 2029 entrants with monitoring ending in December 2029.",
+    "Power inferred from 720 households or 84 localities without accounting for linked routes or uncertain outcome variation.",
+    "Selection on future benefit collection or completed interviews without an explicit target change.",
+    "Unaffordable cadastral measurement or assumed road data, approvals and land-entry access.",
+    "Leaders' permission substituted for individual consent, unsupported sensitive linkage, or precise stigmatizing public maps.",
+    "An undisclosed hidden fact represented as though it were present in the public exchange.",
+    "Multiple independent actor answers, full-book disclosure or invented facts driven by expected duration."
+  ],
+  "completion_signs": [
+    "The coordinator understands a defensible primary target or a clearly conditional choice between a small number of targets.",
+    "The advice identifies priority pre-delivery measurements and comparison information, and relates the household sampling and mapping tradeoffs to the available budget.",
+    "The proposed analysis respects selection into rollout, the chosen outcome geography, feasible follow-up and the permissions needed for its data collection.",
+    "Residual identification limits and the next practical decision are explicit; useful conditional advice does not require every fact card to have been disclosed.",
+    "A justified staged or descriptive plan is acceptable if the consultant explains why the original causal claim remains unresolved and what could make a later causal analysis credible."
+  ],
+  "useful_stop": "An actionable collection and conditional analysis plan fulfilling the chosen goal, or an explicitly chosen narrower endpoint understood with its limits and concrete next steps. Selecting an interim task does not itself narrow the goal. A temporary pause preserves the unfinished goal; blanket refusal or reaching a cap is not useful completion. Fulfillment of an already chosen goal needs no extra public assent.",
+  "expected_turn_range": [
+    8,
+    10
+  ],
+  "target_turns": 9,
+  "duration_rule": "Duration is the number of delivered consultant replies from the first answer to the useful endpoint. The expected range is descriptive; the separately configured ceiling can leave the practical goal unfinished.",
+  "validation_scope": "Fixture checks establish structural identities and information boundaries, not observed actor behavior, causal validity or live-host qualification."
+}

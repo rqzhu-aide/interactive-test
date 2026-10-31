@@ -1,0 +1,185 @@
+{
+  "actor_facts": [
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "known",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-prospective",
+      "knowledge_tier": "practical",
+      "source": "board planning brief",
+      "statement": "The program has not started. We need a design that can be run with the existing centers and a saved report before launch."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-delivery",
+      "knowledge_tier": "domain",
+      "source": "delivery-constraints.md",
+      "statement": "The curriculum is delivered by each center's regular tutors; mixing curricula within a center is impractical. Twelve centers can start now and the remainder can wait until after the primary follow-up."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-target",
+      "knowledge_tier": "domain",
+      "source": "delivery-constraints.md",
+      "statement": "The board wants the average effect of offering this program to eligible learners at the listed centers, including learners who do not attend. The centers volunteered for the pilot."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "explicit planning assumptions",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-planning-uncertainty",
+      "knowledge_tier": "statistical",
+      "source": "planning-inputs.json",
+      "statement": "The variance, ICC and attrition entries are planning assumptions rather than established trial estimates. We can consider their sensitivity but cannot obtain a new pilot during this session."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "known access limit",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-record-access",
+      "knowledge_tier": "practical",
+      "source": "office file inventory",
+      "statement": "The listed office records are available locally. I can share records that help with the questions we are discussing. I cannot obtain other records or contact staff during this consultation."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "user preference",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-report",
+      "knowledge_tier": "practical",
+      "source": "user deliverable preference",
+      "statement": "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication."
+    }
+  ],
+  "actor_rules": [
+    {
+      "action": "Prefer a feasible center-level allocation with all eligible learners recruited before assignment and follow-up regardless of attendance. Region-stratified random allocation is acceptable if justified, without requiring that exact design. Do not choose an option inconsistent with delivery constraints or demand a favorable effect.",
+      "condition": "The consultant explains feasible alternatives and requests a practical choice.",
+      "fact_ids": [
+        "f-delivery",
+        "f-target"
+      ],
+      "rule_id": "r-design-choice",
+      "source_ids": []
+    },
+    {
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-problem-records",
+      "source_ids": [
+        "s-dictionary",
+        "s-delivery",
+        "s-calendar",
+        "s-planning",
+        "s-inventory"
+      ]
+    },
+    {
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+      "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-known-unknown",
+      "source_ids": []
+    },
+    {
+      "action": "Acknowledge the findings and choose among the actual offered directions. Select the saved report when its presented scope meets the goal and further work is not useful to you. An earlier report request is a desired outcome, not standing approval. During ongoing work, answer questions and steer bounded next actions. Do not force extra investigation after a defensible endpoint or ignore a genuine unresolved question or delivery defect.",
+      "condition": "The substantive investigation and supported analysis are settled, but only a conversational recap or intermediate artifact has been supplied and a complete saved report is still absent.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-report-goal",
+      "source_ids": []
+    },
+    {
+      "action": "Accept the supported report. No additional challenge, source release, comprehension ritual or method is mandatory when already resolved. Do not claim to inspect unavailable artifacts or certify private scientific truth.",
+      "condition": "The consultant supplies a complete saved report that answers the agreed question at the supported evidence level, including any actual requested correction.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-finish",
+      "source_ids": []
+    }
+  ],
+  "files": {
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "77d65b9dff4d40b2ea5d3495968e1fa1ed1ee34978f311eb6ab7310c33da1cad",
+    "public/available-records.md": "71329fdf63502480b3464800866dabbadf04c59a6def5ed88b92d42f7e4b9bb6",
+    "public/calendar-and-measures.md": "2d53027ec3655d7a9850f79fa6c48814e4112b807be920c678e6bf8f2eae0165",
+    "public/centers.csv": "e27e86c5efb79fb7128ed79b5d9b539d3638ea41cdd92cec469099fa1764db38",
+    "public/delivery-constraints.md": "4f6c619d103ca585510e9b8f00cbdb4cc6b25161607e0ad4c66827d7cc1760b5",
+    "public/dictionary.md": "c7489f36e9eeefb1c4fe8ecaed86315c5898e756805511a22c60c75aa46ca5bc",
+    "public/planning-inputs.json": "8c1a6f65a683d23a2f7a3aa4d706b40e08f8b20d1ee3028fd558e76f9bd3cd88",
+    "reviewer.json": "5855871febd83f59892943d9305dbdd61be1a91d149941fb7adf13bbb7be2e4f",
+    "world.json": "3c59b6f0514fbf9c2175aa1b7923adf40cb0b3e68959c5d08a92d6d20a728263"
+  },
+  "goal": "Prepare a complete saved local design report for a feasible prospective evaluation of tutoring offers at the 24 listed learning centers. Explain the design and collection plan, precision assumptions and practical decisions. No trial has run and no program-effect results are requested. A self-contained HTML report is suitable; no publication.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use.",
+  "initial_requests": {
+    "expert": "Please use the causal-consultant skill for this consultation. The tutoring offer has not launched at our 24 centers. Please develop a prospective evaluation that addresses allocation, interference and precision, and save a complete design report. I can discuss implementation constraints.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. Our board wants a convincing tutoring pilot before expanding across 24 centers. Please help us plan a study and save a report. We hope it will make a strong case for expansion.",
+    "standard": "Please use the causal-consultant skill for this consultation. We are planning a tutoring program at 24 learning centers. Please help me choose a study to find out whether it helps learners, discuss the options with me, and save a report we can use."
+  },
+  "label": "Prospective clustered tutoring study",
+  "oracle_check": "check_oracle.py",
+  "problem_id": "study-design",
+  "problem_version": "1.3.0",
+  "reviewer": "reviewer.json",
+  "schema_version": 1,
+  "sources": [
+    {
+      "availability": "initial",
+      "destination": "centers.csv",
+      "file": "public/centers.csv",
+      "id": "s-centers",
+      "release_when": "Initial center roster."
+    },
+    {
+      "availability": "on_request",
+      "destination": "dictionary.md",
+      "file": "public/dictionary.md",
+      "id": "s-dictionary",
+      "release_when": "Questions about roster columns, historical scores, units or supporting documents."
+    },
+    {
+      "availability": "on_request",
+      "destination": "delivery-constraints.md",
+      "file": "public/delivery-constraints.md",
+      "id": "s-delivery",
+      "release_when": "Questions about delivery, assignment, interference, eligibility, decision target or all study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "calendar-and-measures.md",
+      "file": "public/calendar-and-measures.md",
+      "id": "s-calendar",
+      "release_when": "Questions about recruitment, measurement, timing, follow-up or all study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "planning-inputs.json",
+      "file": "public/planning-inputs.json",
+      "id": "s-planning",
+      "release_when": "Questions about feasibility, sample size, worthwhile effect, precision, ICC, attrition or all study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "available-records.md",
+      "file": "public/available-records.md",
+      "id": "s-inventory",
+      "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
+    }
+  ],
+  "suite_version": "8.2.0",
+  "target_turns": 5,
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+  "world": "world.json"
+}

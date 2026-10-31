@@ -1,0 +1,195 @@
+{
+  "actor_facts": [
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "user preference",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-audit-goal",
+      "knowledge_tier": "practical",
+      "source": "report-decision.md",
+      "statement": "The renewal decision needs a trustworthy report. If the program effect cannot be established, explain the available evidence and a useful next study."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-export",
+      "knowledge_tier": "domain",
+      "source": "export-ledger.md",
+      "statement": "The office has an export ledger and complete program roster that explain the repeated records; I can share them."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented access limit",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-participants-only",
+      "knowledge_tier": "domain",
+      "source": "collection-and-selection.md",
+      "statement": "This is a participant register, not a sample of everyone eligible. We cannot obtain untreated records or additional follow-up in this consultation."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "documented meaning and explicit uncertainty",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-missing-meaning",
+      "knowledge_tier": "statistical",
+      "source": "dictionary.md and collection-and-selection.md",
+      "statement": "Blank completion means unascertained status, not documented failure. We do not have enough retained information to certify a missingness mechanism."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "known access limit",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-record-access",
+      "knowledge_tier": "practical",
+      "source": "office file inventory",
+      "statement": "The listed office records are available locally. I can share records that help with the questions we are discussing. I cannot obtain other records or contact staff during this consultation."
+    },
+    {
+      "available_when": "A relevant question about this subject",
+      "certainty": "user preference",
+      "disclosure_condition": "Answer relevant parts naturally. Preserve the stated certainty; do not supply a numerical analysis result.",
+      "fact_id": "f-report",
+      "knowledge_tier": "practical",
+      "source": "user deliverable preference",
+      "statement": "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication."
+    }
+  ],
+  "actor_rules": [
+    {
+      "action": "Accept useful data auditing, transparent observed-case summaries and any justified missing-outcome bounds, with an evidence plan. Preserve the original causal question as unanswered if appropriate. Do not demand an effect estimate, new inaccessible data or indefinite investigation.",
+      "condition": "The consultant explains the comparison or missing-data limit and offers a supported analysis/report scope.",
+      "fact_ids": [
+        "f-audit-goal",
+        "f-participants-only",
+        "f-missing-meaning"
+      ],
+      "rule_id": "r-bounded-analysis",
+      "source_ids": []
+    },
+    {
+      "action": "Apply the shared r-records rule and the selected persona's disclosure_policy. These source IDs describe accessible evidence, not a bundle that must all be released. Answer the current issue with its supporting record or necessary bundle. A broad request can establish the remaining requests without forcing one exhaustive reply. Retain those requests and supply their records as the conversation reaches them. Accessible, inspected and released are different states: a requested accessible record can be attached before you know its contents. Use attachments to supply it, state any genuine uncertainty and do not wait for your own release or invent a document's answer. Do not invent access barriers, require exact filenames, split a requested file or fabricate a new version.",
+      "condition": "The consultant asks for study records, definitions, collection or selection details, or all relevant supporting material.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-problem-records",
+      "source_ids": [
+        "s-dictionary",
+        "s-roster",
+        "s-export",
+        "s-collection",
+        "s-report-decision",
+        "s-inventory"
+      ]
+    },
+    {
+      "action": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+      "condition": "The consultant asks about facts beyond current knowledge or accessible records.",
+      "fact_ids": [
+        "f-record-access"
+      ],
+      "rule_id": "r-known-unknown",
+      "source_ids": []
+    },
+    {
+      "action": "Acknowledge the findings and choose among the actual offered directions. Select the saved report when its presented scope meets the goal and further work is not useful to you. An earlier report request is a desired outcome, not standing approval. During ongoing work, answer questions and steer bounded next actions. Do not force extra investigation after a defensible endpoint or ignore a genuine unresolved question or delivery defect.",
+      "condition": "The substantive investigation and supported analysis are settled, but only a conversational recap or intermediate artifact has been supplied and a complete saved report is still absent.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-report-goal",
+      "source_ids": []
+    },
+    {
+      "action": "Accept the supported report. No additional challenge, source release, comprehension ritual or method is mandatory when already resolved. Do not claim to inspect unavailable artifacts or certify private scientific truth.",
+      "condition": "The consultant supplies a complete saved report that answers the agreed question at the supported evidence level, including any actual requested correction.",
+      "fact_ids": [
+        "f-report"
+      ],
+      "rule_id": "r-finish",
+      "source_ids": []
+    }
+  ],
+  "files": {
+    "check_oracle.py": "9e0890849319324b8e3aea8ff8b137611febf6cf7dd75532b2dc4a00f2a1b611",
+    "oracle.json": "b434ea87f8904017d027e217a32fb3874e3b934473abb56386023eef39b581ea",
+    "public/available-records.md": "a54a92f831aea99142809cef99c61c80424f111f2486f5034c924c1fe5149792",
+    "public/collection-and-selection.md": "dea91e849bf443172f9da968eeb68b73cd6aeeb96ebe0743277e0570c162f606",
+    "public/dictionary.md": "116d5502e744cee692eae3cf05c6ca4f300edb5897956658d0c9b0e906a45846",
+    "public/export-ledger.md": "a80a10cd0a309f8a508ba5eac510cbb74091ed0af4244d94ac3bac30674dc548",
+    "public/extract.csv": "b2c2bfe1aae32c2f6bbf055254a69982f6dac940a2a0e00a3442b7d8fe16a27f",
+    "public/participant-roster.csv": "9f1fa36f8e599d265e60cf4a501aed29c97035040a3557757ecb1247acbe69a4",
+    "public/report-decision.md": "d3798d86dea0d08273295f10f9275ebb876546d3b82b5b16b52467c8d236b388",
+    "reviewer.json": "bc17fdbb441c26627680a9c176f497a9ef4090c9a7abc52504011184c6652de8",
+    "world.json": "84e585a1c78ed74a4eae8e45e2a8e3f38a991214e4c07a02290343d5eaef6ab1"
+  },
+  "goal": "Audit the tutoring program extract, investigate what can and cannot support a causal conclusion, and save a complete local report with reproducible data preparation, honest descriptive findings or bounds, remaining data limitations and a practical future-evidence plan. HTML is suitable; no publication.",
+  "initial_request": "Please use the causal-consultant skill for this consultation. Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude.",
+  "initial_requests": {
+    "expert": "Please use the causal-consultant skill for this consultation. Please assess whether our incomplete tutoring extract supports any causal effect claim, then save a complete reproducible report with justified descriptive findings if it does not. I can share the roster and export records.",
+    "novice-adversarial": "Please use the causal-consultant skill for this consultation. Our program needs a strong completion story for renewal. Please assess whether tutoring worked using these records and save a report we can present to the board.",
+    "standard": "Please use the causal-consultant skill for this consultation. Can these tutoring records tell us whether the program improved completion? Please investigate the data, discuss what analysis would answer the question, and save a complete report explaining what we can conclude."
+  },
+  "label": "Incomplete participant extract and causal limits",
+  "oracle_check": "check_oracle.py",
+  "problem_id": "data-quality-edge",
+  "problem_version": "1.3.0",
+  "reviewer": "reviewer.json",
+  "schema_version": 1,
+  "sources": [
+    {
+      "availability": "initial",
+      "destination": "extract.csv",
+      "file": "public/extract.csv",
+      "id": "s-extract",
+      "release_when": "Initial participant extract."
+    },
+    {
+      "availability": "on_request",
+      "destination": "dictionary.md",
+      "file": "public/dictionary.md",
+      "id": "s-dictionary",
+      "release_when": "Questions about keys, blanks, measures, outcomes, denominator or study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "participant-roster.csv",
+      "file": "public/participant-roster.csv",
+      "id": "s-roster",
+      "release_when": "Questions about people, inclusion, duplicates, denominators, completeness or all supporting records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "export-ledger.md",
+      "file": "public/export-ledger.md",
+      "id": "s-export",
+      "release_when": "Questions about duplicated rows, versions, exports, missing values, recoverability or all supporting records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "collection-and-selection.md",
+      "file": "public/collection-and-selection.md",
+      "id": "s-collection",
+      "release_when": "Questions about selection, treatment, comparison groups, timing, collection, missingness or all study records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "report-decision.md",
+      "file": "public/report-decision.md",
+      "id": "s-report-decision",
+      "release_when": "Questions about decision needs, acceptable report scope or all supporting records."
+    },
+    {
+      "availability": "on_request",
+      "destination": "available-records.md",
+      "file": "public/available-records.md",
+      "id": "s-inventory",
+      "release_when": "Available whenever the user is asked about records, source availability or all supporting material."
+    }
+  ],
+  "suite_version": "8.2.0",
+  "target_turns": 8,
+  "unknown_policy": "Source-supported knowledge comes only from selected actor facts, inspected records and visible conversation. A document's existence does not confer knowledge of its contents. Standard and expert users state uncertainty truthfully. The novice-adversarial user may make unreliable spoken assertions under its profile, but records actual unknowns and the distinction between evidence and claimed belief privately. No persona may invent a document, available source, new data collection or staff contact. A material unspecified fact limits only the affected evaluation claim, pending a versioned fixture revision; spoken insistence cannot establish the study fact or identifying assumption.",
+  "world": "world.json"
+}

@@ -1,0 +1,1 @@
+$causal-consultant It's 18 February 2027. I want to prepare a study of gender differences in surgical care around Durban and Pietermaritzburg. We plan to collect surgical outcomes for patients treated by male and female surgeons, plus possible confounders. How should we design this to reach a causal conclusion?

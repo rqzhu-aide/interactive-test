@@ -1,0 +1,194 @@
+{
+  "world_id": "real-rggvy-chhattisgarh-v1",
+  "world_version": "1.0.0",
+  "kind": "Real-source observational replication subset with a clearly hypothetical client decision and conversation agenda; invariant across personas.",
+  "privacy": "Private dossier and oracle never reach the actor or consultant. Actor initial facts contain client preferences and source access only. Released documents and scientific facts remain invariant; novice-adversarial spoken assertions may be unreliable without changing the world.",
+  "generation": {
+    "generator": null,
+    "seed": null,
+    "specification": {
+      "known_causal_truth": false,
+      "source_kind": "Real observational replication data, geographically restricted; no synthetic outcomes or known counterfactual effect.",
+      "scope": "Chhattisgarh, Census 2001 state code 22; all retained state rows and original columns.",
+      "main_sample": "Main NSS Tables 3/5/7 select unrestricted available district panels; sample_1011 is Table B9 sensitivity.",
+      "cluster_qualification": "Six stdt_cluster dependence groups in the household extract, not a claim to have rerun the published collapsed estimator. Published table notes group historical district splits and shared DPRs. Archived collapsed code uses clustvar from vdpr4; uncollapsed code explicitly combines dependencies into stdt_cluster. Exact standard-error reproduction needs reconciliation.",
+      "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
+      "oracle_scope": "Immutable source identities, original schemas, local row/key/weight/group bookkeeping and documented specification selection. No preferred causal estimate, p-value, confidence interval or outcome direction."
+    },
+    "extraction_provenance": {
+      "source_doi": "10.7910/DVN/APWICK",
+      "source_dataset_version": "1.0",
+      "paper_doi": "10.1086/730204",
+      "selection": "st_code == 22; retain all rows, all columns, original values, and original source sample flags",
+      "village_source_url": "https://dataverse.harvard.edu/api/access/datafile/7887967",
+      "village_source_shape": [
+        580643,
+        943
+      ],
+      "village_source_ranges_inclusive": [
+        [
+          0,
+          189706
+        ],
+        [
+          1512612203,
+          1589095258
+        ]
+      ],
+      "village_transform": "Copy original header and selected records byte for byte; change only Stata observation count at header offset 6. Source has no trailing value-label tables.",
+      "household_source_url": "https://dataverse.harvard.edu/api/access/datafile/7887970",
+      "household_source_sha256": "e2d40744c14bfb9bc1691ba7c3fe9af2cd1043187dffed832f238d2ac00744b0",
+      "household_transform": "Filter TSV rows using original text values; preserve all 61 fields. TSV quoting/newline serialization may differ.",
+      "files": {
+        "villages.dta": {
+          "bytes": 76672763,
+          "sha256": "0ed6392392886cdbb7d52c5efb391adfffa0b84b6e51c8b964a3b7332e12cda6"
+        },
+        "households.tsv": {
+          "bytes": 2292839,
+          "sha256": "ee6df61ed0d237c3d9a8c5143cc8b1c7505b8e3574ce3e205ed2dc85414e05b1"
+        }
+      }
+    },
+    "archive": "public/data.zip",
+    "archive_members": {
+      "household_variables.csv": "8620f70d3bbae64c236924da5113d1e68b2b776c0a6dae4c8ca3d54cfffb215a",
+      "households.tsv": "ee6df61ed0d237c3d9a8c5143cc8b1c7505b8e3574ce3e205ed2dc85414e05b1",
+      "village_variables.csv": "1833d880db0aa3fda4cde57fa8880b579d714ab168c0c039a580cc967b58519c",
+      "villages.dta": "0ed6392392886cdbb7d52c5efb391adfffa0b84b6e51c8b964a3b7332e12cda6"
+    },
+    "note": "Deterministic ZIP packaging of previously verified state-only data and original label dictionaries. No rows, outcomes or covariates were simulated. The original DTA subset changed only observation count in its header; household TSV retains original cell values. No annotated dataset README/profile is included."
+  },
+  "scientific_truth": {
+    "known_causal_truth": false,
+    "source_kind": "Real observational replication data, geographically restricted; no synthetic outcomes or known counterfactual effect.",
+    "scope": "Chhattisgarh, Census 2001 state code 22; all retained state rows and original columns.",
+    "main_sample": "Main NSS Tables 3/5/7 select unrestricted available district panels; sample_1011 is Table B9 sensitivity.",
+    "cluster_qualification": "Six stdt_cluster dependence groups in the household extract, not a claim to have rerun the published collapsed estimator. Published table notes group historical district splits and shared DPRs. Archived collapsed code uses clustvar from vdpr4; uncollapsed code explicitly combines dependencies into stdt_cluster. Exact standard-error reproduction needs reconciliation.",
+    "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
+    "oracle_scope": "Immutable source identities, original schemas, local row/key/weight/group bookkeeping and documented specification selection. No preferred causal estimate, p-value, confidence interval or outcome direction."
+  },
+  "documented_facts": [
+    {
+      "id": "w-nss-design",
+      "statement": "NSS 1999-2000,2004-05,2009-10 are repeated household cross sections, two-stage sampled; linked analysis labels are2000,2005,2010. Household and village identities needed for census village linkage are obscured.",
+      "evidence": "paper p. 2949; appendix C11 printed pp. . 63-65 (PDF pp. 64-66)"
+    },
+    {
+      "id": "w-copying",
+      "statement": "The 2000 source IDs are deliberately copied to successor 2001 districts by the historical geography crosswalk. This creates 2400 additional state rows, not repeated household follow-up or evidence of accidental corruption.",
+      "evidence": "appendix printed p. 65; merge_nss_panel.do1518-1530,1584-1586; oracle household counts"
+    },
+    {
+      "id": "w-population-weight",
+      "statement": "Household tot_p01 is a district total despite retained village-running-variable label. Normalized weights sum to 1e6 per district-wave; original raw WT is dropped. Population-weighted household analysis additionally uses tot_p_dist.",
+      "evidence": "merge_nss_panel.do458-461,1613-1619,1841-1851; DD_regs_NSS.do1643"
+    },
+    {
+      "id": "w-outcomes",
+      "statement": "NSS expenditure has 30-day recall, is adjusted to2010 rupees, and E1 removes electricity expenditure per capita. The welfare/income interpretation needs assumptions. This foundation village file lacks the later SHRUG predicted-consumption outcome.",
+      "evidence": "appendix printed pp. 57-58,65; MASTER M3, M7, M8; village dictionary"
+    },
+    {
+      "id": "w-main-sample",
+      "statement": "Main NSS Tables 3/5/7 select ifs empty; sample_1011 selects Table B9 sensitivity. Local treatment includes Durg and Kawardha with vplan4=10.5.",
+      "evidence": "outputs_nss.do29,142,259,2559; household cells"
+    },
+    {
+      "id": "w-rd",
+      "statement": "The village threshold concerns habitation population >= 300; source p_300_D is1 at 300 although its label says>300. Legacy rf_sample_150 contains 414 state rows including 50 flagged population mismatches; final RD uses outcome-specific selection/bandwidths.",
+      "evidence": "paper eq1; appendix C5; MASTER187-191; dictionary and oracle"
+    },
+    {
+      "id": "w-maps-lights",
+      "statement": "Main RD restricts to states with usable maps, whereas district DD is not restricted on this criterion. Chhattisgarh passes the state criterion but has 1923 missing raw-light rows in each of 2001 and 2011. Projected lights use two past and two future years; this is a measure timing fact, not proof of contaminated baseline in the paper.",
+      "evidence": "appendix C2-C3 printed pp. 50-53; oracle"
+    },
+    {
+      "id": "w-linkage-selection",
+      "statement": "The foundation census panel selects matches across source files. Habitation linkage uses exact/fuzzy names and population-agreement screening; match rates vary with village size. These facts do not establish the direction or presence of causal bias.",
+      "evidence": "appendix C4-C5 printed pp. 54-57"
+    },
+    {
+      "id": "w-clusters",
+      "statement": "Six stdt_cluster dependence groups in the household extract, not a claim to have rerun the published collapsed estimator. Published table notes group historical district splits and shared DPRs. Archived collapsed code uses clustvar from vdpr4; uncollapsed code explicitly combines dependencies into stdt_cluster. Exact standard-error reproduction needs reconciliation.",
+      "evidence": "paper Table 3p. 2955,Table 5p. 2958; merge_nss_panel.do1775-1802,1869-1919; oracle"
+    }
+  ],
+  "documented_unknowns": [
+    "True causal effects in this state and any target population.",
+    "Whether conditional parallel trends, RD continuity, exclusion restrictions, no interference or transport assumptions hold.",
+    "Individual household-to-census-village crosswalk absent from these artifacts.",
+    "Exact national-estimator standard errors without resolving code/documentation cluster definitions and obtaining relevant full inputs.",
+    "Unrecorded assignment decisions, unpublished operational facts, and unavailable microdata."
+  ],
+  "assumption_boundary": "Neither parallel trends, RD continuity, exclusion, missingness ignorability nor transportability is known true from these artifacts. Few groups affect inference but do not automatically imply algebraic nonidentification.",
+  "source_inventory": [
+    {
+      "source_id": "s-data",
+      "file": "public/data.zip",
+      "availability": "initial",
+      "sha256": "4af2fcdc9ddf79f886ce2c598111655a7eafee04037a8a619bb7ec49ed8d049e"
+    },
+    {
+      "source_id": "s-paper",
+      "file": "public/records/paper.pdf",
+      "availability": "on_request",
+      "sha256": "fda6d11cf783a4bb6e751531b39b3cedd8a4e4e576f8d3b22a9aba6412ed229b"
+    },
+    {
+      "source_id": "s-appendix",
+      "file": "public/records/appendix.pdf",
+      "availability": "on_request",
+      "sha256": "ed2ea5b198e4ce0758e3de2e44743e69c3eace889c48bba85beb4338584cc013"
+    },
+    {
+      "source_id": "s-merge-code",
+      "file": "public/records/merge_nss_panel.do",
+      "availability": "on_request",
+      "sha256": "e848a9878a0b277cd343a13826cbfd645fd0038fd7470420c4f27272da36a3f1"
+    },
+    {
+      "source_id": "s-analysis-code",
+      "file": "public/records/DD_regs_NSS.do",
+      "availability": "on_request",
+      "sha256": "7e6a8a575302be8d3923dfb3c28dfd678a7692be47d0dffa81ab3bbd40663904"
+    },
+    {
+      "source_id": "s-output-code",
+      "file": "public/records/outputs_nss.do",
+      "availability": "on_request",
+      "sha256": "57a280ac9a2b5c5638c2e6efbf809747a96e64aee7b6e7b7d3d76c13dadf8c84"
+    },
+    {
+      "source_id": "s-master-code",
+      "file": "public/records/MASTER.do",
+      "availability": "on_request",
+      "sha256": "93f22458fa52494c6d955062ff8fd381d68bf5b7da83bd641a0c5e48e3f4d213"
+    },
+    {
+      "source_id": "s-decision",
+      "file": "public/records/decision-notes.md",
+      "availability": "on_request",
+      "sha256": "97a38bca723285fee8e36ce36da9edeaf653322a5fc61f151fc165cd10551763"
+    }
+  ],
+  "source_provenance": {
+    "replication_doi": "https://doi.org/10.7910/DVN/APWICK",
+    "paper_doi": "https://doi.org/10.1086/730204",
+    "author_combined_paper": "https://fionaburlig.com/s/Burlig_Preonas_RGGVY_published_with_appx.pdf",
+    "original_code_urls": {
+      "merge_nss_panel.do": "https://dataverse.harvard.edu/api/access/datafile/7886250",
+      "DD_regs_NSS.do": "https://dataverse.harvard.edu/api/access/datafile/7886191",
+      "outputs_nss.do": "https://dataverse.harvard.edu/api/access/datafile/7886276",
+      "MASTER.do": "https://dataverse.harvard.edu/api/access/datafile/7886180"
+    },
+    "client_note": "public/records/decision-notes.md is an explicitly labelled authored hypothetical decision note, not a historical source."
+  },
+  "reference_outputs": {
+    "checker_file": "check_oracle.py",
+    "checker_sha256": "6a39ba1f94ee1c2344538b7b9743698f62fd9b462263bac777dafc231c7eee01",
+    "oracle_file": "oracle.json",
+    "oracle_sha256": "1252d78d549033d43651e714f95828411b11498968fb14af25cddabbdf5416bc"
+  }
+}
